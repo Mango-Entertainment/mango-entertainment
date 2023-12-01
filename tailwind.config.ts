@@ -10,10 +10,10 @@ const config: Config = {
     extend: {
       colors: {
         "entertainment-red": "#FC4747",
-        "entertainment-black": "#10141E",
-        "entertainment-battleship-grey": "#5A698F",
-        "entertainment-dark-blue": "#161D2F",
-        "entertainment-white": "#FFFFFF",
+        "entertainment-dark-blue": "#10141E",
+        "entertainment-greyish-blue": "#5A698F",
+        "entertainment-semi-dark-blue": "#161D2F",
+        "entertainment-pure-white": "#FFFFFF",
       },
     },
   },
