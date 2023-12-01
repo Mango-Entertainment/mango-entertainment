@@ -8,20 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       colors: {
         "entertainment-red": "#FC4747",
         "entertainment-black": "#10141E",
         "entertainment-battleship-grey": "#5A698F",
         "entertainment-dark-blue": "#161D2F",
-        "entertainment-white": "#FFFFFF"
+        "entertainment-white": "#FFFFFF",
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
 export default config
