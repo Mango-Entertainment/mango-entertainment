@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { outfit } from './ui/fonts'
 import './globals.css'
+import Navbar from './ui/components/Navbar'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -14,7 +15,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${outfit.className} bg-entertainment-black`}>
+      <body className={`${outfit.className} bg-entertainment-dark-blue grid grid-cols-1 lg:grid-cols-2`}>
+        <Navbar />
         {children}
       </body>
     </html>
