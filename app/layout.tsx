@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${outfit.className} bg-entertainment-dark-blue`}>
+      <body className={`${outfit.className} bg-entertainment-dark-blue grid grid-cols-1 lg:grid-cols-2`}>
         <Navbar />
         {children}
       </body>
