@@ -1,4 +1,5 @@
 import {initializeApp} from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 import {
   getAuth,
   onAuthStateChanged,
@@ -23,3 +24,5 @@ export const userStateListener = (callback: NextOrObserver<User>) => {
 };
 
 export const SignOutUser = async () => await signOut(auth);
+
+export const db = getFirestore(app)
