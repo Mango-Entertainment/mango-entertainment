@@ -8,12 +8,11 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "engines": {
-    "node": "20"
-  },
   "dependencies": {
+    "@firebase/auth-types": "^0.12.0",
     "clsx": "^2.0.0",
     "firebase": "^10.7.0",
+    "firebase-admin": "^11.11.1",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18"
