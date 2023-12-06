@@ -1,39 +1,13 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import {useRouter} from "next/navigation";
 import {useState, FormEvent, ChangeEvent} from "react";
-// import { signIn } from '@/app/firebase/auth/signin';
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [passwordOne, setPasswordOne] = useState<string>("");
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
-
-  const auth = getAuth();
-
-  const onSubmit = (event: {preventDefault: () => void}) => {
-    setError(null);
-    //check if passwords match. If they do, create user in Firebase
-    // and redirect to your logged in page.
-    if (passwordOne)
-      signInWithEmailAndPassword(auth, email, passwordOne)
-        .then((authUser) => {
-          console.log("Success. The user is created in Firebase");
-          router.push("/");
-        })
-        .catch((error) => {
-          // An error occurred. Set error message to be displayed to user
-          setError(error.message);
-        });
-    else setError("Password do not match");
-    event.preventDefault();
-  };
-
-  // this is a comment for testing
 
   return (
     <div className="grid justify-items-center justify-center mt-12 md:mt-20">
@@ -49,7 +23,7 @@ const Login = () => {
           <h1 className="text-entertainment-pure-white text-3xl mb-6 font-light">
             Login
           </h1>
-          <form onSubmit={onSubmit}>
+          <form>
             <input
               className="mb-3 h-37 text-sm pl-4 block w-full bg-transparent pb-4 border-0 border-b-2 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red font-light focus:border-entertainment-pure-white"
               type="email"

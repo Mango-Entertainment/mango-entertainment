@@ -1,8 +1,5 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import {useRouter} from "next/navigation";
 import { useState, FormEvent, ChangeEvent } from "react";
 
@@ -14,27 +11,6 @@ const Signup = () => {
     const [passwordTwo, setPasswordTwo] = useState<string>("");
     const router = useRouter();
     const [error, setError] = useState<string|null>(null);
-
-    const auth = getAuth()
-
-    const onSubmit = (event: { preventDefault: () => void; }) => {
-    setError(null)
-    //check if passwords match. If they do, create user in Firebase
-    // and redirect to your logged in page.
-    if(passwordOne === passwordTwo)
-      createUserWithEmailAndPassword(auth, email, passwordOne)
-      .then(authUser => {
-        console.log("Success. The user is created in Firebase")
-        router.push("/");
-      })
-      .catch(error => {
-        // An error occurred. Set error message to be displayed to user
-        setError(error.message)
-      });
-    else
-      setError("Password do not match")
-    event.preventDefault();
-  };
 
   return (
     <div className="grid justify-items-center justify-center mt-12 md:mt-20">
@@ -50,14 +26,13 @@ const Signup = () => {
           <h1 className="text-entertainment-pure-white text-3xl mb-6 font-light">
             Sign Up
           </h1>
-          <form onSubmit={onSubmit}>
+          <form>
             <input
               className="mb-3 h-37 text-sm pl-4 block w-full bg-transparent pb-4 border-0 border-b-2 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red font-light focus:border-entertainment-pure-white"
               type="email"
               name="email"
               value={email}
               placeholder="Email address"
-              onChange={(event) => setEmail(event.target.value)}
               required
             />
             <input
@@ -66,7 +41,6 @@ const Signup = () => {
               placeholder="Password"
               name="passwordOne"
               value={passwordOne}
-              onChange={(event) => setPasswordOne(event.target.value)}
               required
             />
             <input
@@ -74,7 +48,6 @@ const Signup = () => {
               type="password"
               placeholder="Repeat Password"
               name="passwordTwo"
-              onChange={(event) => setPasswordTwo(event.target.value)}
               value={passwordTwo}
               required
             />

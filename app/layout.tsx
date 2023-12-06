@@ -2,9 +2,6 @@ import type { Metadata } from 'next'
 import { outfit } from './ui/fonts'
 import './globals.css'
 import Navbar from './ui/components/Navbar'
-import {getAuthenticatedAppForUser} from "@/firebase/firebase";
-
-
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,14 +13,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-const {currentUser} = await getAuthenticatedAppForUser()
   return (
     <html lang="en">
       <body
         className={`${outfit.className} bg-entertainment-dark-blue grid grid-cols-1 lg:grid-cols-2`}
       >
-        {/* @ts-ignore */}
-        <Navbar initialUser={currentUser?.toJSON()} />
+        <Navbar />
         {children}
       </body>
     </html>
