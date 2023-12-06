@@ -52,7 +52,7 @@ const Login = () => {
             </button>
           </form>
           <p className="text-entertainment-pure-white text-sm text-center font-light">
-            Don't have an acccount?
+            Don&apos;t have an acccount?
             <Link className="text-entertainment-red ml-2" href="/signup">
               Sign Up
             </Link>
