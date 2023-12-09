@@ -7,11 +7,9 @@ export default function Home() {
   const supabase = createClient()
   let {data: selections, error} = await supabase.from("selections").select("*");
   console.log('selections', selections)
-  // console.log('error here', error)
   }
   callDaApi()
 
-  
   return (
    <Homepage />
   )

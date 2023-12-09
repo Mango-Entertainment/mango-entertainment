@@ -2,11 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import {useRouter} from "next/navigation";
 import { useState, FormEvent, ChangeEvent } from "react";
-
-
 
 const Signup = () => {
     const [email, setEmail] = useState<string>("");
@@ -15,26 +12,10 @@ const Signup = () => {
     const router = useRouter();
     const [error, setError] = useState<string|null>(null);
 
-    const auth = getAuth()
 
     const onSubmit = (event: { preventDefault: () => void; }) => {
-    setError(null)
-    //check if passwords match. If they do, create user in Firebase
-    // and redirect to your logged in page.
-    if(passwordOne === passwordTwo)
-      createUserWithEmailAndPassword(auth, email, passwordOne)
-      .then(authUser => {
-        console.log("Success. The user is created in Firebase")
-        router.push("/");
-      })
-      .catch(error => {
-        // An error occurred. Set error message to be displayed to user
-        setError(error.message)
-      });
-    else
-      setError("Password do not match")
-    event.preventDefault();
-  };
+      //fill in later
+    };
 
   return (
     <div className="grid justify-items-center justify-center mt-12 md:mt-20">

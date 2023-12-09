@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {useState, FormEvent, ChangeEvent} from "react";
-// import { signIn } from '@/app/firebase/auth/signin';
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -12,7 +11,6 @@ const Login = () => {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
-  // this is a comment for testing
 
   return (
     <div className="grid justify-items-center justify-center mt-12 md:mt-20">
@@ -55,7 +53,7 @@ const Login = () => {
             </button>
           </form>
           <p className="text-entertainment-pure-white text-sm text-center font-light">
-            Don't have an acccount?
+            Don&apos;t have an acccount?
             <Link className="text-entertainment-red ml-2" href="/signup">
               Sign Up
             </Link>
