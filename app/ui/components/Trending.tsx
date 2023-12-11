@@ -14,8 +14,6 @@ const Trending = async () => {
         {trendingData.map((selection) => {
           {console.log("selection", selection)}
           return <TrendingCard selection={selection} key={selection.id} />;
-          (<div key={selection.id}>{selection.title}</div>);
-          // <TrendingCard selection={selection} key={selection.id} />;
         })}
       </div>
     </div>

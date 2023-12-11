@@ -1,6 +1,7 @@
+import React from 'react';
 import { TrendingData } from "@/app/lib/definitions"
 
-const TrendingCard = (selection: TrendingData) => {
+const TrendingCard  = (selection: TrendingData) => {
   return (
     <div className="entertainment-pure-white">
         {selection.title}
