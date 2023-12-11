@@ -1,36 +1,23 @@
-import {createClient} from "@/utils/supabase/client";
 import TrendingCard from "./TrendingCard";
 import {Tables} from "@/types"
+import { getTrending } from "@/app/lib/db";
+import { TrendingData } from "@/app/lib/definitions";
 
-const apiCall = async () => {
-  const supabase = createClient();
-  let {data: data, error} = await supabase
-    .from("data")
-    .select("*")
-    .eq("isTrending", true);
-  return data;
-};
-
-const Trending = () => {
-    const {
-      title,
-      id,
-      thumbnail,
-      year,
-      category,
-      rating,
-      isBookmarked,
-      isTrending,
-    } = apiCall();
-
+const Trending = async () => {
+  const trendingData = await getTrending();
+  console.table(trendingData);
+  if (!trendingData) return;
   return (
     <div className="ml-4 text-entertainment-pure-white">
       <h1 className="text-xl font-light">Trending</h1>
-      {data.map((selection) => {
-        return (
-            <TrendingCard selection={selection} />
-        )
-      })}
+      <div className="" id="carousel">
+        {trendingData.map((selection) => {
+          {console.log("selection", selection)}
+          return <TrendingCard selection={selection} key={selection.id} />;
+          (<div key={selection.id}>{selection.title}</div>);
+          // <TrendingCard selection={selection} key={selection.id} />;
+        })}
+      </div>
     </div>
   );
 };

@@ -1,8 +1,8 @@
-import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, PromiseLikeOfReactNode } from "react"
+import { TrendingData } from "@/app/lib/definitions"
 
-const TrendingCard = (selection: { title: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined }) => {
+const TrendingCard = (selection: TrendingData) => {
   return (
-    <div>
+    <div className="entertainment-pure-white">
         {selection.title}
     </div>
   )
