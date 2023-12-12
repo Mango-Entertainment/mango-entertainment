@@ -4,9 +4,11 @@ import { getTrending } from "@/app/lib/db";
 import { TrendingData } from "@/app/lib/definitions";
 
 const Trending = async () => {
-  const trendingData = await getTrending();
+  // const trendingData = await getTrending();
+  const trendingData: TrendingData[] = await getTrending();
   console.table(trendingData);
   if (!trendingData) return;
+
   return (
     <div className="ml-4 text-entertainment-pure-white">
       <h1 className="text-xl font-light">Trending</h1>
