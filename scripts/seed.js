@@ -49,7 +49,7 @@ async function seedSelections(client) {
 ('Darker',NULL,NULL,'./assets/thumbnails/darker/regular/small.jpg','./assets/thumbnails/darker/regular/medium.jpg','./assets/thumbnails/darker/regular/large.jpg',2017,'Movie','18+',TRUE,FALSE),
 ('Unresolved Cases',NULL,NULL,'./assets/thumbnails/unresolved-cases/regular/small.jpg','./assets/thumbnails/unresolved-cases/regular/medium.jpg','./assets/thumbnails/unresolved-cases/regular/large.jpg',2018,'TV Series','18+',FALSE,FALSE),
 ('Mission: Saturn',NULL,NULL,'./assets/thumbnails/mission-saturn/regular/small.jpg','./assets/thumbnails/mission-saturn/regular/medium.jpg','./assets/thumbnails/mission-saturn/regular/large.jpg',2017,'Movie','PG',TRUE,FALSE);`;
-console.log(`seeded${insertedSelections.length} selections`)
+// console.log(`seeded${insertedSelections.length} selections`)
 return {createTable, selections: insertedSelections}
     } catch (error) {
         console.error("error seeding")

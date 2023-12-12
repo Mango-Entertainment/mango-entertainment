@@ -6,7 +6,7 @@ export default function Home() {
   const callDaApi = async () => {
   const supabase = createClient()
   let {data: selections, error} = await supabase.from("selections").select("*");
-  console.log('selections', selections)
+  // console.log('selections', selections)
   }
   callDaApi()
 
