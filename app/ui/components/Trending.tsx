@@ -1,5 +1,4 @@
 import TrendingCard from "./TrendingCard";
-import {Tables} from "@/types"
 import { getTrending } from "@/app/lib/db";
 
 const Trending = async () => {
