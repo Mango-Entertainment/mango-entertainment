@@ -1,4 +1,5 @@
 // This file contains type definitions for your data.
+import Recommended from '../ui/components/Recommended';
 // It describes the shape of the data, and what data type each property should accept.
 
 export type Selection = {
@@ -36,3 +37,15 @@ export type TrendingData = {
   large: string
   small: string
 }
+
+export type RegularData = {
+  id: string;
+  title: string;
+  rating: string;
+  year: number;
+  category: string;
+  is_bookmarked: boolean;
+  large: string;
+  small: string;
+  medium: string;
+};
