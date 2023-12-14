@@ -9,8 +9,8 @@ const Trending = async () => {
 
   return (
     <div className="ml-4 text-entertainment-pure-white">
-      <h1 className="text-xl font-light">Trending</h1>
-      <div className="flex flex-nowrap gap-3 w-max" id="carousel">
+      <h1 className="text-xl font-light mb-4 md:mb-6">Trending</h1>
+      <div className="flex flex-nowrap gap-4 md:gap-10 w-max mb-8" id="carousel">
         {trendingData.map((selection) => {
           // {console.log("selection", selection)}
           return <TrendingCard selection={selection} key={selection.id} />;
