@@ -20,15 +20,15 @@ const RegularCard: FC<RegularCardProps> = ({selection}) => {
       : "/icon-category-tv.svg";
 
   return (
-    <div className="entertainment-pure-white w-60 md:w-auto relative">
+    <div className="entertainment-pure-white w-40 md:w-56 relative">
       <Image
-        className="rounded-lg"
+        className="rounded-lg mb-1 md:mb-2"
         src={imageString}
-        width={470}
-        height={230}
+        width={280}
+        height={174}
         alt="trending image"
       />
-      <div className="absolute flex justify-center content-center top-2 right-2 md:top-4 md:right-6">
+      <div className="absolute flex justify-center content-center top-2 right-2 md:top-4 md:right-4">
         {selection.is_bookmarked ? (
           <Image
             src="/icon-bookmark-full.svg"
@@ -45,8 +45,8 @@ const RegularCard: FC<RegularCardProps> = ({selection}) => {
           />
         )}
       </div>
-      <div className="absolute bottom-0 w-full p-3 md:p-6 rounded-b-lg bg-gradient-to-b from-transparent to-black/75">
-        <div className="flex gap-2 text-xs md:text-base font-light items-center opacity-75">
+      <div className="w-full">
+        <div className="flex gap-1 text-[11px] md:text-sm font-light items-center opacity-75">
           {selection.year}
           <span className="opacity-50 text-sm md:text-xl">•</span>
           <Image
@@ -60,7 +60,7 @@ const RegularCard: FC<RegularCardProps> = ({selection}) => {
           <span className="opacity-50 text-sm md:text-xl">•</span>
           {selection.rating}
         </div>
-        <div className="text-sm md:text-2xl font-medium">{selection.title}</div>
+        <div className="text-sm md:text-lg font-medium">{selection.title}</div>
       </div>
     </div>
   );
