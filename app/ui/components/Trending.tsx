@@ -7,7 +7,7 @@ const Trending = async () => {
   if (!trendingData) return;
 
   return (
-    <div className="ml-4 text-entertainment-pure-white">
+    <div className="ml-4 text-entertainment-pure-white overflow-scroll">
       <h1 className="text-xl md:text-3xl font-light mb-4 md:mb-6">Trending</h1>
       <div
         className="flex flex-nowrap gap-4 md:gap-10 w-max mb-8"

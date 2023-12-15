@@ -1,8 +1,8 @@
-import MovieSection from "../ui/components/MovieSection"
+import Movies from '@/app/ui/moviepage/Movies';
 
 const MoviesPage = () => {
   return (
-    <MovieSection />
+    <Movies />
   )
 }
 
