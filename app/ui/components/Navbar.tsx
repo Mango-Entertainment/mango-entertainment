@@ -1,28 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
-import HomeIcon from "./HomeIcon";
-import TvIcon from "./TvIcon";
-import BookmarkIcon from "./BookmarkIcon";
-import MovieIcon from "./MovieIcon";
+import HomeIcon from "@/app/ui/components/HomeIcon";
+import TvIcon from "@/app/ui/components/TvIcon";
+import BookmarkIcon from "@/app/ui/components/BookmarkIcon";
+import MovieIcon from "@/app/ui/components/MovieIcon";
 
 const Navbar = () => {
   return (
-    <div className="grid grid-cols-3 lg:grid-cols-1 lg:h-screen lg:grid-rows-3 lg:place-items-start bg-entertainment-semi-dark-blue items-center md:mx-6 md:w-auto md:mt-6 md:rounded-xl lg:max-h-[960px] h-auto w-full lg:mx-0 lg:justify-self-center lg:w-24">
+    <div className="grid grid-cols-3 lg:grid-cols-1 lg:h-screen lg:grid-rows-[2fr_3fr_9fr] lg:place-items-start bg-entertainment-semi-dark-blue items-center md:mx-6 md:w-auto md:mt-6 md:rounded-xl lg:max-h-[960px] h-auto w-full lg:mx-0 lg:justify-self-center lg:w-24">
       <div className="w-6 h-5 my-4 ml-4 lg:ml-0 md:ml-6 md:my-6 md:w-8 md:h-6 lg:mt-8 lg:justify-self-center">
         <Image src="/logo.svg" alt="icon" width={32} height={25} />
       </div>
-      <div className="flex lg:flex-col justify-between lg:justify-self-center lg:justify-around lg:h-full h-4 lg:w-4">
-        <Link href="/">
-          <HomeIcon />{" "}
+      <div className="flex lg:flex-col justify-between lg:justify-self-center lg:h-full lg:w-5">
+        <Link href="/" className="w-4 md:w-5">
+          <HomeIcon />
         </Link>
-        <Link href="/movies">
-          <MovieIcon />{" "}
+        <Link href="/movies" className="w-4 md:w-5">
+          <MovieIcon />
         </Link>
-        <Link href="/series">
+        <Link href="/series" className="w-4 md:w-5">
           <TvIcon />
         </Link>
-        <Link href="/bookmarks">
-        <BookmarkIcon />
+        <Link href="/bookmarks" className="w-4 md:w-5">
+          <BookmarkIcon />
         </Link>
       </div>
       <div className="flex justify-end lg:justify-self-center lg:self-end">

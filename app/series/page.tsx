@@ -1,8 +1,8 @@
-import SeriesSection from "../ui/components/SeriesSection";
+import Series from "@/app/ui/seriespage/Series";
 
 const SeriesPage = () => {
     return (
-    <SeriesSection />
+    <Series />
 )}
 
 export default SeriesPage

@@ -1,7 +1,7 @@
-import BookmarkSection from "../ui/components/BookmarkSection";
+import Bookmarks from '@/app/ui/bookmarkpage/Bookmarks';
 
 const BookmarkPage = () => {
-  return <BookmarkSection />;
+  return <Bookmarks />;
 };
 
 export default BookmarkPage;
