@@ -55,3 +55,152 @@ WHERE selections.is_trending != true`;
     throw new Error("Failed to fetch recommended data.");
   }
 };
+
+export const getMovies = async () => {
+  try {
+    const result: RegularData[] = [];
+    const data =
+      await sql`SELECT selections.id, selections.title, selections.rating, selections.year, selections.category, selections.is_bookmarked, regular_thumbs.large, regular_thumbs.medium, regular_thumbs.small, selections.is_trending
+FROM selections
+JOIN regular_thumbs ON regular_thumbs.selection_id = selections.id
+WHERE selections.category = 'Movie'`;
+    data.forEach((item) => {
+      const {
+        id,
+        title,
+        rating,
+        year,
+        category,
+        is_bookmarked,
+        large,
+        medium,
+        small,
+      } = item;
+      result.push({
+        id,
+        title,
+        rating,
+        year,
+        category,
+        is_bookmarked,
+        large,
+        medium,
+        small,
+      });
+    });
+    return result;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch recommended data.");
+  }
+}
+
+export const getSeries = async () => {
+  try {
+    const result: RegularData[] = [];
+    const data =
+      await sql`SELECT selections.id, selections.title, selections.rating, selections.year, selections.category, selections.is_bookmarked, regular_thumbs.large, regular_thumbs.medium, regular_thumbs.small, selections.is_trending
+FROM selections
+JOIN regular_thumbs ON regular_thumbs.selection_id = selections.id
+WHERE selections.category = 'TV Series'`;
+    data.forEach((item) => {
+      const {
+        id,
+        title,
+        rating,
+        year,
+        category,
+        is_bookmarked,
+        large,
+        medium,
+        small,
+      } = item;
+      result.push({
+        id,
+        title,
+        rating,
+        year,
+        category,
+        is_bookmarked,
+        large,
+        medium,
+        small,
+      });
+    });
+    return result;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch recommended data.");
+  }
+};
+
+export const getBookmarks = async () => {
+  try {
+    const movieResult: RegularData[] = [];
+    const seriesResult: RegularData[] = [];
+    const movieData =
+      await sql`SELECT selections.id, selections.title, selections.rating, selections.year, selections.category, selections.is_bookmarked, regular_thumbs.large, regular_thumbs.medium, regular_thumbs.small, selections.is_trending
+FROM selections
+JOIN regular_thumbs ON regular_thumbs.selection_id = selections.id
+WHERE selections.category = 'Movie'
+AND selections.is_bookmarked = true`;
+    const seriesData =
+      await sql`SELECT selections.id, selections.title, selections.rating, selections.year, selections.category, selections.is_bookmarked, regular_thumbs.large, regular_thumbs.medium, regular_thumbs.small, selections.is_trending
+FROM selections
+JOIN regular_thumbs ON regular_thumbs.selection_id = selections.id
+WHERE selections.category = 'TV Series'
+AND selections.is_bookmarked = true`;
+ movieData.forEach((item) => {
+   const {
+     id,
+     title,
+     rating,
+     year,
+     category,
+     is_bookmarked,
+     large,
+     medium,
+     small,
+   } = item;
+   movieResult.push({
+     id,
+     title,
+     rating,
+     year,
+     category,
+     is_bookmarked,
+     large,
+     medium,
+     small,
+   });
+ });
+    seriesData.forEach((item) => {
+      const {
+        id,
+        title,
+        rating,
+        year,
+        category,
+        is_bookmarked,
+        large,
+        medium,
+        small,
+      } = item;
+      seriesResult.push({
+        id,
+        title,
+        rating,
+        year,
+        category,
+        is_bookmarked,
+        large,
+        medium,
+        small,
+      });
+    });
+    return {movies: movieResult, series: seriesResult};
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch recommended data.");
+  }
+};
