@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import HomeIcon from "./HomeIcon";
 import TvIcon from "./TvIcon";
 import BookmarkIcon from "./BookmarkIcon";
@@ -11,10 +12,18 @@ const Navbar = () => {
         <Image src="/logo.svg" alt="icon" width={32} height={25} />
       </div>
       <div className="flex lg:flex-col justify-between lg:justify-self-center lg:justify-around lg:h-full h-4 lg:w-4">
-        <HomeIcon />
-        <MovieIcon />
-        <TvIcon />
+        <Link href="/">
+          <HomeIcon />{" "}
+        </Link>
+        <Link href="/movies">
+          <MovieIcon />{" "}
+        </Link>
+        <Link href="/series">
+          <TvIcon />
+        </Link>
+        <Link href="/bookmarks">
         <BookmarkIcon />
+        </Link>
       </div>
       <div className="flex justify-end lg:justify-self-center lg:self-end">
         <Image
