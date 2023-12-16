@@ -1,5 +1,5 @@
 const {db} = require('@vercel/postgres')
-const {selections} = require('../app/lib/data')
+const {selections} = require('@/app/lib/data')
 
 async function seedSelections(client) {
     try {

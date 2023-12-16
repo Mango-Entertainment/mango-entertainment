@@ -1,7 +1,3 @@
-// This file contains type definitions for your data.
-import Recommended from '../ui/components/Recommended';
-// It describes the shape of the data, and what data type each property should accept.
-
 export type Selection = {
   id: string;
   title: string;

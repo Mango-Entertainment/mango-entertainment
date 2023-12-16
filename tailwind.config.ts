@@ -15,6 +15,10 @@ const config: Config = {
         "entertainment-semi-dark-blue": "#161D2F",
         "entertainment-pure-white": "#FFFFFF",
       },
+      gridTemplateColumns: {
+        "auto-fill-100": "repeat(auto-fill, minmax(280px, 1fr))",
+        "auto-fit-100": "repeat(auto-fit, minmax(280px, 1fr))",
+      },
     },
   },
   plugins: [require("@tailwindcss/forms")],
