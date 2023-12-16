@@ -1,5 +1,4 @@
-
-export default function MovieIcon() {
+const MovieIcon = () => {
   return (
     <svg
       viewBox="0 0 20 20"
@@ -9,3 +8,5 @@ export default function MovieIcon() {
     </svg>
   );
 }
+
+export default MovieIcon

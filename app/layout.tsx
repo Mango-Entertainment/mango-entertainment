@@ -1,3 +1,4 @@
+import { FC, ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { outfit } from './ui/fonts'
 import './globals.css'
@@ -25,11 +26,7 @@ export const metadata = {
   },
 };
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+const RootLayout: FC<{ children: ReactNode }> = async ({ children }) => {
   return (
     <html lang="en">
       <body className={`${outfit.className} bg-entertainment-dark-blue grid grid-cols-1 lg:grid-cols-[160px_1fr]`}>
@@ -41,3 +38,5 @@ export default async function RootLayout({
     </html>
   );
 }
+
+export default RootLayout

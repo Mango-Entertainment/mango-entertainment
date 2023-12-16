@@ -1,4 +1,4 @@
-import TrendingCard from "./TrendingCard";
+import TrendingCard from "@/app/ui/components/TrendingCard";
 import { getTrending } from "@/app/lib/db";
 
 const Trending = async () => {

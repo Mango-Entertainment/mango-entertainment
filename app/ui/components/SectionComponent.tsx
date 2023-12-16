@@ -1,4 +1,4 @@
-import RegularCard from "./RegularCard";
+import RegularCard from "@/app/ui/components/RegularCard";
 import { RegularData } from "@/app/lib/definitions";
 import { FC } from "react";
 
