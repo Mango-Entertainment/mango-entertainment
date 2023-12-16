@@ -13,10 +13,9 @@ const SectionComponent: FC<SectionComponentProps> = ({sectionTitle, data}) => {
       <h1 className="text-xl md:text-3xl font-light mb-4 md:mb-6 lg:mb-8">
         {sectionTitle}
       </h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-fit md:gap-x-10 md:gap-y-8 mb-8">
-      {/* <div className="grid grid-cols-[repeat(auto-fit_minmax(280px_1fr))] gap-4 w-fit md:gap-x-10 md:gap-y-8 mb-8"> */}
+      {/* <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-fit md:gap-x-10 md:gap-y-8 mb-8"> */}
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 mb-8">
         {data.map((selection) => {
-          // {console.log("selection", selection)}
           return <RegularCard selection={selection} key={selection.id} />;
         })}
       </div>
