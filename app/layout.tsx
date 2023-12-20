@@ -1,5 +1,4 @@
 import { FC, ReactNode } from 'react'
-import type { Metadata } from 'next'
 import { outfit } from './ui/fonts'
 import './globals.css'
 import Navbar from './ui/components/Navbar'
@@ -26,7 +25,7 @@ export const metadata = {
   },
 };
 
-const RootLayout: FC<{ children: ReactNode }> = async ({ children }) => {
+const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <html lang="en">
       <body className={`${outfit.className} bg-entertainment-dark-blue grid grid-cols-1 lg:grid-cols-[160px_1fr]`}>

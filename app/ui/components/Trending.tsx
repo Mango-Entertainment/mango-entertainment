@@ -1,20 +1,18 @@
 import TrendingCard from "@/app/ui/components/TrendingCard";
-import { getTrending } from "@/app/lib/db";
+import {getTrending} from "@/app/lib/db";
 
 const Trending = async () => {
   const trendingData = await getTrending();
-  // console.table(trendingData);
   if (!trendingData) return;
 
   return (
-    <div className="ml-4 text-entertainment-pure-white overflow-scroll">
-      <h1 className="text-xl md:text-3xl font-light mb-4 md:mb-6">Trending</h1>
+    <div className="ml-4 overflow-scroll text-entertainment-pure-white">
+      <h1 className="mb-4 text-xl font-light md:text-3xl md:mb-6">Trending</h1>
       <div
-        className="flex flex-nowrap gap-4 md:gap-10 w-max mb-8"
+        className="flex mb-8 gap-4 flex-nowrap md:gap-10 w-max"
         id="carousel"
       >
         {trendingData.map((selection) => {
-          // {console.log("selection", selection)}
           return <TrendingCard selection={selection} key={selection.id} />;
         })}
       </div>

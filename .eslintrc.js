@@ -1,9 +1,11 @@
-/* eslint-env node */
+const eslintConfigPrettier = require('eslint-config-prettier')
+
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
+  parserOptions: { ecmaVersion: 12, sourceType: 'module' },
   plugins: ['@typescript-eslint'],
-  extends: ['eslint:recommended', 'next/core-web-vitals', 'prettier'],
+  extends: ['next/core-web-vitals', 'prettier'],
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
@@ -23,4 +25,9 @@ module.exports = {
       ],
     },
   ],
-};
+  rules: {
+    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+  },
+  eslintConfigPrettier,
+}
