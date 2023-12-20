@@ -6,8 +6,6 @@ interface TrendingCardProps {
   selection: TrendingData;
 }
 
-const categoryIcons = { "Movie": "/icon-category-movie.svg", "TV Series": "/icon-category-tv.svg"}
-
 const TrendingCard: FC<TrendingCardProps> = ({selection}) => {
   let imageString = selection.large
   imageString = imageString.slice(8)
@@ -17,7 +15,7 @@ const TrendingCard: FC<TrendingCardProps> = ({selection}) => {
       : "/icon-category-tv.svg";
 
   return (
-    <div className="entertainment-pure-white w-60 md:w-auto relative">
+    <div className="relative entertainment-pure-white w-60 md:w-auto">
       <Image
         className="rounded-lg"
         src={imageString}
@@ -25,7 +23,7 @@ const TrendingCard: FC<TrendingCardProps> = ({selection}) => {
         height={230}
         alt="trending image"
       />
-      <div className="absolute flex justify-center content-center top-2 right-2 md:top-4 md:right-6">
+      <div className="absolute flex content-center justify-center top-2 right-2 md:top-4 md:right-6">
         {selection.is_bookmarked ? (
           <Image
             src="/icon-bookmark-full.svg"
@@ -42,10 +40,10 @@ const TrendingCard: FC<TrendingCardProps> = ({selection}) => {
           />
         )}
       </div>
-      <div className="absolute bottom-0 w-full p-3 md:p-6 rounded-b-lg bg-gradient-to-b from-transparent to-black/75">
-        <div className="flex gap-2 text-xs md:text-base font-light items-center opacity-75">
+      <div className="absolute bottom-0 w-full p-3 rounded-b-lg md:p-6 bg-gradient-to-b from-transparent to-black/75">
+        <div className="flex items-center text-xs font-light opacity-75 gap-2 md:text-base">
           {selection.year}
-          <span className="opacity-50 text-sm md:text-xl">•</span>
+          <span className="text-sm opacity-50 md:text-xl">•</span>
           <Image
             className="h-3"
             src={categoryIcon}
@@ -54,10 +52,10 @@ const TrendingCard: FC<TrendingCardProps> = ({selection}) => {
             alt={`${selection.category} icon`}
           />
           {selection.category}
-          <span className="opacity-50 text-sm md:text-xl">•</span>
+          <span className="text-sm opacity-50 md:text-xl">•</span>
           {selection.rating}
         </div>
-        <div className="text-sm md:text-2xl font-medium">{selection.title}</div>
+        <div className="text-sm font-medium md:text-2xl">{selection.title}</div>
       </div>
     </div>
   );

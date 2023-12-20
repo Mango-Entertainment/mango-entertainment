@@ -1,5 +1,5 @@
 import { getRecommended } from "@/app/lib/db";
-import SectionComponent from "./SectionComponent";
+import SectionComponent from "@/app/ui/components/SectionComponent";
 
 const Recommended = async () => {
     const recommendedData = await getRecommended();

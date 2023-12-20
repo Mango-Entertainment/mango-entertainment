@@ -13,7 +13,7 @@ const Login = () => {
 
 
   return (
-    <div className="grid justify-items-center justify-center mt-12 md:mt-20">
+    <div className="justify-center mt-12 grid justify-items-center md:mt-20">
       <Image
         className="mb-14 md:mb-20"
         src="/logo.svg"
@@ -21,14 +21,14 @@ const Login = () => {
         width={32}
         height={25.6}
       />
-      <div className="bg-entertainment-semi-dark-blue rounded-xl md:rounded-3xl w-80 md:w-96 h-auto">
+      <div className="h-auto bg-entertainment-semi-dark-blue rounded-xl md:rounded-3xl w-80 md:w-96">
         <div className="p-6 md:p-8">
-          <h1 className="text-entertainment-pure-white text-3xl mb-6 font-light">
+          <h1 className="mb-6 text-3xl font-light text-entertainment-pure-white">
             Login
           </h1>
           <form>
             <input
-              className="mb-3 h-37 text-sm pl-4 block w-full bg-transparent pb-4 border-0 border-b-2 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red font-light focus:border-entertainment-pure-white"
+              className="block w-full pb-4 pl-4 mb-3 text-sm font-light bg-transparent border-0 border-b-2 h-37 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
               type="email"
               name="email"
               value={email}
@@ -37,7 +37,7 @@ const Login = () => {
               required
             />
             <input
-              className="mb-3 h-37 text-sm pl-4 block w-full bg-transparent pb-4 border-0 border-b-2 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red font-light focus:border-entertainment-pure-white"
+              className="block w-full pb-4 pl-4 mb-3 text-sm font-light bg-transparent border-0 border-b-2 h-37 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
               type="password"
               placeholder="Password"
               name="passwordOne"
@@ -46,15 +46,15 @@ const Login = () => {
               required
             />
             <button
-              className="text-entertainment-pure-white hover:text-entertainment-dark-blue hover:bg-entertainment-pure-white w-full text-sm font-light bg-entertainment-red rounded-md h-12 mb-6"
+              className="w-full h-12 mb-6 text-sm font-light text-entertainment-pure-white hover:text-entertainment-dark-blue hover:bg-entertainment-pure-white bg-entertainment-red rounded-md"
               type="submit"
             >
               Login to your account
             </button>
           </form>
-          <p className="text-entertainment-pure-white text-sm text-center font-light">
+          <p className="text-sm font-light text-center text-entertainment-pure-white">
             Don&apos;t have an acccount?
-            <Link className="text-entertainment-red ml-2" href="/signup">
+            <Link className="ml-2 text-entertainment-red" href="/signup">
               Sign Up
             </Link>
           </p>

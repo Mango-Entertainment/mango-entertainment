@@ -11,7 +11,7 @@ const Navbar = () => {
       <div className="w-6 h-5 my-4 ml-4 lg:ml-0 md:ml-6 md:my-6 md:w-8 md:h-6 lg:mt-8 lg:justify-self-center">
         <Image src="/logo.svg" alt="icon" width={32} height={25} />
       </div>
-      <div className="flex lg:flex-col justify-between lg:justify-self-center lg:h-full lg:w-5">
+      <div className="flex justify-between lg:flex-col lg:justify-self-center lg:h-full lg:w-5">
         <Link href="/" className="w-4 md:w-5">
           <HomeIcon />
         </Link>
@@ -27,7 +27,7 @@ const Navbar = () => {
       </div>
       <div className="flex justify-end lg:justify-self-center lg:self-end">
         <Image
-          className="w-6 h-6 md:w-8 md:h-8 mr-4 md:mr-6 lg:mr-0 lg:w-10 lg:h-10 lg:mb-8 w-6 h-6 border-entertainment-pure-white border-2 rounded-full"
+          className="w-6 h-6 mr-4 border-2 rounded-full md:w-8 md:h-8 md:mr-6 lg:mr-0 lg:w-10 lg:h-10 lg:mb-8 border-entertainment-pure-white"
           src="/image-avatar.png"
           alt="icon"
           width={80}
