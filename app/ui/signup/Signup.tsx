@@ -1,21 +1,35 @@
-"use client";
-
-import Image from "next/image";
-import Link from "next/link";
-import {useRouter} from "next/navigation";
-import { useState, FormEvent, ChangeEvent } from "react";
+import Link from 'next/link'
+import { headers, cookies } from 'next/headers'
+import { createClient } from '@/utils/supabase/server'
+import { redirect } from 'next/navigation'
+import Image from 'next/image'
 
 const Signup = () => {
-    const [email, setEmail] = useState<string>("");
-    const [passwordOne, setPasswordOne] = useState<string>("");
-    const [passwordTwo, setPasswordTwo] = useState<string>("");
-    const router = useRouter();
-    const [error, setError] = useState<string|null>(null);
+  const signUpWithEmail = async (formData: FormData) => {
+    'use server'
 
+    const origin = headers().get('origin')
+    const email = formData.get('email') as string
+    const password = formData.get('passwordOne') as string
+    const password2 = formData.get('passwordTwo') as string
+    const cookieStore = cookies()
+    const supabase = createClient(cookieStore)
 
-    const onSubmit = (event: { preventDefault: () => void; }) => {
-      //fill in later
-    };
+    if (password !== password2) return
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${origin}/auth/callback`,
+      },
+    })
+
+    if (error) {
+      return redirect('/login?message=Could not authenticate user')
+    }
+
+    return redirect('/login?message=Check email to continue sign in process')
+  }
 
   return (
     <div className="justify-center mt-12 grid justify-items-center md:mt-20">
@@ -31,14 +45,12 @@ const Signup = () => {
           <h1 className="mb-6 text-3xl font-light text-entertainment-pure-white">
             Sign Up
           </h1>
-          <form onSubmit={onSubmit}>
+          <form action={signUpWithEmail}>
             <input
               className="block w-full pb-4 pl-4 mb-3 text-sm font-light bg-transparent border-0 border-b-2 h-37 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
               type="email"
               name="email"
-              value={email}
               placeholder="Email address"
-              onChange={(event) => setEmail(event.target.value)}
               required
             />
             <input
@@ -46,8 +58,6 @@ const Signup = () => {
               type="password"
               placeholder="Password"
               name="passwordOne"
-              value={passwordOne}
-              onChange={(event) => setPasswordOne(event.target.value)}
               required
             />
             <input
@@ -55,8 +65,6 @@ const Signup = () => {
               type="password"
               placeholder="Repeat Password"
               name="passwordTwo"
-              onChange={(event) => setPasswordTwo(event.target.value)}
-              value={passwordTwo}
               required
             />
             <button
@@ -75,7 +83,7 @@ const Signup = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup
