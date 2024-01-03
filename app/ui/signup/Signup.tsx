@@ -1,21 +1,50 @@
-"use client";
+'use client'
 
-import Image from "next/image";
-import Link from "next/link";
-import {useRouter} from "next/navigation";
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import Link from 'next/link'
+import { headers, cookies } from 'next/headers'
+import { createClient } from '@/utils/supabase/client'
+import { useRouter } from 'next/navigation'
+import Image from 'next/image'
+// import { signUpWithEmail } from '@/app/signup/route'
+
+const FormFieldsSchema = z
+  .object({
+    email: z.string().email(),
+    password1: z
+      .string()
+      .min(7, { message: 'Must be at least 7 characters long' }),
+    password2: z.string(),
+  })
+  .refine((data) => data.password1 === data.password2, {
+    message: 'Passwords do not match',
+    path: ["password2"]
+  })
+
+type FormFields = z.infer<typeof FormFieldsSchema>
 
 const Signup = () => {
-    const [email, setEmail] = useState<string>("");
-    const [passwordOne, setPasswordOne] = useState<string>("");
-    const [passwordTwo, setPasswordTwo] = useState<string>("");
-    const router = useRouter();
-    const [error, setError] = useState<string|null>(null);
+  const router = useRouter()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormFields>({ resolver: zodResolver(FormFieldsSchema) })
 
+  const supabase = createClient()
 
-    const onSubmit = (event: { preventDefault: () => void; }) => {
-      //fill in later
-    };
+  const signUpWithEmail = async ({ email, password }: { email: string, password: string }) => {
+    const res = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `/login`,
+      },
+    })
+    if(res.data.user?.email) router.push("/login")
+  }
 
   return (
     <div className="justify-center mt-12 grid justify-items-center md:mt-20">
@@ -31,34 +60,33 @@ const Signup = () => {
           <h1 className="mb-6 text-3xl font-light text-entertainment-pure-white">
             Sign Up
           </h1>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={handleSubmit((d) =>
+            signUpWithEmail({ email: d.email, password: d.password1 })
+          )}>
             <input
+              {...register('email')}
               className="block w-full pb-4 pl-4 mb-3 text-sm font-light bg-transparent border-0 border-b-2 h-37 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
-              type="email"
-              name="email"
-              value={email}
               placeholder="Email address"
-              onChange={(event) => setEmail(event.target.value)}
+              type='email'
               required
             />
+            <span>{errors.email?.message}</span>
             <input
+              {...register('password1')}
               className="block w-full pb-4 pl-4 mb-3 text-sm font-light bg-transparent border-0 border-b-2 h-37 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
-              type="password"
               placeholder="Password"
-              name="passwordOne"
-              value={passwordOne}
-              onChange={(event) => setPasswordOne(event.target.value)}
+              type='password'
               required
             />
+            <span>{errors.password1?.message}</span>
             <input
+              {...register('password2')}
               className="block w-full pb-4 pl-4 mb-10 text-sm font-light bg-transparent border-0 border-b-2 h-37 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
-              type="password"
               placeholder="Repeat Password"
-              name="passwordTwo"
-              onChange={(event) => setPasswordTwo(event.target.value)}
-              value={passwordTwo}
+              type='password'
               required
             />
+            <span>{errors.password2?.message}</span>
             <button
               className="w-full h-12 mb-6 text-sm font-light text-entertainment-pure-white hover:text-entertainment-dark-blue hover:bg-entertainment-pure-white bg-entertainment-red rounded-md"
               type="submit"
@@ -75,7 +103,7 @@ const Signup = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup
