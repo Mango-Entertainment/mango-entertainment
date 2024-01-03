@@ -1,7 +1,7 @@
 'use client'
 
 import { useForm, SubmitHandler } from 'react-hook-form'
-import * as z from 'zod'
+import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { headers, cookies } from 'next/headers'
