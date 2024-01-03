@@ -40,9 +40,14 @@ const Auth = () => {
 
   if(user === ''){
     return (
-      <div>
-        <Link href='/login'>Login</Link>
-        <Link href='/signup'>Sign Up</Link>
+      <div className="bg-entertainment-red text-entertainment-pure-white text-center w-14 h-7 mr-4 rounded-md md:h-8 md:mr-6 lg:mr-0 lg:mb-8 flex align-center justify-center"
+>
+        <Link
+          href="/login"
+          className="self-center"
+        >
+          Login
+        </Link>
       </div>
     )
   }
