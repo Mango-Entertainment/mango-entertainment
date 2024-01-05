@@ -2,6 +2,7 @@ import { FC, ReactNode } from 'react'
 import { outfit } from './ui/fonts'
 import './globals.css'
 import Navbar from './ui/components/Navbar'
+import { ClerkProvider } from '@clerk/nextjs'
 
 const meta = {
   favicon: "/icon.svg",
@@ -27,15 +28,17 @@ export const metadata = {
 
 const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <html lang="en">
-      <body className={`${outfit.className} bg-entertainment-dark-blue grid grid-cols-1 lg:grid-cols-[160px_1fr]`}>
-        <Navbar />
-        <div className='overflow-x-hidden'>
-          {children}
-        </div>
-      </body>
-    </html>
-  );
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${outfit.className} bg-entertainment-dark-blue grid grid-cols-1 lg:grid-cols-[160px_1fr]`}
+        >
+          <Navbar />
+          <div className="overflow-x-hidden">{children}</div>
+        </body>
+      </html>
+    </ClerkProvider>
+  )
 }
 
 export default RootLayout
