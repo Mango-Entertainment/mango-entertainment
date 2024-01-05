@@ -1,3 +1,4 @@
+import {z} from 'zod'
 import { TrendingData, RegularData } from '@/app/lib/definitions'
 import postgres from 'postgres'
 

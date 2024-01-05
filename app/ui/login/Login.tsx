@@ -3,14 +3,36 @@
 import Image from "next/image";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
-import {useState, FormEvent, ChangeEvent} from "react";
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from "react-hook-form";
+import { createClient, getURL } from '@/utils/supabase/client'
+
+
+const FormFieldsSchema = z
+  .object({
+    email: z.string().email(),
+    password: z
+      .string()
+      .min(7, { message: 'Must be at least 7 characters long' }),
+  })
+
+type FormFields = z.infer<typeof FormFieldsSchema>
 
 const Login = () => {
-  const [email, setEmail] = useState<string>("");
-  const [passwordOne, setPasswordOne] = useState<string>("");
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+  const { register, handleSubmit, formState: { errors },
+} = useForm<FormFields>({resolver: zodResolver(FormFieldsSchema)})
 
+const supabase = createClient()
+
+const loginWithEmail = async ({email, password}: {email: string, password: string}) => {
+  const res = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  })
+  if (res.data.user?.email) router.push(getURL())
+}
 
   return (
     <div className="justify-center mt-12 grid justify-items-center md:mt-20">
@@ -26,25 +48,23 @@ const Login = () => {
           <h1 className="mb-6 text-3xl font-light text-entertainment-pure-white">
             Login
           </h1>
-          <form>
+          <form onSubmit={handleSubmit((d)=> loginWithEmail({email: d.email, password: d.password}))}>
             <input
               className="block w-full pb-4 pl-4 mb-3 text-sm font-light bg-transparent border-0 border-b-2 h-37 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
               type="email"
-              name="email"
-              value={email}
+              {...register('email')}
               placeholder="Email address"
-              onChange={(event) => setEmail(event.target.value)}
               required
             />
+            <span>{errors.email?.message}</span>
             <input
               className="block w-full pb-4 pl-4 mb-3 text-sm font-light bg-transparent border-0 border-b-2 h-37 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
               type="password"
               placeholder="Password"
-              name="passwordOne"
-              value={passwordOne}
-              onChange={(event) => setPasswordOne(event.target.value)}
+              {...register('password')}
               required
             />
+            <span>{errors.password?.message}</span>
             <button
               className="w-full h-12 mb-6 text-sm font-light text-entertainment-pure-white hover:text-entertainment-dark-blue hover:bg-entertainment-pure-white bg-entertainment-red rounded-md"
               type="submit"
