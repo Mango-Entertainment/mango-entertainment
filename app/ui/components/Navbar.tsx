@@ -5,9 +5,6 @@ import TvIcon from "@/app/ui/components/TvIcon";
 import BookmarkIcon from "@/app/ui/components/BookmarkIcon";
 import MovieIcon from "@/app/ui/components/MovieIcon";
 import { UserButton } from '@clerk/nextjs'
-import Auth from "@/app/ui/components/Auth";
-
-
 
 const Navbar = () => {
 
@@ -34,16 +31,9 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex justify-end lg:justify-self-center lg:self-end">
-
-        <UserButton afterSignOutUrl="/" />
-        {/* <Image
-          className="w-6 h-6 mr-4 border-2 rounded-full md:w-8 md:h-8 md:mr-6 lg:mr-0 lg:w-10 lg:h-10 lg:mb-8 border-entertainment-pure-white"
-          src="/image-avatar.png"
-          alt="icon"
-          width={80}
-          height={80}
-        /> */}
-        <Auth />
+        <div className="mr-4 md:mr-6 lg:mb-8">
+          <UserButton afterSignOutUrl="/" />
+        </div>
       </div>
     </div>
   )
