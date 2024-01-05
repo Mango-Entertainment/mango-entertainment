@@ -6,7 +6,7 @@ import {useRouter} from "next/navigation";
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from "react-hook-form";
-import { createClient } from '@/utils/supabase/client'
+import { createClient, getURL } from '@/utils/supabase/client'
 
 
 const FormFieldsSchema = z
@@ -29,9 +29,9 @@ const supabase = createClient()
 const loginWithEmail = async ({email, password}: {email: string, password: string}) => {
   const res = await supabase.auth.signInWithPassword({
     email,
-    password
+    password,
   })
-  if (res.data.user?.email) router.push('/')
+  if (res.data.user?.email) router.push(getURL())
 }
 
   return (

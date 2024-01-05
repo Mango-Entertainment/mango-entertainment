@@ -5,10 +5,11 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { headers, cookies } from 'next/headers'
-import { createClient } from '@/utils/supabase/client'
+import { createClient, getURL } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-// import { signUpWithEmail } from '@/app/signup/route'
+
+
 
 const FormFieldsSchema = z
   .object({
@@ -40,10 +41,10 @@ const Signup = () => {
       email,
       password,
       options: {
-        emailRedirectTo: `/login`,
+        emailRedirectTo: `${getURL()}login`,
       },
     })
-    if(res.data.user?.email) router.push("/login")
+    if(res.data.user?.email) router.push(`${getURL()}login`)
   }
 
   return (
