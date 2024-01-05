@@ -4,6 +4,8 @@ import HomeIcon from "@/app/ui/components/HomeIcon";
 import TvIcon from "@/app/ui/components/TvIcon";
 import BookmarkIcon from "@/app/ui/components/BookmarkIcon";
 import MovieIcon from "@/app/ui/components/MovieIcon";
+import { UserButton } from '@clerk/nextjs'
+
 
 const Navbar = () => {
   return (
@@ -26,16 +28,17 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex justify-end lg:justify-self-center lg:self-end">
-        <Image
+        <UserButton afterSignOutUrl="/" />
+        {/* <Image
           className="w-6 h-6 mr-4 border-2 rounded-full md:w-8 md:h-8 md:mr-6 lg:mr-0 lg:w-10 lg:h-10 lg:mb-8 border-entertainment-pure-white"
           src="/image-avatar.png"
           alt="icon"
           width={80}
           height={80}
-        />
+        /> */}
       </div>
     </div>
-  );
+  )
 };
 
 export default Navbar;
