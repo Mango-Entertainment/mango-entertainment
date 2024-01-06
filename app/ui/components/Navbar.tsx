@@ -31,7 +31,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex justify-end lg:justify-self-center lg:self-end">
-        <div className="mr-4 md:mr-6 lg:mb-8">
+        <div>
           <Auth />
         </div>
       </div>

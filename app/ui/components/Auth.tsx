@@ -24,9 +24,8 @@ const Auth = () => {
   }
   
   return (
-    <div>
+    <div className="mr-4 mt-.5 md:mr-6 lg:mb-8 lg:mr-0">
       <UserButton afterSignOutUrl="/" />
-      {/* Logged in */}
     </div>
   )
 }
