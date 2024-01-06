@@ -1,56 +1,45 @@
-"use client";
+'use client'
 
-import Image from "next/image";
-import Link from "next/link";
-import {useRouter} from "next/navigation";
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from "react-hook-form";
-import { useSignIn } from "@clerk/nextjs";
+import { useForm } from 'react-hook-form'
+import { createClient, getURL } from '@/utils/supabase/client'
 
-
-
-const FormFieldsSchema = z
-  .object({
-    email: z.string().email(),
-    password: z
-      .string()
-      .min(7, { message: 'Must be at least 7 characters long' }),
-  })
+const FormFieldsSchema = z.object({
+  email: z.string().email(),
+  password: z
+    .string()
+    .min(7, { message: 'Must be at least 7 characters long' }),
+})
 
 type FormFields = z.infer<typeof FormFieldsSchema>
 
 const Login = () => {
-  const router = useRouter();
-  const { register, handleSubmit, formState: { errors },
-        } = useForm<FormFields>()
-  const { isLoaded, signIn, setActive } = useSignIn();
+  const router = useRouter()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormFields>({ resolver: zodResolver(FormFieldsSchema) })
 
+  const supabase = createClient()
 
-const loginWithEmail = async ({emailAddress, password}: {emailAddress: string, password: string}) => {
-  if(!isLoaded) {
-    return
-  }
-
-  try {
-    const result = await signIn.create({
-      identifier: emailAddress,
+  const loginWithEmail = async ({
+    email,
+    password,
+  }: {
+    email: string
+    password: string
+  }) => {
+    const res = await supabase.auth.signInWithPassword({
+      email,
       password,
-    });
-
-    if (result.status === "complete") {
-      console.log(result);
-      await setActive({ session: result.createdSessionId });
-      router.push("/")
-    }
-    else {
-      /*Investigate why the login hasn't completed */
-      console.log(result);
-    }
-  } catch (err) {
-    console.log(JSON.stringify(err, null, 2))
+    })
+    if (res.data.user?.email) router.push(getURL())
   }
-}
 
   return (
     <div className="justify-center mt-12 grid justify-items-center md:mt-20">
@@ -66,7 +55,11 @@ const loginWithEmail = async ({emailAddress, password}: {emailAddress: string, p
           <h1 className="mb-6 text-3xl font-light text-entertainment-pure-white">
             Login
           </h1>
-          <form onSubmit={handleSubmit((d)=> loginWithEmail({emailAddress: d.email, password: d.password}))}>
+          <form
+            onSubmit={handleSubmit((d) =>
+              loginWithEmail({ email: d.email, password: d.password }),
+            )}
+          >
             <input
               className="block w-full pb-4 pl-4 mb-3 text-sm font-light bg-transparent border-0 border-b-2 h-37 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
               type="email"
@@ -99,7 +92,7 @@ const loginWithEmail = async ({emailAddress, password}: {emailAddress: string, p
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

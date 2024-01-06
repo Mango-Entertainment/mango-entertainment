@@ -1,12 +1,13 @@
 'use client'
-import { useState, FormEvent } from 'react'
+import { useState } from 'react'
+import { headers, cookies } from 'next/headers'
 import { useRouter } from 'next/navigation'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { useSignUp } from '@clerk/nextjs'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ClerkAPIErrorJSON } from '@clerk/types'
+
 
 const FormFieldsSchema = z
   .object({
@@ -26,22 +27,14 @@ type FormFields = z.infer<typeof FormFieldsSchema>
 const Signup = () => {
   const { isLoaded, signUp, setActive } = useSignUp()
   const router = useRouter()
-  const [verifying, setVerifying] = useState(false)
-  const [code, setCode] = useState('')
-
+  const [pendingVerification, setPendingVerification] = useState(false)
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormFields>({})
 
-  const signUpWithEmail = async ({
-    emailAddress,
-    password,
-  }: {
-    emailAddress: string
-    password: string
-  }) => {
+  const signUpWithEmail = async ({ emailAddress, password }: { emailAddress: string, password: string}) => {
     if (!isLoaded) {
       return
     }
@@ -56,42 +49,10 @@ const Signup = () => {
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
 
       // change the UI to our pending section.
-      setVerifying(true)
+      setPendingVerification(true)
     } catch (err: any) {
       console.error(JSON.stringify(err, null, 2))
     }
-  }
-
-  const handleVerify = async (e: FormEvent) => {
-    e.preventDefault()
-    if(!isLoaded) return
-
-    try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code
-      })
-      if(completeSignUp.status !== "complete") {
-        console.log(JSON.stringify(completeSignUp, null, 2))
-      }
-
-      if (completeSignUp.status === "complete"){
-        await setActive({ session: completeSignUp.createdSessionId })
-        router.push('/')
-      }
-
-    } catch (err) {
-      console.log('Error:', JSON.stringify(err, null, 2))
-    }
-  }
-
-  if(verifying) {
-    return (
-      <form onSubmit={handleVerify}>
-        <label id="code">Code</label>
-        <input value={code} id="code" name="code" onChange={(e) => setCode(e.target.value)} />
-        <button type="submit">Complete sign up</button>
-      </form>
-    )
   }
 
   return (
