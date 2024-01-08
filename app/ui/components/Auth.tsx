@@ -9,7 +9,6 @@ const Auth = () => {
   const { isSignedIn, user, isLoaded } = useUser()
 
   if(!isSignedIn){
-    console.log('user id not found')
     return (
       <div className="bg-entertainment-red text-entertainment-pure-white text-center w-14 h-7 mr-4 rounded-md md:h-8 md:mr-6 lg:mr-0 lg:mb-8 flex align-center justify-center"
 >

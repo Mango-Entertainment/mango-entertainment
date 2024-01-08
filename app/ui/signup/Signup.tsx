@@ -6,14 +6,17 @@ import { z } from 'zod'
 import { useSignUp } from '@clerk/nextjs'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ClerkAPIErrorJSON } from '@clerk/types'
+// import { ClerkAPIErrorJSON } from '@clerk/types'
+import { zodResolver } from '@hookform/resolvers/zod'
+
 
 const FormFieldsSchema = z
   .object({
     email: z.string().email(),
     password1: z
       .string()
-      .min(7, { message: 'Must be at least 7 characters long' }),
+      .min(8, { message: 'Must be at least 8 characters long' })
+      .max(32, { message: 'Password must be between 8 and 32 characters long'}),      
     password2: z.string(),
   })
   .refine((data) => data.password1 === data.password2, {
@@ -25,6 +28,7 @@ type FormFields = z.infer<typeof FormFieldsSchema>
 
 const Signup = () => {
   const { isLoaded, signUp, setActive } = useSignUp()
+  const [clerkError, setClerkError] = useState(null)
   const router = useRouter()
   const [verifying, setVerifying] = useState(false)
   const [code, setCode] = useState('')
@@ -33,7 +37,7 @@ const Signup = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormFields>({})
+  } = useForm<FormFields>({resolver: zodResolver(FormFieldsSchema)})
 
   const signUpWithEmail = async ({
     emailAddress,
@@ -51,14 +55,14 @@ const Signup = () => {
         emailAddress,
         password,
       })
-
       // send the email.
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
 
       // change the UI to our pending section.
       setVerifying(true)
     } catch (err: any) {
-      console.error(JSON.stringify(err, null, 2))
+      console.log(JSON.stringify(err, null, 2))
+      setClerkError(err.errors[0].message)
     }
   }
 
@@ -146,7 +150,6 @@ const Signup = () => {
               type="email"
               required
             />
-            <span>{errors.email?.message}</span>
             <input
               {...register('password1')}
               className="block w-full pb-4 pl-4 mb-3 text-sm font-light bg-transparent border-0 border-b-2 h-37 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
@@ -154,7 +157,6 @@ const Signup = () => {
               type="password"
               required
             />
-            <span>{errors.password1?.message}</span>
             <input
               {...register('password2')}
               className="block w-full pb-4 pl-4 mb-10 text-sm font-light bg-transparent border-0 border-b-2 h-37 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
@@ -162,7 +164,12 @@ const Signup = () => {
               type="password"
               required
             />
-            <span>{errors.password2?.message}</span>
+            <h2 className="text-entertainment-red mb-8">
+              {errors.email && <p>{errors.email.message}</p>}
+              {errors.password1 && <p>{errors.password1.message}</p>}
+              {errors.password2 && <p>{errors.password2.message}</p>}
+              {clerkError && <p>{clerkError}</p>}
+            </h2>
             <button
               className="w-full h-12 mb-6 text-sm font-light text-entertainment-pure-white hover:text-entertainment-dark-blue hover:bg-entertainment-pure-white bg-entertainment-red rounded-md"
               type="submit"
