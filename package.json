@@ -11,7 +11,7 @@
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.29.1",
+    "@clerk/nextjs": "^4.29.3",
     "@hookform/resolvers": "^3.3.3",
     "@supabase/ssr": "^0.0.10",
     "@supabase/supabase-js": "^2.39.0",
