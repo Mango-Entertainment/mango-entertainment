@@ -6,56 +6,39 @@ import { useRouter } from 'next/navigation'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useSignIn } from '@clerk/nextjs'
-import { useState } from 'react'
+import { createClient, getURL } from '@/utils/supabase/client'
 
 const FormFieldsSchema = z.object({
   email: z.string().email(),
   password: z
     .string()
+    .min(7, { message: 'Must be at least 7 characters long' }),
 })
 
 type FormFields = z.infer<typeof FormFieldsSchema>
 
 const Login = () => {
   const router = useRouter()
-  const [clerkError, setClerkError] = useState(null)
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormFields>({ resolver: zodResolver(FormFieldsSchema) })
-  const { isLoaded, signIn, setActive } = useSignIn()
+
+  const supabase = createClient()
 
   const loginWithEmail = async ({
-    emailAddress,
+    email,
     password,
   }: {
-    emailAddress: string
+    email: string
     password: string
   }) => {
-    if (!isLoaded) {
-      return
-    }
-
-    try {
-      const result = await signIn.create({
-        identifier: emailAddress,
-        password,
-      })
-
-      if (result.status === 'complete') {
-        console.log(result)
-        await setActive({ session: result.createdSessionId })
-        router.push('/')
-      } else {
-        /*Investigate why the login hasn't completed */
-        console.log(result)
-      }
-    } catch (err: any) {
-      console.log(JSON.stringify(err, null, 2))
-      setClerkError(err.errors[0].message)
-    }
+    const res = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+    if (res.data.user?.email) router.push(getURL())
   }
 
   return (
@@ -74,7 +57,7 @@ const Login = () => {
           </h1>
           <form
             onSubmit={handleSubmit((d) =>
-              loginWithEmail({ emailAddress: d.email, password: d.password }),
+              loginWithEmail({ email: d.email, password: d.password }),
             )}
           >
             <input
@@ -84,6 +67,7 @@ const Login = () => {
               placeholder="Email address"
               required
             />
+            <span>{errors.email?.message}</span>
             <input
               className="block w-full pb-4 pl-4 mb-3 text-sm font-light bg-transparent border-0 border-b-2 h-37 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
               type="password"
@@ -91,11 +75,7 @@ const Login = () => {
               {...register('password')}
               required
             />
-            <h2 className="text-entertainment-red mb-8">
-              {errors.email && <p>{errors.email.message}</p>}
-              {errors.password && <p>{errors.password.message}</p>}
-              {clerkError && <p>{clerkError}</p>}
-            </h2>
+            <span>{errors.password?.message}</span>
             <button
               className="w-full h-12 mb-6 text-sm font-light text-entertainment-pure-white hover:text-entertainment-dark-blue hover:bg-entertainment-pure-white bg-entertainment-red rounded-md"
               type="submit"
