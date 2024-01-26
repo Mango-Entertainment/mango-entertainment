@@ -10,9 +10,13 @@
     "cleanup": "eslint --ignore-path .eslintignore --ext .js,.ts",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seeds/seed.ts"
+  },
   "dependencies": {
     "@clerk/nextjs": "^4.29.3",
     "@hookform/resolvers": "^3.3.3",
+    "@prisma/client": "^5.8.1",
     "@supabase/ssr": "^0.0.10",
     "@supabase/supabase-js": "^2.39.0",
     "clsx": "^2.0.0",
@@ -37,7 +41,9 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.0",
     "postcss": "^8",
+    "prisma": "^5.8.1",
     "tailwindcss": "^3.3.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }
