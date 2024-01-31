@@ -51,17 +51,23 @@ export const getMovies = async () => {
 
 export const getSeries = async () => {
   try {
-    const data: RegularData[] = await sql<
-      RegularData[]
-    >`SELECT selections.id, selections.title, selections.rating, selections.year, selections.category, selections.is_bookmarked, regular_thumbs.large, regular_thumbs.medium, regular_thumbs.small, selections.is_trending
-                FROM selections
-                JOIN regular_thumbs ON regular_thumbs.selection_id = selections.id
-                WHERE selections.category = 'TV Series'`
-    return data
+    
   } catch (error) {
-    console.error('Database Error:', error)
+    console.error('Database error:', error)
     throw new Error('Failed to fetch series data.')
   }
+  // try {
+  //   const data: RegularData[] = await sql<
+  //     RegularData[]
+  //   >`SELECT selections.id, selections.title, selections.rating, selections.year, selections.category, selections.is_bookmarked, regular_thumbs.large, regular_thumbs.medium, regular_thumbs.small, selections.is_trending
+  //               FROM selections
+  //               JOIN regular_thumbs ON regular_thumbs.selection_id = selections.id
+  //               WHERE selections.category = 'TV Series'`
+  //   return data
+  // } catch (error) {
+  //   console.error('Database Error:', error)
+  //   throw new Error('Failed to fetch series data.')
+  // }
 }
 
 export const getBookmarks = async () => {

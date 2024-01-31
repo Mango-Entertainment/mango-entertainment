@@ -8,15 +8,20 @@ import Link from 'next/link'
 import Image from 'next/image'
 // import { ClerkAPIErrorJSON } from '@clerk/types'
 import { zodResolver } from '@hookform/resolvers/zod'
+import queryClient from '@/utils/query-client'
+import { trpc } from '@/utils/trpc'
 
 
 const FormFieldsSchema = z
   .object({
+    name: z.string({ required_error: 'Name is required' }),
     email: z.string().email(),
     password1: z
       .string()
       .min(8, { message: 'Must be at least 8 characters long' })
-      .max(32, { message: 'Password must be between 8 and 32 characters long'}),      
+      .max(32, {
+        message: 'Password must be between 8 and 32 characters long',
+      }),
     password2: z.string(),
   })
   .refine((data) => data.password1 === data.password2, {
@@ -30,6 +35,8 @@ const Signup = () => {
   const { isLoaded, signUp, setActive } = useSignUp()
   const [clerkError, setClerkError] = useState(null)
   const router = useRouter()
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
   const [verifying, setVerifying] = useState(false)
   const [code, setCode] = useState('')
 
@@ -39,12 +46,30 @@ const Signup = () => {
     formState: { errors },
   } = useForm<FormFields>({resolver: zodResolver(FormFieldsSchema)})
 
+
+  const { mutate } = trpc.createUser.useMutation({
+    onSettled: () => {
+      setName('')
+      setEmail('')
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [
+          ['getUsers'],
+          { input: { limit: 10, page: 1 }, type: 'query' },
+        ],
+      })
+    },
+  })
+
   const signUpWithEmail = async ({
     emailAddress,
     password,
+    name
   }: {
     emailAddress: string
     password: string
+    name: string
   }) => {
     if (!isLoaded) {
       return
@@ -59,6 +84,8 @@ const Signup = () => {
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
 
       // change the UI to our pending section.
+      setName(name)
+      setEmail(emailAddress)  
       setVerifying(true)
     } catch (err: any) {
       console.log(JSON.stringify(err, null, 2))
@@ -80,6 +107,12 @@ const Signup = () => {
 
       if (completeSignUp.status === 'complete') {
         await setActive({ session: completeSignUp.createdSessionId })
+        console.log(JSON.stringify(completeSignUp, null, 2))
+        // ADD USERS NAME, EMAIL, AND USER ID TO OUR DATABASE
+        const clerk_id: string = completeSignUp.createdUserId || ''
+        mutate({ name, email, clerk_id})
+
+
         router.push('/')
       }
     } catch (err) {
@@ -139,10 +172,15 @@ const Signup = () => {
             Sign Up
           </h1>
           <form
-            onSubmit={handleSubmit((d) =>
-              signUpWithEmail({ emailAddress: d.email, password: d.password1 }),
-            )}
+            onSubmit={handleSubmit((d) => signUpWithEmail({ name: d.name, emailAddress: d.email, password: d.password1 })            )}
           >
+            <input
+              {...register('name')}
+              className="block w-full pb-4 pl-4 mb-3 text-sm font-light bg-transparent border-0 border-b-2 h-37 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
+              placeholder="Name"
+              type="text"
+              required
+            />
             <input
               {...register('email')}
               className="block w-full pb-4 pl-4 mb-3 text-sm font-light bg-transparent border-0 border-b-2 h-37 border-entertainment-greyish-blue text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"

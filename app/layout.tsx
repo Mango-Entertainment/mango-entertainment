@@ -3,6 +3,7 @@ import { outfit } from './ui/fonts'
 import './globals.css'
 import Navbar from './ui/components/Navbar'
 import { ClerkProvider } from '@clerk/nextjs'
+import { TrpcProvider } from '@/utils/trpc-provider'
 
 const meta = {
   favicon: "/icon.svg",
@@ -33,8 +34,10 @@ const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
         <body
           className={`${outfit.className} bg-entertainment-dark-blue grid grid-cols-1 lg:grid-cols-[160px_1fr]`}
         >
-          <Navbar />
-          <div className="overflow-x-hidden">{children}</div>
+          <TrpcProvider>
+            <Navbar />
+            <div className="overflow-x-hidden">{children}</div>
+          </TrpcProvider>
         </body>
       </html>
     </ClerkProvider>
