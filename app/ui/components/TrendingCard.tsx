@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { TrendingData } from "@/app/lib/definitions"
+import type { TrendingData } from '@/app/lib/definitions';
 import Image from 'next/image';
 
 interface TrendingCardProps {
@@ -9,6 +9,7 @@ interface TrendingCardProps {
 const TrendingCard: FC<TrendingCardProps> = ({selection}) => {
   let imageString = selection.large
   imageString = imageString.slice(8)
+
   const categoryIcon =
     selection.category === "Movie"
       ? "/icon-category-movie.svg"

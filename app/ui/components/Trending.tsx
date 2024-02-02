@@ -1,8 +1,14 @@
 import TrendingCard from "@/app/ui/components/TrendingCard";
 import {getTrending} from "@/app/lib/db";
+import { TrendingData } from "@/app/lib/definitions";
+
+const storedTrendingData = getTrending();
 
 const Trending = async () => {
-  const trendingData = await getTrending();
+  const trendingData = await storedTrendingData
+  console.log('====================================');
+  console.log(trendingData);
+  console.log('====================================');
   if (!trendingData) return;
 
   return (
@@ -12,7 +18,7 @@ const Trending = async () => {
         className="flex mb-8 gap-4 flex-nowrap md:gap-10 w-max"
         id="carousel"
       >
-        {trendingData.map((selection) => {
+        {trendingData.map((selection: TrendingData) => {
           return <TrendingCard selection={selection} key={selection.id} />;
         })}
       </div>
