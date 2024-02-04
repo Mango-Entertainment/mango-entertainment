@@ -1,28 +1,24 @@
-// import {z} from 'zod'
-import { TrendingData, RegularData } from '@/app/lib/definitions'
-// import postgres from 'postgres'
 import prisma from '@/prisma/prisma.db'
-import { TrendingThumb } from '@prisma/client'
-import { log } from 'console'
-
-// const connectionString = `${process.env.DATABASE_URL}`
-// const sql = postgres(connectionString)
+import { Prisma } from '@prisma/client'
 
 const getTrending = async () => {
   const data = await prisma.selection.findMany({
-      where: {
-        is_trending: true
-      },
-      include: {
-        TrendingThumb: true
-      }
-    })
-    const result: TrendingData[] = []
-    data.forEach(element => result.push({ id: element.id, title: element.title, rating: element.rating,  year: element.year, category: element.category, is_bookmarked: element.is_bookmarked, large: element.TrendingThumb.large, small: element.TrendingThumb.small })
-    );
-    // const { id, title, rating, year, category, is_bookmarked, large, small } 
-    return result
-  }
+    where: {
+      is_trending: true
+    },
+    include: {
+      TrendingThumb: true
+    }
+  })
+  return data
+}
+
+// const selectionWithTrendingThumbs = Prisma.validator<Prisma.SelectionScalarFieldEnum>()({
+//   include: { TrendingThumbs: true },
+// })
+
+// export type SelectionWithTrendingThumbs = Prisma.SelectionGetPayload<typeof selectionWithTrendingThumbs>
+export type SelectionWithTrendingThumbs = Prisma.PromiseReturnType<typeof getTrending>
 
 
 export const getRecommended = async () => {

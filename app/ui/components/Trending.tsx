@@ -1,11 +1,10 @@
 import TrendingCard from "@/app/ui/components/TrendingCard";
-import {getTrending} from "@/app/lib/db";
-import { TrendingData } from "@/app/lib/definitions";
+import {getTrending, SelectionWithTrendingThumbs} from "@/app/lib/db";
 
 const storedTrendingData = getTrending();
 
 const Trending = async () => {
-  const trendingData = await storedTrendingData
+  const trendingData: SelectionWithTrendingThumbs = await storedTrendingData
   console.log('====================================');
   console.log(trendingData);
   console.log('====================================');
@@ -18,8 +17,18 @@ const Trending = async () => {
         className="flex mb-8 gap-4 flex-nowrap md:gap-10 w-max"
         id="carousel"
       >
-        {trendingData.map((selection: TrendingData) => {
-          return <TrendingCard selection={selection} key={selection.id} />;
+        {trendingData.map((selection) => {
+          if(!selection.TrendingThumb?.large) return
+          return <TrendingCard 
+            key={selection.id}
+            id={selection.id} 
+            is_bookmarked={selection.is_bookmarked} 
+            title={selection.title} 
+            rating={selection.rating} 
+            category={selection.category} 
+            year={selection.year} 
+            imageString={selection.TrendingThumb?.large.slice(8)} 
+          />;
         })}
       </div>
     </div>
