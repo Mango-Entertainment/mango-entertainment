@@ -1,6 +1,6 @@
-import {getSeries} from "@/app/lib/db";
 import SectionComponent from "@/app/ui/components/SectionComponent";
-import Search from "@/app/ui/components/Search";
+import { getSeries } from "@/app/lib/db";
+import Search from "../components/Search";
 
 const Series = async () => {
   const seriesData = await getSeries();

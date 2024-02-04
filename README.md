@@ -54,7 +54,7 @@ npm install
 
 At the root of the project, run this command in the terminal:`touch .env.local`.
 
-In the .env you'll need these variables and the value will be specific to your Clerk, Supabase, and Vercel accounts:
+In the .env you'll need these variables and the value will be specific to your Clerk account:
 
 ```
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
@@ -83,6 +83,56 @@ In your .env.local, add the values for these variables:
 4. `NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL` equal to `/`
 
 5. `NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL` equal to `/`
+
+## Prisma setup
+
+`npm install prisma --save-dev`
+
+run this in your terminal
+
+`npx prisma init`
+
+Open the Docker app (install it if you don't have it).
+
+Run this command `touch .env`
+
+Add this to the `.env`
+
+`DATABASE_URL="postgresql://postgres:password@localhost:5432/mango-entertainment"`
+
+In the terminal run `./start-database.sh`
+
+If you have trouble running this, it is likely due to permissions issues.
+
+Try running this in your terminal `chmod 755 start-database.sh`
+
+It should ask if you want to generate a new password, say yes.
+
+As long as no other postgres db is running, the command from line 95 should start the container.
+
+Run this command
+
+```bash
+mkdir -p prisma/migrations/0_init
+
+npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script > prisma/migrations/0_init/migration.sql
+
+npx prisma migrate resolve --applied 0_init
+
+npx prisma db push
+```
+
+The `npx prisma db push` should push your schema to PostgreSQL.
+
+Now run
+
+```bash
+npm install @prisma/client
+
+npx prisma generate
+
+npx prisma db seed
+```
 
 ## Contact
 

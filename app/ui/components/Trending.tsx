@@ -1,8 +1,13 @@
 import TrendingCard from "@/app/ui/components/TrendingCard";
-import {getTrending} from "@/app/lib/db";
+import {getTrending, SelectionWithTrendingThumbs} from "@/app/lib/db";
+
+const storedTrendingData = getTrending();
 
 const Trending = async () => {
-  const trendingData = await getTrending();
+  const trendingData: SelectionWithTrendingThumbs = await storedTrendingData
+  console.log('====================================');
+  console.log(trendingData);
+  console.log('====================================');
   if (!trendingData) return;
 
   return (
@@ -13,7 +18,17 @@ const Trending = async () => {
         id="carousel"
       >
         {trendingData.map((selection) => {
-          return <TrendingCard selection={selection} key={selection.id} />;
+          if(!selection.TrendingThumb?.large) return
+          return <TrendingCard 
+            key={selection.id}
+            id={selection.id} 
+            is_bookmarked={selection.is_bookmarked} 
+            title={selection.title} 
+            rating={selection.rating} 
+            category={selection.category} 
+            year={selection.year} 
+            imageString={selection.TrendingThumb?.large.slice(8)} 
+          />;
         })}
       </div>
     </div>

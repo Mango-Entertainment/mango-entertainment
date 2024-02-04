@@ -1,16 +1,27 @@
-import { FC } from 'react'
-import { RegularData } from '@/app/lib/definitions'
 import Image from 'next/image'
+import { FC } from 'react'
 
 interface RegularCardProps {
-  selection: RegularData
+  id: string
+  is_bookmarked: boolean
+  title: string
+  year: number
+  category: string
+  rating: string
+  imageString: string
 }
 
-const RegularCard: FC<RegularCardProps> = ({ selection }) => {
-  let imageString = selection.large
-  imageString = imageString.slice(8)
+const RegularCard: FC<RegularCardProps> = ({
+  id,
+  title,
+  year,
+  category,
+  is_bookmarked,
+  rating,
+  imageString
+}) => {
   const categoryIcon =
-    selection.category === 'Movie'
+    category === 'Movie'
       ? '/icon-category-movie.svg'
       : '/icon-category-tv.svg'
 
@@ -24,7 +35,7 @@ const RegularCard: FC<RegularCardProps> = ({ selection }) => {
         alt="trending image"
       />
       <div className="absolute flex content-center justify-center top-2 right-2 md:top-4 md:right-4">
-        {selection.is_bookmarked ? (
+        {is_bookmarked ? (
           <Image
             src="/icon-bookmark-full.svg"
             height={32}
@@ -42,20 +53,20 @@ const RegularCard: FC<RegularCardProps> = ({ selection }) => {
       </div>
       <div className="w-full">
         <div className="flex gap-1 text-[11px] md:text-sm font-light items-center opacity-75">
-          {selection.year}
+          {year}
           <span className="text-sm opacity-50 md:text-xl">•</span>
           <Image
             className="h-3"
             src={categoryIcon}
             height={12}
             width={12}
-            alt={`${selection.category} icon`}
+            alt={`${category} icon`}
           />
-          {selection.category}
+          {category}
           <span className="text-sm opacity-50 md:text-xl">•</span>
-          {selection.rating}
+          {rating}
         </div>
-        <div className="text-sm font-medium md:text-lg">{selection.title}</div>
+        <div className="text-sm font-medium md:text-lg">{title}</div>
       </div>
     </div>
   )
