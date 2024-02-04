@@ -1,7 +1,7 @@
 import prisma from '@/prisma/prisma.db'
 import { Prisma } from '@prisma/client'
 
-const getTrending = async () => {
+export const getTrending = async () => {
   const data = await prisma.selection.findMany({
     where: {
       is_trending: true
@@ -13,22 +13,10 @@ const getTrending = async () => {
   return data
 }
 
-// const selectionWithTrendingThumbs = Prisma.validator<Prisma.SelectionScalarFieldEnum>()({
-//   include: { TrendingThumbs: true },
-// })
-
-// export type SelectionWithTrendingThumbs = Prisma.SelectionGetPayload<typeof selectionWithTrendingThumbs>
 export type SelectionWithTrendingThumbs = Prisma.PromiseReturnType<typeof getTrending>
 
 
 export const getRecommended = async () => {
-  try {
-    // const data: RegularData[] = await sql<
-    //   RegularData[]
-    // >`SELECT selections.id, selections.title, selections.rating, selections.year, selections.category, selections.is_bookmarked, regular_thumbs.large, regular_thumbs.medium, regular_thumbs.small, selections.is_trending
-    //             FROM selections
-    //             JOIN regular_thumbs ON regular_thumbs.selection_id = selections.id
-    //             WHERE selections.is_trending != true`
     const data = await prisma.selection.findMany({
       where: {
         is_trending: false
@@ -39,20 +27,13 @@ export const getRecommended = async () => {
     })
 
     return data
-  } catch (error) {
-    console.error('Database Error:', error)
-    throw new Error('Failed to fetch recommended data.')
-  }
 }
 
+export type WithRegularThumbs = Prisma.PromiseReturnType<typeof getRecommended>
+
+
+
 export const getMovies = async () => {
-  try {
-    // const data: RegularData[] = await sql<
-    //   RegularData[]
-    // >`SELECT selections.id, selections.title, selections.rating, selections.year, selections.category, selections.is_bookmarked, regular_thumbs.large, regular_thumbs.medium, regular_thumbs.small, selections.is_trending
-    //             FROM selections
-    //             JOIN regular_thumbs ON regular_thumbs.selection_id = selections.id
-    //             WHERE selections.category = 'Movie'`
     const data = await prisma.selection.findMany({
       where: {
         category: 'Movie'
@@ -62,14 +43,9 @@ export const getMovies = async () => {
       }
     })
     return data
-  } catch (error) {
-    console.error('Database Error:', error)
-    throw new Error('Failed to fetch movie data.')
-  }
 }
 
 export const getSeries = async () => {
-  try {
     const data = await prisma.selection.findMany({
       where: {
         category: 'TV Series'
@@ -78,38 +54,10 @@ export const getSeries = async () => {
         RegularThumb: true
       }
     })
-  } catch (error) {
-    console.error('Database error:', error)
-    throw new Error('Failed to fetch series data.')
-  }
-  // try {
-  //   const data: RegularData[] = await sql<
-  //     RegularData[]
-  //   >`SELECT selections.id, selections.title, selections.rating, selections.year, selections.category, selections.is_bookmarked, regular_thumbs.large, regular_thumbs.medium, regular_thumbs.small, selections.is_trending
-  //               FROM selections
-  //               JOIN regular_thumbs ON regular_thumbs.selection_id = selections.id
-  //               WHERE selections.category = 'TV Series'`
-  //   return data
-  // } catch (error) {
-  //   console.error('Database Error:', error)
-  //   throw new Error('Failed to fetch series data.')
-  // }
+    return data
 }
 
 export const getBookmarks = async () => {
-  try {
-    // const movieResult: RegularData[] =
-    // await sql<RegularData[]>`SELECT selections.id, selections.title, selections.rating, selections.year, selections.category, selections.is_bookmarked, regular_thumbs.large, regular_thumbs.medium, regular_thumbs.small, selections.is_trending
-    // FROM selections
-    // JOIN regular_thumbs ON regular_thumbs.selection_id = selections.id
-    // WHERE selections.category = 'Movie'
-    // AND selections.is_bookmarked = true`
-    // const seriesResult: RegularData[] =
-    //   await sql<RegularData[]>`SELECT selections.id, selections.title, selections.rating, selections.year, selections.category, selections.is_bookmarked, regular_thumbs.large, regular_thumbs.medium, regular_thumbs.small, selections.is_trending
-    //             FROM selections
-    //             JOIN regular_thumbs ON regular_thumbs.selection_id = selections.id
-    //             WHERE selections.category = 'TV Series'
-    //             AND selections.is_bookmarked = true`
     const movieResult = await prisma.selection.findMany({
       where: {
         category: 'Movie',
@@ -130,10 +78,6 @@ export const getBookmarks = async () => {
     })
 
     return { movies: movieResult, series: seriesResult }
-  } catch (error) {
-    console.error('Database Error:', error)
-    throw new Error('Failed to fetch bookmark data.')
-  }
 }
 
-export {getTrending}
+export type BookmarkedWithRegularThumbs = Prisma.PromiseReturnType<typeof getBookmarks>

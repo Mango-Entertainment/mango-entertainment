@@ -1,26 +1,25 @@
-import { FC } from 'react'
-import { RegularData } from '@/app/lib/definitions'
 import Image from 'next/image'
-import prisma from '@/prisma/prisma.db'
-import { Prisma } from '@prisma/client'
+import { FC } from 'react'
 
+interface RegularCardProps {
+  id: string
+  is_bookmarked: boolean
+  title: string
+  year: number
+  category: string
+  rating: string
+  imageString: string
+}
 
-// const RegularData = Prisma.validator<Prisma.SelectionDefaultArgs>()({
-//   include: { RegularThumb: true },
-// })
-
-
-
-// const RegularCard: FC<RegularCardProps> = ({
-const RegularCard = ({
-  is_bookmarked,
-  category,
-  title,
-  rating,
-  year,
+const RegularCard: FC<RegularCardProps> = ({
   id,
-  large
-}: RegularData) => {
+  title,
+  year,
+  category,
+  is_bookmarked,
+  rating,
+  imageString
+}) => {
   const categoryIcon =
     category === 'Movie'
       ? '/icon-category-movie.svg'
@@ -30,7 +29,7 @@ const RegularCard = ({
     <div className="relative w-40 entertainment-pure-white md:w-56">
       <Image
         className="mb-1 rounded-lg md:mb-2"
-        src={large}
+        src={imageString}
         width={280}
         height={174}
         alt="trending image"
