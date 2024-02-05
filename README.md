@@ -54,85 +54,55 @@ npm install
 
 At the root of the project, run this command in the terminal:`touch .env.local`.
 
-In the .env you'll need these variables and the value will be specific to your Clerk account:
-
-```
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-CLERK_SECRET_KEY
-NEXT_PUBLIC_CLERK_SIGN_IN_URL
-NEXT_PUBLIC_CLERK_SIGN_UP_URL
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL
-```
-
-#### Make an account on clerk.com
+#### Make an account on [clerk.com](https://clerk.com/)
 Once your account is created, click add application from your Clerk dashboard.
 
-Look at the left hand side of your dashboard under developers. There's a button that says API Keys.
+Look at the left hand side of your dashboard under developers. There's a button that says API Keys. Copy those keys and paste them in `.env.local`.
 
-Copy your `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY`.
+Then copy and paste this into `.env.local`:
 
-In your .env.local, add the values for these variables:
+```bash
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+```
 
-1. `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` you copied
+## Docker setup
 
-2. `NEXT_PUBLIC_CLERK_SIGN_IN_URL` equal to `sign-in`
+Open the Docker app ([install it](https://www.docker.com/products/docker-desktop/) if you don't have it).
 
-3. `NEXT_PUBLIC_CLERK_SIGN_UP_URL` equal to `sign-up`
+Add this to `.env.local`:
+```bash
+POSTGRES_HOST=127.0.0.1
+POSTGRES_PORT=6500
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=password123
+POSTGRES_DB=trpc_prisma
 
-4. `NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL` equal to `/`
+DATABASE_URL=postgresql://postgres:password123@localhost:6500/trpc_prisma
 
-5. `NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL` equal to `/`
+PGADMIN_DEFAULT_EMAIL=admin@admin.com
+PGADMIN_DEFAULT_PASSWORD=password123
+
+PORT=3000
+```
+
+In the terminal run `docker-compose up -d`
 
 ## Prisma setup
 
-`npm install prisma --save-dev`
+Create an file at the root of the project by running `touch .env`.
 
-run this in your terminal
+Run this terminal command:
 
-`npx prisma init`
+`npx prisma migrate dev`
 
-Open the Docker app (install it if you don't have it).
+## Run the project
 
-Run this command `touch .env`
+Now you're ready to run the project! Run `npm run dev`.
 
-Add this to the `.env`
-
-`DATABASE_URL="postgresql://postgres:password@localhost:5432/mango-entertainment"`
-
-In the terminal run `./start-database.sh`
-
-If you have trouble running this, it is likely due to permissions issues.
-
-Try running this in your terminal `chmod 755 start-database.sh`
-
-It should ask if you want to generate a new password, say yes.
-
-As long as no other postgres db is running, the command from line 95 should start the container.
-
-Run this command
-
-```bash
-mkdir -p prisma/migrations/0_init
-
-npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script > prisma/migrations/0_init/migration.sql
-
-npx prisma migrate resolve --applied 0_init
-
-npx prisma db push
-```
-
-The `npx prisma db push` should push your schema to PostgreSQL.
-
-Now run
-
-```bash
-npm install @prisma/client
-
-npx prisma generate
-
-npx prisma db seed
-```
+This runs the project on port 3000.
 
 ## Contact
 
