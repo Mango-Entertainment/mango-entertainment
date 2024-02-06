@@ -40,7 +40,7 @@ Mango Entertainment allows you to curate the ripest mix of entertainment. TV ser
 <!-- BASIC REQUIREMENTS -->
 
 Git, Node.js, and NPM are required to run this project locally.
-You'll also have to have accounts at Vercel, Supabase, and Clerk.
+You'll also have to have an account at Clerk.
 
 ### Clone the repo to your machine:
 
@@ -72,7 +72,9 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 
 Open the Docker app ([install it](https://www.docker.com/products/docker-desktop/) if you don't have it).
 
-Add this to `.env.local`:
+Create a file at the root of the project by running `touch .env`.
+
+Add this to `.env`:
 ```bash
 POSTGRES_HOST=127.0.0.1
 POSTGRES_PORT=6500
@@ -80,7 +82,8 @@ POSTGRES_USER=postgres
 POSTGRES_PASSWORD=password123
 POSTGRES_DB=trpc_prisma
 
-DATABASE_URL=postgresql://postgres:password123@localhost:6500/trpc_prisma
+POSTGRES_PRISMA_URL=postgresql://postgres:password123@localhost:6500/trpc_prisma
+POSTGRES_URL_NON_POOLING=postgresql://postgres:password123@localhost:6500/trpc_prisma
 
 PGADMIN_DEFAULT_EMAIL=admin@admin.com
 PGADMIN_DEFAULT_PASSWORD=password123
@@ -91,8 +94,6 @@ PORT=3000
 In the terminal run `docker-compose up -d`
 
 ## Prisma setup
-
-Create an file at the root of the project by running `touch .env`.
 
 Run this terminal command:
 
