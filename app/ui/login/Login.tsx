@@ -45,15 +45,12 @@ const Login = () => {
       })
 
       if (result.status === 'complete') {
-        console.log(result)
         await setActive({ session: result.createdSessionId })
         router.push('/')
       } else {
         /*Investigate why the login hasn't completed */
-        console.log(result)
       }
     } catch (err: any) {
-      console.log(JSON.stringify(err, null, 2))
       setClerkError(err.errors[0].message)
     }
   }

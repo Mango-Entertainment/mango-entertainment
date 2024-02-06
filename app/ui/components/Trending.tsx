@@ -5,9 +5,6 @@ const storedTrendingData = getTrending();
 
 const Trending = async () => {
   const trendingData: SelectionWithTrendingThumbs = await storedTrendingData
-  console.log('====================================');
-  console.log(trendingData);
-  console.log('====================================');
   if (!trendingData) return;
 
   return (

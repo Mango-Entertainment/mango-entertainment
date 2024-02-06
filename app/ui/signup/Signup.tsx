@@ -88,7 +88,6 @@ const Signup = () => {
       setEmail(emailAddress)  
       setVerifying(true)
     } catch (err: any) {
-      console.log(JSON.stringify(err, null, 2))
       setClerkError(err.errors[0].message)
     }
   }

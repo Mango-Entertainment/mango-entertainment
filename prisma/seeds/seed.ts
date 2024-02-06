@@ -1,25 +1,7 @@
 import { PrismaClient } from '@prisma/client'
-import { log } from 'console'
 const prisma = new PrismaClient()
 
 const data = require('./data.json')
-
-// async function main () {
-//   const id = crypto.randomUUID()
-
-//   const user0 = await prisma.user.upsert({
-//     where: { id: id },
-//     update: {},
-//     create: {
-//       id: id,
-//       name: "User0",
-//       email: "user0@emailAddresses.com",
-//     }
-//   })
-
-//   console.log(user0)
-
-// }
 
 async function main() {
   data.map(async (selection: any) => {
@@ -58,7 +40,6 @@ async function main() {
         }
       })
 
-      console.log(addTrending)
     } else {
       const newSelection = await prisma.selection.upsert({
         where: { id: record_id },
@@ -81,30 +62,10 @@ async function main() {
         },
       })
   
-      console.log(newSelection)
     }
 
 
   })
-
-  // for (let i = 0; i < data.length; i++) {
-  //   if (!data[i].id) {
-  //     const record_id = crypto.randomUUID()
-  //     data[i].id = record_id
-
-  //     const trending_thumbs = data[i].thumbnail.trending
-  //     trending_thumbs.id = crypto.randomUUID()
-  //     trending_thumbs.selection_id = record_id
-
-  //     const regular_thumbs = data[i].thumbnail.regular
-  //     regular_thumbs.id = crypto.randomUUID()
-  //     regular_thumbs.selection_id = record_id
-
-
-  //     console.log(selection)
-  //   }
-  // }
-
 }
 
 main()

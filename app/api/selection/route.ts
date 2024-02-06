@@ -8,6 +8,5 @@ export const GET = async (req:NextRequest) => {
         RegularThumb: true,
       },
     })
-    console.log(seriesSelection)
     return NextResponse.json({seriesSelection})
 }
