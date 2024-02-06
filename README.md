@@ -23,17 +23,11 @@ Mango Entertainment allows you to curate the ripest mix of entertainment. TV ser
 
 ### Built With
 
-[![Next JS]][Next-js-url]
-[![Tailwindcss]][Tailwind-url]
-[![TypeScript]][TypeScript-url]
+[![TypeScript]][TypeScript-url][![Next JS]][Next-js-url][![Tailwindcss]][Tailwind-url]
 
-[![Supabase]][Supabase-url]
-[![Postgres]][Postgres-url]
+[![Postgres]][Postgres-url][![Prisma]][Prisma-url]
 
-[![Clerk]][Clerk-url]
-
-[![Vercel]][Vercel-url]
-
+[![Clerk]][Clerk-url][![Vercel]][Vercel-url][![Docker]][Docker-url]
 
 ## Local Project Setup
 
@@ -136,23 +130,26 @@ Alex Curtis-Slep
 [LinkedIn-shield]: https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white
 
 <!-- Technology shields and links -->
+[TypeScript]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white
+[TypeScript-url]: https://www.typescriptlang.org/
+
 [Next JS]: https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white
 [Next-js-url]: https://www.nextjs.org
 
 [Tailwindcss]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
 [Tailwind-url]: https://tailwindcss.com/
 
-[TypeScript]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white
-[TypeScript-url]: https://www.typescriptlang.org/
-
-[Supabase]: https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white
-[Supabase-url]: https://supabase.com/
-
 [Postgres]: https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white
 [Postgres-url]: https://www.postgresql.org/
+
+[Prisma]: https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white
+[Prisma-url]: https://www.prisma.io/
 
 [Clerk]: https://img.shields.io/badge/Clerk-6C47FF.svg?style=for-the-badge&logo=Clerk&logoColor=white
 [Clerk-url]: https://clerk.com/
 
 [Vercel]: https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white
 [Vercel-url]: vercel.com/
+
+[Docker]: https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white
+[Docker-url]: https://www.docker.com/
