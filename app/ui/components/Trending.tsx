@@ -1,11 +1,15 @@
 import TrendingCard from "@/app/ui/components/TrendingCard";
-import {getTrending, SelectionWithTrendingThumbs} from "@/app/lib/db";
+// import {getTrending, SelectionWithTrendingThumbs} from "@/app/lib/db";
+import queryClient from "@/utils/query-client";
+import { trpc } from "@/utils/trpc";
 
-const storedTrendingData = getTrending();
+// const storedTrendingData = getTrending();
 
 const Trending = async () => {
-  const trendingData: SelectionWithTrendingThumbs = await storedTrendingData
-  if (!trendingData) return;
+  const query = trpc.getTrending.useQuery()
+  console.log(query)
+  // const trendingData: SelectionWithTrendingThumbs = await storedTrendingData
+  // if (!trendingData) return;
 
   return (
     <div className="ml-4 overflow-scroll text-entertainment-pure-white">
@@ -14,7 +18,7 @@ const Trending = async () => {
         className="flex mb-8 gap-4 flex-nowrap md:gap-10 w-max"
         id="carousel"
       >
-        {trendingData.map((selection) => {
+        {/* {trendingData.map((selection) => {
           if(!selection.TrendingThumb?.large) return
           return <TrendingCard 
             key={selection.id}
@@ -26,7 +30,7 @@ const Trending = async () => {
             year={selection.year} 
             imageString={selection.TrendingThumb?.large.slice(8)} 
           />;
-        })}
+        })} */}
       </div>
     </div>
   );
