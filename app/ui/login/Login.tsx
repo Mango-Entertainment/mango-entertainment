@@ -8,7 +8,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useSignIn, useUser } from '@clerk/nextjs'
 import { useState } from 'react'
-import { redirect } from 'next/navigation'
 
 const FormFieldsSchema = z.object({
   email: z.string().email(),
@@ -56,7 +55,7 @@ const Login = () => {
     }
   }
   if (isSignedIn) {
-    redirect('/')
+    router.replace('/')
   }
   return (
     <div className="justify-center mt-12 grid justify-items-center md:mt-20">

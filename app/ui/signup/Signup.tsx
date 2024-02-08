@@ -1,6 +1,6 @@
 'use client'
 import { useState, FormEvent } from 'react'
-import { useRouter, redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useSignUp, useUser } from '@clerk/nextjs'
@@ -153,7 +153,7 @@ const Signup = () => {
     )
   }
   if (isSignedIn) {
-    return redirect('/')
+    return router.replace('/')
   } else {
     return (
       <div className="justify-center mt-12 grid justify-items-center md:mt-20">
