@@ -6,18 +6,19 @@ import { useRouter } from 'next/navigation'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useSignIn } from '@clerk/nextjs'
+import { useSignIn, useUser } from '@clerk/nextjs'
 import { useState } from 'react'
+import { redirect } from 'next/navigation'
 
 const FormFieldsSchema = z.object({
   email: z.string().email(),
-  password: z
-    .string()
+  password: z.string(),
 })
 
 type FormFields = z.infer<typeof FormFieldsSchema>
 
 const Login = () => {
+  const { isSignedIn } = useUser()
   const router = useRouter()
   const [clerkError, setClerkError] = useState(null)
   const {
@@ -54,7 +55,9 @@ const Login = () => {
       setClerkError(err.errors[0].message)
     }
   }
-
+  if (isSignedIn) {
+    redirect('/')
+  }
   return (
     <div className="justify-center mt-12 grid justify-items-center md:mt-20">
       <Image

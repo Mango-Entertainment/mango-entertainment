@@ -1,9 +1,6 @@
 "use client"
-import { useState } from "react"
 import Link from "next/link"
-import Image from "next/image"
-import { UserButton, useUser, clerkClient } from "@clerk/nextjs"
-import { redirect } from "next/navigation"
+import { UserButton, useUser } from "@clerk/nextjs"
 
 const Auth = () => {
   const { isSignedIn, user, isLoaded } = useUser()
