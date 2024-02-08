@@ -54,8 +54,8 @@ const RegularData = z.object({
   medium: z.string(),
 })
 
-export type Selection = z.infer<typeof Selection>
-export type TrendingThumbs = z.infer<typeof TrendingThumbs>
-export type RegularThumbs = z.infer<typeof RegularThumbs>
+// export type Selection = z.infer<typeof Selection>
+// export type TrendingThumbs = z.infer<typeof TrendingThumbs>
+// export type RegularThumbs = z.infer<typeof RegularThumbs>
 export type TrendingData = z.infer<typeof TrendingData>
 export type RegularData = z.infer<typeof RegularData>
