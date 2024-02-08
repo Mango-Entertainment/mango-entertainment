@@ -1,11 +1,13 @@
+'use client'
+
+import { trpc } from "@/utils/trpc";
 import TrendingCard from "@/app/ui/components/TrendingCard";
-import {getTrending, SelectionWithTrendingThumbs} from "@/app/lib/db";
 
-const storedTrendingData = getTrending();
-
-const Trending = async () => {
-  const trendingData: SelectionWithTrendingThumbs = await storedTrendingData
-  if (!trendingData) return;
+const Trending = () => {
+  const {data} = trpc.getTrending.useQuery()
+  const trendingData = data?.data.trendingSelections
+  
+  if(!trendingData) return
 
   return (
     <div className="ml-4 overflow-scroll text-entertainment-pure-white">
