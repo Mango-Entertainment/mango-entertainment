@@ -1,4 +1,4 @@
-import { getTrendingHandler } from './selection-controller'
+import { getTrendingHandler, getSelectionHandler } from './selection-controller'
 import { t } from '@/utils/trpc-server'
 
 const trendingSelectionRouter = t.router({
@@ -6,4 +6,8 @@ const trendingSelectionRouter = t.router({
     .query(() => getTrendingHandler()),
 })
 
-export default trendingSelectionRouter
+const selectionRouter = t.router({
+  getSelection: t.procedure.query(() => getSelectionHandler()),
+})
+
+export {trendingSelectionRouter, selectionRouter}

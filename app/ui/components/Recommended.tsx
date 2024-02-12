@@ -1,11 +1,19 @@
-import { getRecommended } from "@/app/lib/db";
-import SectionComponent from "@/app/ui/components/SectionComponent";
+'use client'
 
-const Recommended = async () => {
-    const recommendedData = await getRecommended();
-    if (!recommendedData) return;
+import SectionComponent from "@/app/ui/components/SectionComponent";
+import { trpc } from '@/utils/trpc'
+
+const Recommended = () => {
+  const {data} = trpc.getSelection.useQuery()
+  let selectionData = data?.data.selections
+  if (!selectionData) return
+
+  
+  const recommendedData = selectionData.filter((selection) => {
+          return !selection.is_trending
+        })
   return (
-    <SectionComponent sectionTitle="Recommended for you" data={recommendedData} />    
+    <SectionComponent sectionTitle="Recommended for you" {...recommendedData} />    
   );
 }
 

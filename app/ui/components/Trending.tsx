@@ -6,12 +6,11 @@ import TrendingCard from "@/app/ui/components/TrendingCard";
 const Trending = () => {
   const {data} = trpc.getTrending.useQuery()
   const trendingData = data?.data.trendingSelections
-  
-  if(!trendingData) return
 
   return (
     <div className="ml-4 overflow-scroll text-entertainment-pure-white">
       <h1 className="mb-4 text-xl font-light md:text-3xl md:mb-6">Trending</h1>
+      {trendingData ? (
       <div
         className="flex mb-8 gap-4 flex-nowrap md:gap-10 w-max"
         id="carousel"
@@ -30,6 +29,9 @@ const Trending = () => {
           />;
         })}
       </div>
+      ) : (
+        <div>Loading</div>
+      )}
     </div>
   );
 };
