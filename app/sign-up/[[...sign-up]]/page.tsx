@@ -1,4 +1,3 @@
-import Signup from "@/app/ui/signup/Signup";
-// import UserForm from '../../ui/signup/UserForm';
+import Signup from "@/app/_ui/signup/Signup";
 
 export default Signup

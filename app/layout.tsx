@@ -1,9 +1,9 @@
 import { FC, ReactNode } from 'react'
-import { outfit } from './ui/fonts'
+import { outfit } from './_ui/fonts'
 import './globals.css'
-import Navbar from './ui/components/Navbar'
+import Navbar from './_ui/components/Navbar'
 import { ClerkProvider } from '@clerk/nextjs'
-import { TrpcProvider } from '@/utils/trpc-provider'
+import { TrpcProvider } from '@/lib/server/trpc-provider'
 
 const meta = {
   favicon: "/icon.svg",
@@ -32,7 +32,7 @@ const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${outfit.className} bg-entertainment-dark-blue grid grid-cols-1 lg:grid-cols-[160px_1fr]`}
+          className={`${outfit.className} bg-entertainment-dark-blue h-screen grid grid-cols-1 lg:grid-cols-[160px_1fr]`}
         >
           <TrpcProvider>
             <Navbar />

@@ -1,6 +1,6 @@
-import userRouter from '@/server/routes/users/user-route'
-import {trendingSelectionRouter, selectionRouter, recommendedRouter, moviesRouter, seriesRouter, bookmarksRouter, bookmarkedMovieRouter, bookmarkedSeriesRouter } from '@/server/routes/selections/selection-route'
-import { t } from '@/utils/trpc-server'
+import userRouter from '@/lib/server/routes/users/user-route'
+import {trendingSelectionRouter, selectionRouter, recommendedRouter, moviesRouter, seriesRouter, bookmarksRouter, bookmarkedMovieRouter, bookmarkedSeriesRouter } from '@/lib/server/routes/selections/selection-route'
+import { t } from '@/lib/server/trpc-server'
 import { createServerSideHelpers } from '@trpc/react-query/server'
 import SuperJSON from 'superjson'
 

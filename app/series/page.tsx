@@ -1,4 +1,4 @@
-import Series from "@/app/ui/seriespage/Series";
+import Series from "@/app/_ui/seriespage/Series";
 
 const SeriesPage = () => {
     return (
