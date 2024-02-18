@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma/prisma.db'
 import { TRPCError } from '@trpc/server'
+import { SectionFilterQuery } from '@/lib/server/routes/selections/selection-schema'
 
 export const getTrendingHandler = async () => {
   try {
@@ -154,4 +155,39 @@ export const getBookmarkedSeriesHandler = async () => {
   } catch (err: any) {
     throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err.message })
   }
+}
+
+export const getSelectionsHandler = async ({sectionFilterQuery}: {sectionFilterQuery: SectionFilterQuery}) => {
+  const {sectionType} = sectionFilterQuery
+  let sectionTitle, data, sectionData
+  switch (sectionType) {
+     case 'recommended':
+       sectionTitle = 'Recommended'
+       data = await getRecommendedHandler()
+       sectionData = data?.data.selections
+       break
+     case 'movies':
+       sectionTitle = 'Movies'
+       data = await getMoviesHandler()
+       sectionData = data?.data.selections
+       break
+     case 'series':
+       sectionTitle = 'TV Series'
+       data = await getSeriesHandler()
+       sectionData = data?.data.selections
+       break
+     case 'bookmarked_movies':
+       sectionTitle = 'Movies'
+       data = await getBookmarkedMoviesHandler()
+       sectionData = data?.data.selections
+       break
+     case 'bookmarked_series':
+       sectionTitle = 'TV Series'
+       data = await getBookmarkedSeriesHandler()
+       sectionData = data?.data.selections
+       break
+     default:
+       break
+   }
+   return {sectionTitle, sectionData}
 }

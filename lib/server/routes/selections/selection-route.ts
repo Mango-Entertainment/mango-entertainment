@@ -1,35 +1,22 @@
-import { getTrendingHandler, getRecommendedHandler, getAllSelectionsHandler, getMoviesHandler, getSeriesHandler, getBookmarkedHandler, getBookmarkedMoviesHandler, getBookmarkedSeriesHandler } from './selection-controller'
+import { z } from 'zod'
+import { getTrendingHandler, getRecommendedHandler, getAllSelectionsHandler, getMoviesHandler, getSeriesHandler, getBookmarkedHandler, getBookmarkedMoviesHandler, getBookmarkedSeriesHandler, getSelectionsHandler } from './selection-controller'
 import { t } from '@/lib/server/trpc-server'
-
-const trendingSelectionRouter = t.router({
-  getTrending: t.procedure
-    .query(() => getTrendingHandler()),
-})
+import { sectionFilterQuery } from '@/lib/server/routes/selections/selection-schema'
 
 const selectionRouter = t.router({
+  getSelections: t.procedure.input(sectionFilterQuery).query(async (opts) => {
+    const {input} = opts
+    const {sectionTitle, sectionData} = await getSelectionsHandler({sectionFilterQuery: input})
+    return {sectionTitle, sectionData}
+  }),
+  getTrending: t.procedure.query(() => getTrendingHandler()),
   getSelection: t.procedure.query(() => getAllSelectionsHandler()),
-})
-
-const recommendedRouter = t.router({
   getRecommended: t.procedure.query(() => getRecommendedHandler()),
-})
-
-const moviesRouter = t.router({
   getMovies: t.procedure.query(() => getMoviesHandler()),
-})
-
-const seriesRouter = t.router({
   getSeries: t.procedure.query(() => getSeriesHandler()),
-})
-
-const bookmarksRouter = t.router({
   getBookmarks: t.procedure.query(() => getBookmarkedHandler()),
-})
-const bookmarkedMovieRouter = t.router({
   getBookmarkedMovies: t.procedure.query(() => getBookmarkedMoviesHandler()),
-})
-const bookmarkedSeriesRouter = t.router({
   getBookmarkedSeries: t.procedure.query(() => getBookmarkedSeriesHandler()),
 })
 
-export {trendingSelectionRouter, selectionRouter, recommendedRouter, moviesRouter, seriesRouter, bookmarksRouter, bookmarkedMovieRouter, bookmarkedSeriesRouter}
+export default selectionRouter
