@@ -5,9 +5,11 @@ import { sectionFilterQuery } from '@/lib/server/routes/selections/selection-sch
 
 const selectionRouter = t.router({
   getSelections: t.procedure.input(sectionFilterQuery).query(async (opts) => {
-    const {input} = opts
-    const {sectionTitle, sectionData} = await getSelectionsHandler({sectionFilterQuery: input})
-    return {sectionTitle, sectionData}
+    const { input } = opts
+    const { sectionTitle, sectionData } = await getSelectionsHandler({
+      sectionFilterQuery: input,
+    })
+    return { sectionTitle, sectionData }
   }),
   getTrending: t.procedure.query(() => getTrendingHandler()),
   getSelection: t.procedure.query(() => getAllSelectionsHandler()),
@@ -18,5 +20,4 @@ const selectionRouter = t.router({
   getBookmarkedMovies: t.procedure.query(() => getBookmarkedMoviesHandler()),
   getBookmarkedSeries: t.procedure.query(() => getBookmarkedSeriesHandler()),
 })
-
 export default selectionRouter

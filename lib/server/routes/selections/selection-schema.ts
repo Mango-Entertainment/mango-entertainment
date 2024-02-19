@@ -25,9 +25,13 @@ export const createRegularThumbsSchema = z.object({
   large: z.string(),
 })
 
-export const sectionFilterQuery = z.object({
-  sectionType: z.enum(["recommended", "movies", "series", "bookmarked_movies", "bookmarked_series"])
-})
+export const sectionFilterQuery = z.enum([
+  'recommended',
+  'movies',
+  'series',
+  'bookmarked_movies',
+  'bookmarked_series',
+])
 
 
 
