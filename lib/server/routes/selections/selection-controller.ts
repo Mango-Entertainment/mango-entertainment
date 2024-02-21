@@ -157,36 +157,56 @@ export const getBookmarkedSeriesHandler = async () => {
   }
 }
 
-export const getSelectionsHandler = async ({sectionFilterQuery}: {sectionFilterQuery: SectionFilterQuery}) => {
-  let sectionTitle, data, sectionData
-  switch (sectionFilterQuery) {
-    case 'recommended':
-      sectionTitle = 'Recommended'
-      data = await getRecommendedHandler()
-      sectionData = data?.data.selections
-      break
-    case 'movies':
-      sectionTitle = 'Movies'
-      data = await getMoviesHandler()
-      sectionData = data?.data.selections
-      break
-    case 'series':
-      sectionTitle = 'TV Series'
-      data = await getSeriesHandler()
-      sectionData = data?.data.selections
-      break
-    case 'bookmarked_movies':
-      sectionTitle = 'Movies'
-      data = await getBookmarkedMoviesHandler()
-      sectionData = data?.data.selections
-      break
-    case 'bookmarked_series':
-      sectionTitle = 'TV Series'
-      data = await getBookmarkedSeriesHandler()
-      sectionData = data?.data.selections
-      break
-    default:
-      break
+// export const getSelectionsHandler = async ({sectionFilterQuery}: {sectionFilterQuery: SectionFilterQuery}) => {
+//   let sectionTitle, data, sectionData
+//   switch (sectionFilterQuery) {
+//     case 'recommended':
+//       sectionTitle = 'Recommended'
+//       data = await getRecommendedHandler()
+//       sectionData = data?.data.selections
+//       break
+//     case 'movies':
+//       sectionTitle = 'Movies'
+//       data = await getMoviesHandler()
+//       sectionData = data?.data.selections
+//       break
+//     case 'series':
+//       sectionTitle = 'TV Series'
+//       data = await getSeriesHandler()
+//       sectionData = data?.data.selections
+//       break
+//     case 'bookmarked_movies':
+//       sectionTitle = 'Movies'
+//       data = await getBookmarkedMoviesHandler()
+//       sectionData = data?.data.selections
+//       break
+//     case 'bookmarked_series':
+//       sectionTitle = 'TV Series'
+//       data = await getBookmarkedSeriesHandler()
+//       sectionData = data?.data.selections
+//       break
+//     default:
+//       break
+//   }
+//    return {sectionTitle, sectionData}
+// }
+
+export const getSelectionsHandler = async ({
+  sectionFilterQuery,
+}: {
+  sectionFilterQuery: SectionFilterQuery
+}) => {
+  let {category, is_bookmarked, is_trending} = sectionFilterQuery
+  try {
+    const selections = await prisma.selection.findMany({where: sectionFilterQuery, include: {RegularThumb: true}})
+    console.log('selections')
+    console.log(selections)
+    return {
+        status: 'success',
+        results: selections.length,
+        data: { selections },
+    }
+  } catch (error) {
+    console.log(error)
   }
-   return {sectionTitle, sectionData}
 }

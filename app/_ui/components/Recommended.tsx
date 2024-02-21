@@ -3,9 +3,12 @@
 import SectionComponent from "@/app/_ui/components/SectionComponent";
 
 const Recommended = () => {
-  
+  let sectionQuery = {
+    is_trending: false
+  }
+
   return (
-    <SectionComponent sectionType="recommended" />    
+    <SectionComponent sectionTitle="Recommended" sectionQuery={sectionQuery} />    
   );
 }
 

@@ -1,9 +1,11 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useState } from 'react'
 import { outfit } from './_ui/fonts'
 import './globals.css'
 import Navbar from './_ui/components/Navbar'
 import { ClerkProvider } from '@clerk/nextjs'
 import { TrpcProvider } from '@/lib/server/trpc-provider'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import SearchProvider from '@/app/context/appContext'
 
 const meta = {
   favicon: "/icon.svg",
@@ -35,8 +37,10 @@ const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
           className={`${outfit.className} bg-entertainment-dark-blue h-screen grid grid-cols-1 lg:grid-cols-[160px_1fr]`}
         >
           <TrpcProvider>
-            <Navbar />
-            <div className="overflow-x-hidden">{children}</div>
+            <SearchProvider>
+              <Navbar />
+              <div className="overflow-x-hidden">{children}</div>
+            </SearchProvider>
           </TrpcProvider>
         </body>
       </html>

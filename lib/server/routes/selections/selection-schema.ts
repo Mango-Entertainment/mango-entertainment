@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { nullable, z } from 'zod'
 
 export const createSelectionSchema = z.object({
   id: z.string(),
@@ -25,13 +25,16 @@ export const createRegularThumbsSchema = z.object({
   large: z.string(),
 })
 
-export const sectionFilterQuery = z.enum([
-  'recommended',
-  'movies',
-  'series',
-  'bookmarked_movies',
-  'bookmarked_series',
-])
+export const sectionFilterQuery = z.object({
+  category: z.string().optional(),
+  is_bookmarked: z.boolean().optional(),
+  is_trending: z.boolean().optional(),
+  title: z
+    .object({
+      search: z.string(),
+    })
+    .optional(),
+})
 
 
 

@@ -4,13 +4,20 @@ import { t } from '@/lib/server/trpc-server'
 import { sectionFilterQuery } from '@/lib/server/routes/selections/selection-schema'
 
 const selectionRouter = t.router({
-  getSelections: t.procedure.input(sectionFilterQuery).query(async (opts) => {
+  selections: t.procedure.input(sectionFilterQuery).query(async (opts) => {
     const { input } = opts
-    const { sectionTitle, sectionData } = await getSelectionsHandler({
+    const data = await getSelectionsHandler({
       sectionFilterQuery: input,
     })
-    return { sectionTitle, sectionData }
+    return data
   }),
+  // getSelections: t.procedure.input(sectionFilterQuery).query(async (opts) => {
+  //   const { input } = opts
+  //   const { sectionTitle, sectionData } = await getSelectionsHandler({
+  //     sectionFilterQuery: input,
+  //   })
+  //   return { sectionTitle, sectionData }
+  // }),
   getTrending: t.procedure.query(() => getTrendingHandler()),
   getSelection: t.procedure.query(() => getAllSelectionsHandler()),
   getRecommended: t.procedure.query(() => getRecommendedHandler()),

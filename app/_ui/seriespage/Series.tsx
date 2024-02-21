@@ -5,10 +5,13 @@ import Search from "../components/Search";
 
 
 const Series = () => {
+  let sectionQuery = {
+    category: 'TV Series',
+  }
   return (
     <div className="text-entertainment-greyish-blue">
       <Search />
-      <SectionComponent sectionType="series" />
+      <SectionComponent sectionTitle="Tv series" sectionQuery={sectionQuery} />
     </div>
   );
 };
