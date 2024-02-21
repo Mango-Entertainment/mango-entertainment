@@ -36,9 +36,26 @@ export const sectionFilterQuery = z.object({
     .optional(),
 })
 
+export const filterQuery = z.object({
+  category: z.string().optional(),
+  is_bookmarked: z.boolean().optional(),
+  is_trending: z.boolean().optional(),
+  title: z
+    .object({
+      search: z.string(),
+    })
+    .optional(),
+})
 
+export const imageSelect = z.object({
+    TrendingThumb: z.boolean().optional(),
+    RegularThumb: z.boolean().optional()
+})
 
 export type CreateSelection = z.TypeOf<typeof createSelectionSchema>
 export type CreateTrendingThumbs = z.TypeOf<typeof createTrendingThumbsSchema>
 export type CreateRegularThumbs = z.TypeOf<typeof createRegularThumbsSchema>
 export type SectionFilterQuery = z.TypeOf<typeof sectionFilterQuery>
+export type FilterQuery = z.TypeOf<typeof filterQuery>
+export type ImageSelect = z.TypeOf<typeof imageSelect>
+

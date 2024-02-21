@@ -35,6 +35,7 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode }> = ({
       transformer: superjson,
     }),
   )
+
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>

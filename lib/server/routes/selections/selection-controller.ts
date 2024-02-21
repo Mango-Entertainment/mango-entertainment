@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma/prisma.db'
 import { TRPCError } from '@trpc/server'
-import { SectionFilterQuery } from '@/lib/server/routes/selections/selection-schema'
+import { SectionFilterQuery, FilterQuery, imageSelect, ImageSelect } from '@/lib/server/routes/selections/selection-schema'
+import { filterQuery } from './selection-schema';
 
 export const getTrendingHandler = async () => {
   try {
@@ -18,12 +19,30 @@ export const getTrendingHandler = async () => {
   }
 }
 
-export const getAllSelectionsHandler = async () => {
+// export const getAllSelectionsHandler = async () => {
+//   try {
+//     const selections = await prisma.selection.findMany({
+//       include: {
+//         RegularThumb: true,
+//         TrendingThumb: true
+//       },
+//     })
+//     return {
+//       status: 'success',
+//       results: selections.length,
+//       data: { selections },
+//     }
+//   } catch (err: any) {
+//     throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: err.message })
+//   }
+// }
+
+
+export const getAllSelectionsHandler = async ({filterQuery, imageSelect}: {filterQuery: FilterQuery, imageSelect: ImageSelect} ) => {
   try {
     const selections = await prisma.selection.findMany({
-      include: {
-        RegularThumb: true,
-      },
+      where: filterQuery,
+        include: imageSelect
     })
     return {
       status: 'success',
