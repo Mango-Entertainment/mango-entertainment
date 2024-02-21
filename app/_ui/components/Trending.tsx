@@ -4,7 +4,7 @@ import { trpc } from "@/lib/server/trpc";
 import TrendingCard from "@/app/_ui/components/TrendingCard";
 
 const Trending = () => {
-  const {data} = trpc.getTrending.useQuery()
+  const {data} = trpc.trending.useQuery()
   const trendingData = data?.data.trendingSelections
 
   return (
