@@ -9,36 +9,34 @@ const SectionComponent = ({ section, search, bookmarked }: {section: string, sea
     case false:
       switch (section) {
         case 'Recommended':
-          {
-            sectionData = trpc.recommended.useQuery(search)
-            break
-          }
-
-          case 'Movies': {
-            sectionData = trpc.movies.useQuery(search)
-            break
-          }
-          case 'TV Series': {
-            sectionData = trpc.series.useQuery(search)
-            break
-          }
+          sectionData = trpc.recommended.useQuery(search)
           break
-        }
+        case 'Movies':
+          sectionData = trpc.movies.useQuery(search)
+          break
+        case 'TV Series':
+          sectionData = trpc.series.useQuery(search)
+          break
+        default:
+          break
+      }
+      break // Break out of the first switch
     case true:
       switch (section) {
-        case 'Movies': {
+        case 'Movies':
           sectionData = trpc.bookmarked_movies.useQuery(search)
           break
-        }
-        case 'TV Series': {
+        case 'TV Series':
           sectionData = trpc.bookmarked_series.useQuery(search)
           break
-        }
-        break
+        default:
+          break
       }
+      break // Break out of the second switch
     default:
       break
   }
+
   const { data, isLoading } = sectionData
   const selections = data?.data.selections
   if (selections && selections.length < 1) return
@@ -51,7 +49,8 @@ const SectionComponent = ({ section, search, bookmarked }: {section: string, sea
       <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 mb-8">
         {selections?.map((selection) => {
           // if (!selection.RegularThumb?.large) return
-          if (!selection?.RegularThumb?.large) return
+          const largeThumb = selection.RegularThumb?.large.slice(8) || null
+          if (!largeThumb) return
           return (
             <RegularCard
               key={selection.id}
@@ -61,7 +60,7 @@ const SectionComponent = ({ section, search, bookmarked }: {section: string, sea
               category={selection.category}
               is_bookmarked={selection.is_bookmarked}
               rating={selection.rating}
-              imageString={selection.RegularThumb?.large.slice(8)}
+              imageString={largeThumb}
             />
           )
         })}
