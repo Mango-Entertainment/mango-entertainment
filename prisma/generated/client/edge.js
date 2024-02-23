@@ -150,7 +150,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/alexcurtisslep/Documents/projects/mango-entertainment/lib/prisma/generated/client",
+      "value": "/Users/alexcurtisslep/Documents/projects/mango-entertainment/prisma/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -167,7 +167,8 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../..",
   "clientVersion": "5.9.1",

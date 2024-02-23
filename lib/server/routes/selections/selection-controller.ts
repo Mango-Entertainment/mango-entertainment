@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma/prisma.db';
+import prisma from '@/prisma/prisma.db';
 import { FilterQuery, ImageSelect, SearchQuery, SectionFilterQuery } from '@/lib/server/routes/selections/selection-schema';
 import { TRPCError } from '@trpc/server';
 
