@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma/prisma.db'
+import prisma from '@/prisma/prisma.db'
 import { TRPCError } from '@trpc/server'
 import { CreateUserInput, FilterQueryInput } from './user-schema'
 
