@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  // previewFeatures = ["fullTextSearch"]
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+  id      String   @id @default(uuid())
+  clerk_id String
+  name      String   
+  email    String @unique
+  role String @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Selection {
+  id      String   @id @default(uuid())
+  title   String   @db.VarChar(255)
+  year    Int      @db.Integer
+  category String  @db.VarChar(255)
+  rating  String   @db.VarChar(255)
+  is_bookmarked Boolean @db.Boolean
+  is_trending Boolean @db.Boolean
+  RegularThumb RegularThumb?
+  TrendingThumb TrendingThumb?
+}
+
+model RegularThumb {
+  id      String   @id @default(uuid())
+  large   String   @db.VarChar(255)
+  small   String   @db.VarChar(255)
+  medium   String   @db.VarChar(255)
+  selection_id String @unique
+  Selection Selection @relation(fields:[selection_id], references:[id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model TrendingThumb {
+  id      String   @id @default(uuid())
+  large   String   @db.VarChar(255)
+  small   String   @db.VarChar(255)
+  selection_id String @unique
+  Selection Selection @relation(fields:[selection_id], references:[id], onDelete: NoAction, onUpdate: NoAction)
+}
