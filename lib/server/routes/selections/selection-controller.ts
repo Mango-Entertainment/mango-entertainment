@@ -70,12 +70,41 @@ export const getSelectionsHandler = async ({
   }
 }
 
-export const getSearchHandler = async ({searchQuery} : {searchQuery: SearchQuery}) => {
+export const getTrendingWithSearchHandler = async ({searchQuery} : {searchQuery: SearchQuery}) => {
   const selections = await prisma.selection.findMany({
     where: {
       title: {
+        mode: 'insensitive',
         contains: searchQuery,
       },
+      is_trending: true,
+    },
+    include: {
+      TrendingThumb: true,
+    },
+  })
+  return {
+    status: 'success',
+    results: selections.length,
+    data: { selections },
+  }
+}
+
+export const getRecommendedWithSearchHandler = async ({
+  searchQuery,
+}: {
+  searchQuery: SearchQuery
+}) => {
+  const selections = await prisma.selection.findMany({
+    where: {
+      title: {
+        mode: 'insensitive',
+        contains: searchQuery,
+      },
+      is_trending: false,
+    },
+    include: {
+      RegularThumb: true,
     },
   })
   return {
