@@ -10,12 +10,8 @@ import { imageSelect } from '@/lib/server/routes/selections/selection-schema'
 const Homepage = () => {
   const [search, setSearch] = useState('')
   const imageSelect = {TrendingThumb: true}
-  const { data, isLoading, refetch } = trpc.all_selections.useQuery({
-        title: {
-          search: search
-        }
-  })
-
+  const { data: searchResults, isLoading, refetch } = trpc.search.useQuery(search)
+  console.log(searchResults)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)

@@ -52,10 +52,13 @@ export const imageSelect = z.object({
     RegularThumb: z.boolean().optional()
 })
 
+export const searchQuery = z.string()
+
 export type CreateSelection = z.TypeOf<typeof createSelectionSchema>
 export type CreateTrendingThumbs = z.TypeOf<typeof createTrendingThumbsSchema>
 export type CreateRegularThumbs = z.TypeOf<typeof createRegularThumbsSchema>
 export type SectionFilterQuery = z.TypeOf<typeof sectionFilterQuery>
 export type FilterQuery = z.TypeOf<typeof filterQuery>
 export type ImageSelect = z.TypeOf<typeof imageSelect>
+export type SearchQuery = z.TypeOf<typeof searchQuery>
 

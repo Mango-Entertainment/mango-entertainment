@@ -1,7 +1,6 @@
-import prisma from '@/lib/prisma/prisma.db'
-import { TRPCError } from '@trpc/server'
-import { SectionFilterQuery, FilterQuery, imageSelect, ImageSelect } from '@/lib/server/routes/selections/selection-schema'
-import { filterQuery } from './selection-schema';
+import prisma from '@/lib/prisma/prisma.db';
+import { FilterQuery, ImageSelect, SearchQuery, SectionFilterQuery } from '@/lib/server/routes/selections/selection-schema';
+import { TRPCError } from '@trpc/server';
 
 export const getTrendingHandler = async () => {
   try {
@@ -68,5 +67,20 @@ export const getSelectionsHandler = async ({
     }
   } catch (error) {
     console.log(error)
+  }
+}
+
+export const getSearchHandler = async ({searchQuery} : {searchQuery: SearchQuery}) => {
+  const selections = await prisma.selection.findMany({
+    where: {
+      title: {
+        contains: searchQuery,
+      },
+    },
+  })
+  return {
+    status: 'success',
+    results: selections.length,
+    data: { selections },
   }
 }
