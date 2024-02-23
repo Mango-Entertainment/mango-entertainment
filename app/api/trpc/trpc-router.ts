@@ -1,6 +1,6 @@
-import userRouter from '@/server/routes/users/user-route'
-import trendingSelectionRouter from '@/server/routes/selections/selection-route'
-import { t } from '@/utils/trpc-server'
+import userRouter from '@/lib/server/routes/users/user-route'
+import selectionRouter from '@/lib/server/routes/selections/selection-route'
+import { t } from '@/lib/server/trpc-server'
 import { createServerSideHelpers } from '@trpc/react-query/server'
 import SuperJSON from 'superjson'
 
@@ -13,7 +13,7 @@ const healthCheckerRouter = t.router({
   }),
 })
 
-export const appRouter = t.mergeRouters(userRouter, trendingSelectionRouter, healthCheckerRouter)
+export const appRouter = t.mergeRouters(userRouter, selectionRouter, healthCheckerRouter)
 
 export const createSSRHelper = () =>
   createServerSideHelpers({

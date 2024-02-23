@@ -1,3 +1,3 @@
-import Login from "@/app/ui/login/Login";
+import Login from "@/app/_ui/login/Login";
 
 export default Login;

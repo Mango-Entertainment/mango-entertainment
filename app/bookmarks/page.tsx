@@ -1,4 +1,4 @@
-import Bookmarks from '@/app/ui/bookmarkpage/Bookmarks';
+import Bookmarks from '@/app/_ui/bookmarkpage/Bookmarks';
 
 const BookmarkPage = () => {
   return <Bookmarks />;

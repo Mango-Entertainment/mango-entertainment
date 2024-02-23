@@ -1,4 +1,4 @@
-import Movies from '@/app/ui/moviepage/Movies';
+import Movies from '@/app/_ui/moviepage/Movies';
 
 const MoviesPage = () => {
   return (
