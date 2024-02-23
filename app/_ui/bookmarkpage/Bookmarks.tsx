@@ -2,23 +2,25 @@
 
 import Search from '@/app/_ui/components/Search'
 import SectionComponent from '@/app/_ui/components/SectionComponent'
+import { ChangeEvent, useState } from 'react'
+
 
 const Bookmarks = () => {
-  let movieQuery = {
-    category: 'Movie',
-    is_bookmarked: true
-  }
-
-  let seriesQuery = {
-    category: 'TV Series',
-    is_bookmarked: true,
-  }
+  const [search, setSearch] = useState('')
+ 
+   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+     setSearch(e.target.value)
+   }
 
   return (
     <div className="text-entertainment-greyish-blue">
-      <Search />
-      <SectionComponent sectionTitle="Movies" sectionQuery={movieQuery} />
-      <SectionComponent sectionTitle="TV Series" sectionQuery={seriesQuery} />
+      <Search search={search} handleChange={handleChange} />
+      <SectionComponent section="Movies" bookmarked={true} search={search} />
+      <SectionComponent
+        section="TV Series"
+        bookmarked={true}
+        search={search}
+      />
     </div>
   )
 }

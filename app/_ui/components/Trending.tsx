@@ -5,7 +5,7 @@ import { trpc } from "@/lib/server/trpc";
 const Trending = ({search} : {search: string}) => {
   const { data } = trpc.trending.useQuery(search)
   const trendingData = data?.data.selections
-
+  if(trendingData && trendingData.length < 1) return
   return (
     <div className="ml-4 overflow-scroll text-entertainment-pure-white">
       <h1 className="mb-4 text-xl font-light md:text-3xl md:mb-6">Trending</h1>

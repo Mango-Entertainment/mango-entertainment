@@ -2,13 +2,9 @@
 
 import SectionComponent from "@/app/_ui/components/SectionComponent";
 
-const Recommended = () => {
-  let sectionQuery = {
-    is_trending: false
-  }
-
+const Recommended = ({search}: {search: string}) => {
   return (
-    <SectionComponent sectionTitle="Recommended" sectionQuery={sectionQuery} />    
+    <SectionComponent section="Recommended" bookmarked={false} search={search} />    
   );
 }
 
