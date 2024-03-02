@@ -1,15 +1,14 @@
-import TrendingCard from "@/app/_ui/components/TrendingCard";
+import { SelectionWithTrendingThumbs } from '@/types/db'
 import { trpc } from "@/lib/server/trpc";
-// import { Selection, TrendingThumb } from '@prisma/client'
+import TrendingCard from "@/app/_ui/components/TrendingCard";
 
-// type SelectionWithTrendingThumbs = Selection & {
-//   TrendingThumb: TrendingThumb
-// }
-
+const getTrendingData = (search: string) => {
+  const trendingData = trpc.trending.useQuery(search)
+  return trendingData?.data?.data?.selections as SelectionWithTrendingThumbs[]
+}
 
 const Trending = ({search} : {search: string}) => {
-  const { data } = trpc.trending.useQuery(search)
-  const trendingData = data?.data.selections
+  const trendingData = getTrendingData(search)
   if(trendingData && trendingData.length < 1) return
   return (
     <div className="ml-4 overflow-scroll text-entertainment-pure-white">

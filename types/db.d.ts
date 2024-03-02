@@ -3,3 +3,7 @@ import type { User, Selection, TrendingThumb, RegularThumb } from '@prisma/clien
 export type SelectionWithRegularThumbs = Selection & {
   RegularThumb: RegularThumb
 }
+
+export type SelectionWithTrendingThumbs = Selection & {
+  TrendingThumb: TrendingThumb
+}
