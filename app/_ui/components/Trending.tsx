@@ -1,5 +1,10 @@
 import TrendingCard from "@/app/_ui/components/TrendingCard";
 import { trpc } from "@/lib/server/trpc";
+// import { Selection, TrendingThumb } from '@prisma/client'
+
+// type SelectionWithTrendingThumbs = Selection & {
+//   TrendingThumb: TrendingThumb
+// }
 
 
 const Trending = ({search} : {search: string}) => {
