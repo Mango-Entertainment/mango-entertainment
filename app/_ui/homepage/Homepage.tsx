@@ -4,15 +4,6 @@ import Recommended from '@/app/_ui/components/Recommended'
 import Search from '@/app/_ui/components/Search'
 import Trending from '@/app/_ui/components/Trending'
 import { ChangeEvent, useState } from 'react'
-import { Selection, TrendingThumb, RegularThumb } from '@prisma/client'
-
-type SelectionWithTrendingThumbs = Selection & {
-  TrendingThumb: TrendingThumb
-}
-
-type SelectionWithRegularThumbs = Selection & {
-  RegularThumb: RegularThumb
-}
 
 const Homepage = () => {
   const [search, setSearch] = useState('')

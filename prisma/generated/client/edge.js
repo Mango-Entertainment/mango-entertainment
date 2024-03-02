@@ -150,7 +150,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/dev/code/mango-entertainment/prisma/generated/client",
+      "value": "/Users/alexcurtisslep/Documents/mango-entertainment/prisma/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -159,7 +159,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
@@ -167,8 +167,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../..",
   "clientVersion": "5.9.1",
