@@ -1,11 +1,18 @@
-'use client'
+import { SelectionWithRegularThumbs } from '@/types/db'
+import { trpc } from '@/lib/server/trpc'
+import SectionComponent from '@/app/_ui/components/SectionComponent'
 
-import SectionComponent from "@/app/_ui/components/SectionComponent";
-
-const Recommended = ({search}: {search: string}) => {
-  return (
-    <SectionComponent section="Recommended" bookmarked={false} search={search} />    
-  );
+const getRecommendedData = (search: string) => {
+  const recommendedData = trpc.recommended.useQuery(search)
+  return recommendedData?.data?.data?.selections as SelectionWithRegularThumbs[]
 }
 
-export default Recommended;
+const Recommended = ({ search }: { search: string }) => {
+  const sectionData = getRecommendedData(search)
+
+  if (!sectionData) null
+
+  return <SectionComponent sectionData={sectionData} section="Recommended" />
+}
+
+export default Recommended

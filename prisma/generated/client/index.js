@@ -151,7 +151,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/alexcurtisslep/Documents/projects/mango-entertainment/prisma/generated/client",
+      "value": "/home/dev/code/mango-entertainment/prisma/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -160,7 +160,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
@@ -178,6 +178,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -187,7 +188,8 @@ const config = {
     }
   },
   "inlineSchema": "Ly8gVGhpcyBpcyB5b3VyIFByaXNtYSBzY2hlbWEgZmlsZSwKLy8gbGVhcm4gbW9yZSBhYm91dCBpdCBpbiB0aGUgZG9jczogaHR0cHM6Ly9wcmlzLmx5L2QvcHJpc21hLXNjaGVtYQoKZ2VuZXJhdG9yIGNsaWVudCB7CiAgcHJvdmlkZXIgPSAicHJpc21hLWNsaWVudC1qcyIKICAvLyBwcmV2aWV3RmVhdHVyZXMgPSBbImZ1bGxUZXh0U2VhcmNoIl0KICBvdXRwdXQgICA9ICIuL2dlbmVyYXRlZC9jbGllbnQiCn0KCmRhdGFzb3VyY2UgZGIgewogIHByb3ZpZGVyID0gInBvc3RncmVzcWwiCiAgdXJsICAgICAgPSBlbnYoIlBPU1RHUkVTX1BSSVNNQV9VUkwiKQogIGRpcmVjdFVybCA9IGVudigiUE9TVEdSRVNfVVJMX05PTl9QT09MSU5HIikKfQoKbW9kZWwgVXNlciB7CiAgaWQgICAgICBTdHJpbmcgICBAaWQgQGRlZmF1bHQodXVpZCgpKQogIGNsZXJrX2lkIFN0cmluZwogIG5hbWUgICAgICBTdHJpbmcgICAKICBlbWFpbCAgICBTdHJpbmcgQHVuaXF1ZQogIHJvbGUgU3RyaW5nIEBkZWZhdWx0KCJ1c2VyIikKICBjcmVhdGVkQXQgRGF0ZVRpbWUgQGRlZmF1bHQobm93KCkpCiAgdXBkYXRlZEF0IERhdGVUaW1lIEB1cGRhdGVkQXQKfQoKbW9kZWwgU2VsZWN0aW9uIHsKICBpZCAgICAgIFN0cmluZyAgIEBpZCBAZGVmYXVsdCh1dWlkKCkpCiAgdGl0bGUgICBTdHJpbmcgICBAZGIuVmFyQ2hhcigyNTUpCiAgeWVhciAgICBJbnQgICAgICBAZGIuSW50ZWdlcgogIGNhdGVnb3J5IFN0cmluZyAgQGRiLlZhckNoYXIoMjU1KQogIHJhdGluZyAgU3RyaW5nICAgQGRiLlZhckNoYXIoMjU1KQogIGlzX2Jvb2ttYXJrZWQgQm9vbGVhbiBAZGIuQm9vbGVhbgogIGlzX3RyZW5kaW5nIEJvb2xlYW4gQGRiLkJvb2xlYW4KICBSZWd1bGFyVGh1bWIgUmVndWxhclRodW1iPwogIFRyZW5kaW5nVGh1bWIgVHJlbmRpbmdUaHVtYj8KfQoKbW9kZWwgUmVndWxhclRodW1iIHsKICBpZCAgICAgIFN0cmluZyAgIEBpZCBAZGVmYXVsdCh1dWlkKCkpCiAgbGFyZ2UgICBTdHJpbmcgICBAZGIuVmFyQ2hhcigyNTUpCiAgc21hbGwgICBTdHJpbmcgICBAZGIuVmFyQ2hhcigyNTUpCiAgbWVkaXVtICAgU3RyaW5nICAgQGRiLlZhckNoYXIoMjU1KQogIHNlbGVjdGlvbl9pZCBTdHJpbmcgQHVuaXF1ZQogIFNlbGVjdGlvbiBTZWxlY3Rpb24gQHJlbGF0aW9uKGZpZWxkczpbc2VsZWN0aW9uX2lkXSwgcmVmZXJlbmNlczpbaWRdLCBvbkRlbGV0ZTogTm9BY3Rpb24sIG9uVXBkYXRlOiBOb0FjdGlvbikKfQoKbW9kZWwgVHJlbmRpbmdUaHVtYiB7CiAgaWQgICAgICBTdHJpbmcgICBAaWQgQGRlZmF1bHQodXVpZCgpKQogIGxhcmdlICAgU3RyaW5nICAgQGRiLlZhckNoYXIoMjU1KQogIHNtYWxsICAgU3RyaW5nICAgQGRiLlZhckNoYXIoMjU1KQogIHNlbGVjdGlvbl9pZCBTdHJpbmcgQHVuaXF1ZQogIFNlbGVjdGlvbiBTZWxlY3Rpb24gQHJlbGF0aW9uKGZpZWxkczpbc2VsZWN0aW9uX2lkXSwgcmVmZXJlbmNlczpbaWRdLCBvbkRlbGV0ZTogTm9BY3Rpb24sIG9uVXBkYXRlOiBOb0FjdGlvbikKfQ==",
-  "inlineSchemaHash": "ee86845476b6e94f609c319d73a771dd780c0888819ee22933ed31fd0326c198"
+  "inlineSchemaHash": "ee86845476b6e94f609c319d73a771dd780c0888819ee22933ed31fd0326c198",
+  "noEngine": false
 }
 
 const fs = require('fs')
@@ -224,8 +226,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
-path.join(process.cwd(), "prisma/generated/client/libquery_engine-darwin-arm64.dylib.node")
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "prisma/generated/client/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "prisma/generated/client/schema.prisma")
