@@ -1,4 +1,4 @@
-const eslintConfigPrettier = require('eslint-config-prettier')
+// const eslintConfigPrettier = require('eslint-config-prettier')
 
 module.exports = {
   root: true,
@@ -29,5 +29,5 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
   },
-  eslintConfigPrettier,
+  // eslintConfigPrettier,
 }
