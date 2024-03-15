@@ -3,7 +3,7 @@
 import { trpc } from '@/lib/server/trpc'
 import SectionComponent from '@/app/_ui/components/SectionComponent'
 import Search from '../components/Search'
-import { ChangeEvent, useState } from 'react'
+import { type ChangeEvent, useState } from 'react'
 
 const getSeriesData = (search: string) => {
   const seriesData = trpc.getSeries.useQuery({search})
