@@ -1,4 +1,4 @@
-import userRouter from '@/lib/server/routes/users/user-route'
+import {userRouter} from '@/lib/server/routes/users/users'
 // import selectionRouter from '@/lib/server/routes/selections/selection-route'
 import { t } from '@/lib/server/trpc-server'
 import { createServerSideHelpers } from '@trpc/react-query/server'

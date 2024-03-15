@@ -1,5 +1,5 @@
 'use client'
-import { useState, FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -9,6 +9,7 @@ import Image from 'next/image'
 import { zodResolver } from '@hookform/resolvers/zod'
 import queryClient from '@/lib/server/query-client'
 import { trpc } from '@/lib/server/trpc'
+import { hasErrorType } from '@/lib/utils/utils'
 
 const FormFieldsSchema = z
   .object({
@@ -32,7 +33,7 @@ type FormFields = z.infer<typeof FormFieldsSchema>
 const Signup = () => {
   const { isSignedIn } = useUser()
   const { isLoaded, signUp, setActive } = useSignUp()
-  const [clerkError, setClerkError] = useState(null)
+  const [clerkError, setClerkError] = useState<string | null>(null)
   const router = useRouter()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -85,8 +86,11 @@ const Signup = () => {
       setName(name)
       setEmail(emailAddress)
       setVerifying(true)
-    } catch (err: any) {
-      setClerkError(err.errors[0].message)
+    } catch (err) {
+      if (hasErrorType(err)) {
+        const message = err.errors[0]?.message ?? null
+        setClerkError(message)
+      }
     }
   }
 
@@ -106,8 +110,8 @@ const Signup = () => {
         await setActive({ session: completeSignUp.createdSessionId })
         console.log(JSON.stringify(completeSignUp, null, 2))
         // ADD USERS NAME, EMAIL, AND USER ID TO OUR DATABASE
-        const clerk_id: string = completeSignUp.createdUserId || ''
-        mutate({ name, email, clerk_id })
+        const clerkId: string = completeSignUp.createdUserId ?? ''
+        mutate({ name, email, clerkId })
 
         router.push('/')
       }
