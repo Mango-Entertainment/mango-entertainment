@@ -1,14 +1,13 @@
 'use client'
 
-import { SelectionWithRegularThumbs } from '@/types/db'
 import { trpc } from '@/lib/server/trpc'
 import SectionComponent from '@/app/_ui/components/SectionComponent'
 import Search from '../components/Search'
 import { ChangeEvent, useState } from 'react'
 
 const getSeriesData = (search: string) => {
-  const seriesData = trpc.series.useQuery(search)
-  return seriesData?.data?.data?.selections as SelectionWithRegularThumbs[]
+  const seriesData = trpc.getSeries.useQuery({search})
+  return seriesData.data
 }
 
 const Series = () => {
