@@ -1,8 +1,11 @@
-import userRouter from '@/lib/server/routes/users/user-route'
-import selectionRouter from '@/lib/server/routes/selections/selection-route'
+import {userRouter} from '@/lib/server/routes/users/users'
+// import selectionRouter from '@/lib/server/routes/selections/selection-route'
 import { t } from '@/lib/server/trpc-server'
 import { createServerSideHelpers } from '@trpc/react-query/server'
 import SuperJSON from 'superjson'
+import { selectionRouter } from '@/lib/server/routes/selections/selections'
+import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
+
 
 const healthCheckerRouter = t.router({
   healthchecker: t.procedure.query(({ ctx }) => {
@@ -15,6 +18,7 @@ const healthCheckerRouter = t.router({
 
 export const appRouter = t.mergeRouters(userRouter, selectionRouter, healthCheckerRouter)
 
+
 export const createSSRHelper = () =>
   createServerSideHelpers({
     router: appRouter,
@@ -23,3 +27,5 @@ export const createSSRHelper = () =>
   })
 
 export type AppRouter = typeof appRouter
+export type RouterInputs = inferRouterInputs<AppRouter>
+export type RouterOutputs = inferRouterOutputs<AppRouter>

@@ -1,19 +1,18 @@
 'use client'
 
-import { SelectionWithRegularThumbs } from '@/types/db'
 import { trpc } from '@/lib/server/trpc'
 import Search from '@/app/_ui/components/Search'
 import SectionComponent from '@/app/_ui/components/SectionComponent'
-import { ChangeEvent, useState } from 'react'
+import { type ChangeEvent, useState } from 'react'
 
 const getBookmarkedSeriesData = (search: string) => {
-  const seriesData = trpc.bookmarked_series.useQuery(search)
-  return seriesData?.data?.data?.selections as SelectionWithRegularThumbs[]
+  const seriesData = trpc.getBookmarkedSeries.useQuery({search})
+  return seriesData.data
 }
 
 const getBookmarkedMovieData = (search: string) => {
-  const seriesData = trpc.bookmarked_movies.useQuery(search)
-  return seriesData?.data?.data?.selections as SelectionWithRegularThumbs[]
+  const seriesData = trpc.getBookmarkedMovies.useQuery({search})
+  return seriesData.data
 }
 
 const Bookmarks = () => {

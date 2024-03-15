@@ -1,14 +1,14 @@
 import RegularCard from "@/app/_ui/components/RegularCard";
-import { SelectionWithRegularThumbs } from "@/types/db";
 import { FC } from "react";
+import { type RouterOutputs } from "@/app/api/trpc/trpc-router";
 
-interface SectionComponentProps {
-  sectionData: SelectionWithRegularThumbs[]
+type SectionComponentProps = {
+  sectionData: RouterOutputs["getRecommended"] | undefined
   section: string
 }
 
 const SectionComponent: FC<SectionComponentProps> = ({sectionData, section}) => {
-  if (sectionData && sectionData.length < 1) return
+  if (sectionData && sectionData.results < 1) return
 
   return (
     <div className="ml-4 text-entertainment-pure-white">
@@ -16,7 +16,7 @@ const SectionComponent: FC<SectionComponentProps> = ({sectionData, section}) => 
         {section}
       </h1>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 mb-8">
-        {sectionData?.map((selection) => {
+        {sectionData?.data.map((selection) => {
           const largeThumb = selection.RegularThumb?.large.slice(8) || null
           if (!largeThumb) return
           return (

@@ -1,15 +1,14 @@
-import { SelectionWithTrendingThumbs } from '@/types/db'
 import { trpc } from "@/lib/server/trpc";
 import TrendingCard from "@/app/_ui/components/TrendingCard";
 
 const getTrendingData = (search: string) => {
-  const trendingData = trpc.trending.useQuery(search)
-  return trendingData?.data?.data?.selections as SelectionWithTrendingThumbs[]
+  const trendingData = trpc.getTrending.useQuery({search})
+  return trendingData.data
 }
 
 const Trending = ({search} : {search: string}) => {
   const trendingData = getTrendingData(search)
-  if(trendingData && trendingData.length < 1) return
+  if(trendingData && trendingData.results < 1) return
   return (
     <div className="ml-4 overflow-scroll text-entertainment-pure-white">
       <h1 className="mb-4 text-xl font-light md:text-3xl md:mb-6">Trending</h1>
@@ -18,7 +17,7 @@ const Trending = ({search} : {search: string}) => {
           className="flex mb-8 gap-4 flex-nowrap md:gap-10 w-max"
           id="carousel"
         >
-          {trendingData.map((selection) => {
+          {trendingData.data.map((selection) => {
             if (!selection.TrendingThumb?.large) return
             return (
               <TrendingCard
