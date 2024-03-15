@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useSignIn, useUser } from '@clerk/nextjs'
 import { useState } from 'react'
+import { hasErrorType } from '@/lib/utils/utils'
 
 const FormFieldsSchema = z.object({
   email: z.string().email(),
@@ -19,7 +20,7 @@ type FormFields = z.infer<typeof FormFieldsSchema>
 const Login = () => {
   const { isSignedIn } = useUser()
   const router = useRouter()
-  const [clerkError, setClerkError] = useState(null)
+  const [clerkError, setClerkError] = useState<string | null>(null)
   const {
     register,
     handleSubmit,
@@ -46,12 +47,15 @@ const Login = () => {
 
       if (result.status === 'complete') {
         await setActive({ session: result.createdSessionId })
-        router.push('/')
+        router.replace('/')
       } else {
         /*Investigate why the login hasn't completed */
       }
-    } catch (err: any) {
-      setClerkError(err.errors[0].message)
+    } catch (err) {
+      if (hasErrorType(err)) {
+        const message = err.errors[0]?.message ?? null
+        setClerkError(message)
+      }
     }
   }
   if (isSignedIn) {

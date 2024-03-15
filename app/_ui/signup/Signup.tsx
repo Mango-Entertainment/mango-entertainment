@@ -113,7 +113,7 @@ const Signup = () => {
         const clerkId: string = completeSignUp.createdUserId ?? ''
         mutate({ name, email, clerkId })
 
-        router.push('/')
+        router.replace('/')
       }
     } catch (err) {
       console.log('Error:', JSON.stringify(err, null, 2))
