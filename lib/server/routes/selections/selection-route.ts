@@ -4,20 +4,20 @@ import {
   getSeriesWithSearchHandler,
   getBookmarkedMoviesWithSearchHandler,
   getBookmarkedSeriesWithSearchHandler,
-  getSelectionsHandler,
+  // getSelectionsHandler,
   getTrendingWithSearchHandler,
 } from './selection-controller'
 import { t } from '@/lib/server/trpc-server'
-import { sectionFilterQuery, filterQuery, imageSelect, searchQuery } from '@/lib/server/routes/selections/selection-schema'
+import { searchQuery } from '@/lib/server/routes/selections/selection-schema'
 
 const selectionRouter = t.router({
-  selections: t.procedure.input(sectionFilterQuery).query(async (opts) => {
-    const { input } = opts
-    const data = await getSelectionsHandler({
-      sectionFilterQuery: input,
-    })
-    return data
-  }),
+  // selections: t.procedure.input(sectionFilterQuery).query(async (opts) => {
+  //   const { input } = opts
+  //   const data = await getSelectionsHandler({
+  //     sectionFilterQuery: input,
+  //   })
+  //   return data
+  // }),
   trending: t.procedure.input(searchQuery).query(async (opts) => {
     const { input } = opts
     const data = await getTrendingWithSearchHandler({
