@@ -43,7 +43,7 @@ const Signup = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, dirtyFields },
   } = useForm<FormFields>({ resolver: zodResolver(FormFieldsSchema) })
 
   const { mutate } = trpc.createUser.useMutation({
@@ -60,6 +60,8 @@ const Signup = () => {
       })
     },
   })
+
+console.log(dirtyFields)
 
   const signUpWithEmail = async ({
     emailAddress,
@@ -131,10 +133,13 @@ const Signup = () => {
           height={25.6}
         />
         <div className="h-auto bg-entertainment-semi-dark-blue rounded-xl md:rounded-3xl w-80 md:w-96">
-          <div className="p-6 md:p-8">
+          <div className="p-6 md:p-8 text-center">
             <h1 className="mb-6 text-3xl font-light text-entertainment-pure-white">
               Verification Code
             </h1>
+            <p className="font-light text-entertainment-pure-white">
+              Check your email for the code 📧
+            </p>
             <form onSubmit={handleVerify}>
               <input
                 value={code}
@@ -211,6 +216,16 @@ const Signup = () => {
                 required
               />
               <h2 className="text-entertainment-red mb-8">
+                {dirtyFields.password1 && (!errors.password1 && !clerkError) ? (
+                  <>
+                    <p className="text-entertainment-pure-white text-s">
+                      8 character minimum
+                    </p>
+                    <p className="text-entertainment-pure-white text-s">
+                      No common passwords (e.g. &quot;password123&quot;)
+                    </p>
+                  </>
+                ) : null}
                 {errors.email && <p>{errors.email.message}</p>}
                 {errors.password1 && <p>{errors.password1.message}</p>}
                 {errors.password2 && <p>{errors.password2.message}</p>}
