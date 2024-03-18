@@ -131,10 +131,13 @@ const Signup = () => {
           height={25.6}
         />
         <div className="h-auto bg-entertainment-semi-dark-blue rounded-xl md:rounded-3xl w-80 md:w-96">
-          <div className="p-6 md:p-8">
+          <div className="p-6 md:p-8 text-center">
             <h1 className="mb-6 text-3xl font-light text-entertainment-pure-white">
               Verification Code
             </h1>
+            <p className="font-light text-entertainment-pure-white">
+              Check your email for the code 📧
+            </p>
             <form onSubmit={handleVerify}>
               <input
                 value={code}
