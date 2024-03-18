@@ -3,7 +3,7 @@
 import Recommended from '@/app/_ui/components/Recommended'
 import Search from '@/app/_ui/components/Search'
 import Trending from '@/app/_ui/components/Trending'
-import { ChangeEvent, useState } from 'react'
+import { type ChangeEvent, useState } from 'react'
 
 const Homepage = () => {
   const [search, setSearch] = useState('')
