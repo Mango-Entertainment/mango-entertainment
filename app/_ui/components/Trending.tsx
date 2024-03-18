@@ -8,7 +8,7 @@ const getTrendingData = (search: string) => {
 
 const Trending = ({search} : {search: string}) => {
   const trendingData = getTrendingData(search)
-  if(trendingData && trendingData.results < 1) return
+  if(trendingData && trendingData.results < 1) return <></>
   return (
     <div className="ml-4 overflow-scroll text-entertainment-pure-white">
       <h1 className="mb-4 text-xl font-light md:text-3xl md:mb-6">Trending</h1>
