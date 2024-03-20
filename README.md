@@ -1,6 +1,3 @@
-<!-- [![alex-linkedin-shield]][alex-linkedin-url]
-[![steve-linkedin-shield]][steve-linkedin-url] -->
-
 <div align="center">
   <a href="https://github.com/grammerjam/tm-main/tree/main/project3C">
     <img src="./public/mango-entertainment.png" style="height:350px" />
@@ -25,7 +22,7 @@ Mango Entertainment allows you to curate the ripest mix of entertainment. TV ser
 
 [![TypeScript]][TypeScript-url][![Next JS]][Next-js-url][![Tailwindcss]][Tailwind-url]
 
-[![Postgres]][Postgres-url][![Prisma]][Prisma-url]
+[![Postgres]][Postgres-url][![Prisma]][Prisma-url][![tRPC]][tRPC-url]
 
 [![Clerk]][Clerk-url][![Vercel]][Vercel-url][![Docker]][Docker-url]
 
@@ -33,7 +30,8 @@ Mango Entertainment allows you to curate the ripest mix of entertainment. TV ser
 
 <!-- BASIC REQUIREMENTS -->
 
-Git, Node.js, and NPM are required to run this project locally.
+Git, Node.js, and PNPM are required to run this project locally.
+VSCode is required for setting up the dev container.
 You'll also have to have an account at Clerk.
 
 ### Clone the repo to your machine:
@@ -43,10 +41,10 @@ Copy this and run it in your terminal:
 ```bash
 git clone https://github.com/Mango-Entertainment/mango-entertainment.git
 cd mango-entertainment
-npm install
+pnpm install
 ```
 
-At the root of the project, run this command in the terminal:`touch .env.local`.
+At the root of the project, run this command in the terminal:`touch .env.local .env`.
 
 #### Make an account on [clerk.com](https://clerk.com/)
 Once your account is created, click add application from your Clerk dashboard.
@@ -60,42 +58,35 @@ NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=<YOUR_KEY>
+CLERK_SECRET_KEY=<YOUR_SECRET>
 ```
 
-## Docker setup
+Then copy and paste this into `.env`:
 
-Open the Docker app ([install it](https://www.docker.com/products/docker-desktop/) if you don't have it).
-
-Create a file at the root of the project by running `touch .env`.
-
-Add this to `.env`:
 ```bash
-POSTGRES_HOST=127.0.0.1
-POSTGRES_PORT=6500
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=password123
-POSTGRES_DB=trpc_prisma
-
-POSTGRES_PRISMA_URL=postgresql://postgres:password123@localhost:6500/trpc_prisma
-POSTGRES_URL_NON_POOLING=postgresql://postgres:password123@localhost:6500/trpc_prisma
-
-PGADMIN_DEFAULT_EMAIL=admin@admin.com
-PGADMIN_DEFAULT_PASSWORD=password123
-
-PORT=3000
+POSTGRES_PRISMA_URL=postgres://postgres:postgres@localhost:5432/postgres
+POSTGRES_URL_NON_POOLING=postgres://postgres:postgres@localhost:5432/postgres
 ```
 
-In the terminal run `docker-compose up -d`
+## Run app in a container
+
+Make sure you have Docker installed, the Docker daemon running, and the [remote containers extension][dev-container-extension-url] for VSCode. If you open this folder in VSCode, it should ask you to open it in a container. Choose open in container.
+
+For more info about developing inside a container, [check this out][container-info-url].
 
 ## Prisma setup
 
-Run this terminal command:
+Run these terminal commands:
 
-`npx prisma migrate dev`
+```bash
+npx prisma migrate dev
+npx prisma db seed
+```
 
 ## Run the project
 
-Now you're ready to run the project! Run `npm run dev`.
+Now you're ready to run the project! Run `pnpm dev`.
 
 This runs the project on port 3000.
 
@@ -145,6 +136,9 @@ Alex Curtis-Slep
 [Prisma]: https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white
 [Prisma-url]: https://www.prisma.io/
 
+[tRPC]: https://img.shields.io/badge/tRPC-2596BE?logo=trpc&logoColor=fff&style=for-the-badge
+[tRPC-url]: https://trpc.io/
+
 [Clerk]: https://img.shields.io/badge/Clerk-6C47FF.svg?style=for-the-badge&logo=Clerk&logoColor=white
 [Clerk-url]: https://clerk.com/
 
@@ -153,3 +147,7 @@ Alex Curtis-Slep
 
 [Docker]: https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white
 [Docker-url]: https://www.docker.com/
+
+[dev-container-extension-url]: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
+
+[container-info-url]: https://code.visualstudio.com/docs/devcontainers/containers

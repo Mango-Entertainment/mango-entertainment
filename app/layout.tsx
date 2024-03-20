@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from 'react'
+import { type FC, type ReactNode } from 'react'
 import { outfit } from './_ui/fonts'
 import './globals.css'
 import Navbar from './_ui/components/Navbar'
