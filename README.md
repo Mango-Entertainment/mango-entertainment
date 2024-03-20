@@ -33,7 +33,7 @@ Mango Entertainment allows you to curate the ripest mix of entertainment. TV ser
 
 <!-- BASIC REQUIREMENTS -->
 
-Git, Node.js, and NPM are required to run this project locally.
+Git, Node.js, and PNPM are required to run this project locally.
 You'll also have to have an account at Clerk.
 
 ### Clone the repo to your machine:
