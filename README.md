@@ -71,7 +71,7 @@ POSTGRES_URL_NON_POOLING=postgres://postgres:postgres@localhost:5432/postgres
 
 ## Run app in a container
 
-Make sure you have Docker installed, the Docker daemon running, and the [remote containers extension][dev-container-extension-url] for VSCode. If you open this folder in VSCode, it should ask you to open it in a container. Choose open in container.
+Make sure you have Docker installed, the Docker daemon running, and the [remote containers extension][dev-container-extension-url] for VSCode. If you open this folder in VSCode, it should ask you to open it in a container. Choose reopen in container.
 
 For more info about developing inside a container, [check this out][container-info-url].
 
