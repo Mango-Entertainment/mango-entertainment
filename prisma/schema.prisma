@@ -21,6 +21,7 @@ model User {
   role String @default("user")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  bookmarks Bookmarks[]
 }
 
 model Selection {
@@ -29,10 +30,10 @@ model Selection {
   year    Int      @db.Integer
   category String  @db.VarChar(255)
   rating  String   @db.VarChar(255)
-  is_bookmarked Boolean @db.Boolean
   is_trending Boolean @db.Boolean
   RegularThumb RegularThumb?
   TrendingThumb TrendingThumb?
+  bookmarks Bookmarks[]
 }
 
 model RegularThumb {
@@ -50,4 +51,14 @@ model TrendingThumb {
   small   String   @db.VarChar(255)
   selection_id String @unique
   Selection Selection @relation(fields:[selection_id], references:[id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Bookmarks {
+  user_id String
+  selection_id String
+  user  User @relation(fields: [user_id], references: [id])
+  selection Selection @relation(fields:[selection_id], references:[id])
+  assignedAt DateTime @default(now())
+
+  @@id([user_id, selection_id])
 }

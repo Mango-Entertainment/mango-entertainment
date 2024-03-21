@@ -8,7 +8,7 @@ async function main() {
     const record_id = crypto.randomUUID()
     const regular_id = crypto.randomUUID()
     const trending_id = crypto.randomUUID()
-    const { title, year, rating, category, isTrending, isBookmarked, thumbnail } = selection
+    const { title, year, rating, category, isTrending, thumbnail } = selection
     const { regular, trending } = thumbnail
 
     if(trending) {
@@ -20,7 +20,6 @@ async function main() {
           rating: rating,
           category: category,
           year: year,
-          is_bookmarked: isBookmarked,
           is_trending: isTrending,
           RegularThumb: {
             create: {
@@ -49,7 +48,6 @@ async function main() {
           rating: rating,
           category: category,
           year: year,
-          is_bookmarked: isBookmarked,
           is_trending: isTrending,
           RegularThumb: {
             create: {

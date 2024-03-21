@@ -90,48 +90,48 @@ export const selectionRouter = t.router({
         data: selections,
       }
     }),
-  getBookmarkedMovies: t.procedure
-    .input(z.object({ search: z.string() }))
-    .query(async ({ ctx, input }) => {
-      const selections = await prisma.selection.findMany({
-        where: {
-          title: {
-            mode: 'insensitive',
-            contains: input.search,
-          },
-          category: 'Movie',
-          is_bookmarked: true,
-        },
-        include: {
-          RegularThumb: true,
-        },
-      })
-      return {
-        status: 'success',
-        results: selections.length,
-        data: selections,
-      }
-    }),
-  getBookmarkedSeries: t.procedure
-    .input(z.object({ search: z.string() }))
-    .query(async ({ ctx, input }) => {
-      const selections = await prisma.selection.findMany({
-        where: {
-          title: {
-            mode: 'insensitive',
-            contains: input.search,
-          },
-          category: 'TV Series',
-          is_bookmarked: true,
-        },
-        include: {
-          RegularThumb: true,
-        },
-      })
-      return {
-        status: 'success',
-        results: selections.length,
-        data: selections,
-      }
-    }),
+  // getBookmarkedMovies: t.procedure
+  //   .input(z.object({ search: z.string() }))
+  //   .query(async ({ ctx, input }) => {
+  //     const selections = await prisma.selection.findMany({
+  //       where: {
+  //         title: {
+  //           mode: 'insensitive',
+  //           contains: input.search,
+  //         },
+  //         category: 'Movie',
+  //         is_bookmarked: true,
+  //       },
+  //       include: {
+  //         RegularThumb: true,
+  //       },
+  //     })
+  //     return {
+  //       status: 'success',
+  //       results: selections.length,
+  //       data: selections,
+  //     }
+  //   }),
+  // getBookmarkedSeries: t.procedure
+  //   .input(z.object({ search: z.string() }))
+  //   .query(async ({ ctx, input }) => {
+  //     const selections = await prisma.selection.findMany({
+  //       where: {
+  //         title: {
+  //           mode: 'insensitive',
+  //           contains: input.search,
+  //         },
+  //         category: 'TV Series',
+  //         is_bookmarked: true,
+  //       },
+  //       include: {
+  //         RegularThumb: true,
+  //       },
+  //     })
+  //     return {
+  //       status: 'success',
+  //       results: selections.length,
+  //       data: selections,
+  //     }
+  //   }),
 })

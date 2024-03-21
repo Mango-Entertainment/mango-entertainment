@@ -11,8 +11,8 @@ export const userRouter = t.router({
   getUserById: t.procedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
-      return prisma.user.findUnique({
-        where: { id: input.id },
+      return prisma.user.findFirst({
+        where: { clerk_id: input.id },
       })
     }),
   createUser: t.procedure

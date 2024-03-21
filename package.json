@@ -9,7 +9,8 @@
     "lint": "next lint",
     "cleanup": "eslint --ignore-path .eslintignore --ext .js,.ts",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "postinstall": "npx prisma generate"
+    "postinstall": "npx prisma generate",
+    "studio": "dotenv -e .env.local -- pnpx prisma studio"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seeds/seed.ts"
@@ -44,6 +45,8 @@
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "autoprefixer": "^10.0.1",
+    "dotenv": "^16.4.5",
+    "dotenv-cli": "^7.4.1",
     "eslint": "^8.56.0",
     "eslint-config-next": "14.0.3",
     "eslint-config-prettier": "^9.1.0",
