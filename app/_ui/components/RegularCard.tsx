@@ -1,5 +1,14 @@
 import Image from 'next/image'
-import { FC } from 'react'
+import { type FC } from 'react'
+import { useUser } from "@clerk/nextjs";
+import { trpc } from "@/lib/server/trpc";
+
+// Each selection (regular card) has a bookmark icon for logged in users
+// Logged in user can click bookmark icon to add/remove bookmarks
+// To do that we need to: get userID, and the selectionID (rewrite server action accordingly)
+// trigger the mutation call to the db
+// Bookmarks toggle and are tied to the current user
+// 
 
 interface RegularCardProps {
   id: string
@@ -15,8 +24,8 @@ const RegularCard: FC<RegularCardProps> = ({
   id,
   title,
   year,
-  category,
   is_bookmarked,
+  category,
   rating,
   imageString
 }) => {
@@ -24,6 +33,25 @@ const RegularCard: FC<RegularCardProps> = ({
     category === 'Movie'
       ? '/icon-category-movie.svg'
       : '/icon-category-tv.svg'
+
+const {user} = useUser()
+const user_id = user?.id ?? ""
+
+const getBookmark = (user_id: string, selection_id: string) => {
+    const is_bookmarked = trpc.getBookmark.useQuery({user_id, selection_id})
+    return is_bookmarked.data
+}
+
+const toggleBookmark = (user_id: string, selection_id: string) => {
+    console.log(`user with id ${user_id} is bookmarking selection ${selection_id}`)
+    if(getBookmark(user_id, selection_id)) {
+        console.log('found a bookmark')
+        // deleteBookmark(user_id, selection_id)
+    } else {
+        console.log('no bookmark found')
+        // addBookmark(user_id, selection_id)
+    }
+}
 
   return (
     <div className="relative w-40 entertainment-pure-white md:w-56">
@@ -34,7 +62,7 @@ const RegularCard: FC<RegularCardProps> = ({
         height={174}
         alt="trending image"
       />
-      <div className="absolute flex content-center justify-center top-2 right-2 md:top-4 md:right-4">
+      <div onClick={() => toggleBookmark(user_id, id)} className="absolute flex content-center justify-center top-2 right-2 md:top-4 md:right-4">
         {is_bookmarked ? (
           <Image
             src="/icon-bookmark-full.svg"

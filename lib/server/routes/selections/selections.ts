@@ -17,6 +17,7 @@ export const selectionRouter = t.router({
         },
         include: {
           RegularThumb: true,
+          // bookmarks: 
         },
       })
       return {
