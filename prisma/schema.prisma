@@ -54,11 +54,13 @@ model TrendingThumb {
 }
 
 model Bookmarks {
+  id      String   @id @default(uuid())
   user_id String
   selection_id String
   user  User @relation(fields: [user_id], references: [id])
   selection Selection @relation(fields:[selection_id], references:[id])
   assignedAt DateTime @default(now())
+  bookmarked Boolean
 
-  @@id([user_id, selection_id])
+  @@unique([user_id, selection_id], name: "user_selection")
 }

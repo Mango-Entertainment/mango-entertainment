@@ -3,6 +3,7 @@ import { type FC } from 'react'
 import { useUser } from "@clerk/nextjs";
 import { trpc } from "@/lib/server/trpc";
 
+
 // Each selection (regular card) has a bookmark icon for logged in users
 // Logged in user can click bookmark icon to add/remove bookmarks
 // To do that we need to: get userID, and the selectionID (rewrite server action accordingly)
@@ -24,7 +25,6 @@ const RegularCard: FC<RegularCardProps> = ({
   id,
   title,
   year,
-  is_bookmarked,
   category,
   rating,
   imageString
@@ -34,23 +34,33 @@ const RegularCard: FC<RegularCardProps> = ({
       ? '/icon-category-movie.svg'
       : '/icon-category-tv.svg'
 
-const {user} = useUser()
+
+const {user, isSignedIn} = useUser()
 const user_id = user?.id ?? ""
 
-const getBookmark = (user_id: string, selection_id: string) => {
-    const is_bookmarked = trpc.getBookmark.useQuery({user_id, selection_id})
-    return is_bookmarked.data
-}
+const is_bookmarked = trpc.getBookmark.useQuery({ user_id, selection_id: id })
+const set_bookmarked = trpc.createBookmark.useMutation({
+  onSettled: async () => {
+    await is_bookmarked.refetch()
+  }
+})
 
-const toggleBookmark = (user_id: string, selection_id: string) => {
-    console.log(`user with id ${user_id} is bookmarking selection ${selection_id}`)
-    if(getBookmark(user_id, selection_id)) {
-        console.log('found a bookmark')
-        // deleteBookmark(user_id, selection_id)
-    } else {
-        console.log('no bookmark found')
-        // addBookmark(user_id, selection_id)
-    }
+const toggleBookmark = async () => {
+                set_bookmarked.mutate({
+                  user_id: user_id,
+                  selection_id: id,
+                  bookmarked: !is_bookmarked.data?.bookmarked
+                })
+    // if (is_bookmarked.data?.id) {
+    //   if (is_bookmarked.data?.id === undefined) return
+    //     trpc.createBookmark.useMutation({
+          
+    //     })
+    //   // deleteBookmark(user_id, selection_id)
+    // } else {
+    //   console.log('no bookmark found')
+    //   // addBookmark(user_id, selection_id)
+    // }
 }
 
   return (
@@ -62,23 +72,29 @@ const toggleBookmark = (user_id: string, selection_id: string) => {
         height={174}
         alt="trending image"
       />
-      <div onClick={() => toggleBookmark(user_id, id)} className="absolute flex content-center justify-center top-2 right-2 md:top-4 md:right-4">
-        {is_bookmarked ? (
-          <Image
-            src="/icon-bookmark-full.svg"
-            height={32}
-            width={32}
-            alt="bookmark icon"
-          />
-        ) : (
-          <Image
-            src="/icon-bookmark-empty.svg"
-            height={32}
-            width={32}
-            alt="bookmark icon"
-          />
-        )}
-      </div>
+      {isSignedIn ? (
+        <div
+          onClick={() => toggleBookmark()}
+          className="absolute flex content-center justify-center top-2 right-2 md:top-4 md:right-4"
+        >
+          {is_bookmarked.data?.bookmarked ? (
+            <Image
+              src="/icon-bookmark-full.svg"
+              height={32}
+              width={32}
+              alt="bookmark icon"
+            />
+          ) : (
+            <Image
+              src="/icon-bookmark-empty.svg"
+              height={32}
+              width={32}
+              alt="bookmark icon"
+            />
+          )}
+        </div>
+       ) : ( <></> )
+       }
       <div className="w-full">
         <div className="flex gap-1 text-[11px] md:text-sm font-light items-center opacity-75">
           {year}
