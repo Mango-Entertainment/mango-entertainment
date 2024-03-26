@@ -11,7 +11,7 @@ export const userRouter = t.router({
   getUserById: t.procedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
-      return prisma.user.findUnique({
+      return prisma.user.findFirst({
         where: { id: input.id },
       })
     }),
@@ -22,7 +22,7 @@ export const userRouter = t.router({
     .mutation(({ ctx, input }) => {
       return prisma.user.create({
         data: {
-          clerk_id: input.clerkId,
+          id: input.clerkId,
           name: input.name,
           email: input.email,
         },

@@ -17,6 +17,7 @@ export const selectionRouter = t.router({
         },
         include: {
           RegularThumb: true,
+          // bookmarks: 
         },
       })
       return {
@@ -91,47 +92,65 @@ export const selectionRouter = t.router({
       }
     }),
   getBookmarkedMovies: t.procedure
-    .input(z.object({ search: z.string() }))
+    .input(z.object({ search: z.string(), user_id: z.string() }))
     .query(async ({ ctx, input }) => {
-      const selections = await prisma.selection.findMany({
+      const selections = await prisma.bookmarks.findMany({
         where: {
-          title: {
-            mode: 'insensitive',
-            contains: input.search,
-          },
-          category: 'Movie',
-          is_bookmarked: true,
+          user_id: input.user_id,
+          bookmarked: true,
+          selection: {
+            is: {
+              category: "Movie",
+              title: {
+                mode: "insensitive",
+                contains: input.search
+              },
+            }
+          }
         },
         include: {
-          RegularThumb: true,
-        },
+          selection: {
+            include: {
+              RegularThumb: true
+            }
+          }
+        }
       })
       return {
         status: 'success',
         results: selections.length,
-        data: selections,
+        data: selections.map((item) => item.selection)
       }
     }),
   getBookmarkedSeries: t.procedure
-    .input(z.object({ search: z.string() }))
+    .input(z.object({ search: z.string(), user_id: z.string() }))
     .query(async ({ ctx, input }) => {
-      const selections = await prisma.selection.findMany({
+      const selections = await prisma.bookmarks.findMany({
         where: {
-          title: {
-            mode: 'insensitive',
-            contains: input.search,
+          user_id: input.user_id,
+          bookmarked: true,
+          selection: {
+            is: {
+              category: 'TV Series',
+              title: {
+                mode: 'insensitive',
+                contains: input.search,
+              },
+            },
           },
-          category: 'TV Series',
-          is_bookmarked: true,
         },
         include: {
-          RegularThumb: true,
+          selection: {
+            include: {
+              RegularThumb: true,
+            },
+          },
         },
       })
       return {
         status: 'success',
         results: selections.length,
-        data: selections,
+        data: selections.map((item) => item.selection)
       }
     }),
 })

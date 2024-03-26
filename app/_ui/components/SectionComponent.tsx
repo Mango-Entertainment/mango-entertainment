@@ -26,7 +26,6 @@ const SectionComponent: FC<SectionComponentProps> = ({sectionData, section}) => 
               title={selection.title}
               year={selection.year}
               category={selection.category}
-              is_bookmarked={selection.is_bookmarked}
               rating={selection.rating}
               imageString={largeThumb}
             />

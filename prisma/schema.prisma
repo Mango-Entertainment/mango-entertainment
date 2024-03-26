@@ -14,13 +14,14 @@ datasource db {
 }
 
 model User {
-  id      String   @id @default(uuid())
-  clerk_id String
+  // id      String   @id @default(uuid())
+  id String @id @unique
   name      String   
   email    String @unique
   role String @default("user")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  bookmarks Bookmarks[]
 }
 
 model Selection {
@@ -29,10 +30,10 @@ model Selection {
   year    Int      @db.Integer
   category String  @db.VarChar(255)
   rating  String   @db.VarChar(255)
-  is_bookmarked Boolean @db.Boolean
   is_trending Boolean @db.Boolean
   RegularThumb RegularThumb?
   TrendingThumb TrendingThumb?
+  bookmarks Bookmarks[]
 }
 
 model RegularThumb {
@@ -50,4 +51,17 @@ model TrendingThumb {
   small   String   @db.VarChar(255)
   selection_id String @unique
   Selection Selection @relation(fields:[selection_id], references:[id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Bookmarks {
+  id      String   @id @default(uuid())
+  user_id String
+  selection_id String
+  user  User @relation(fields: [user_id], references: [id])
+  selection Selection @relation(fields:[selection_id], references:[id])
+  assignedAt DateTime @default(now())
+  bookmarked Boolean
+
+  @@unique([user_id, selection_id], name: "user_selection")
+  @@index([user_id, selection_id])
 }

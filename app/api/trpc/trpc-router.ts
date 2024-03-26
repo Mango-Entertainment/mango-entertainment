@@ -5,6 +5,7 @@ import { createServerSideHelpers } from '@trpc/react-query/server'
 import SuperJSON from 'superjson'
 import { selectionRouter } from '@/lib/server/routes/selections/selections'
 import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
+import { bookmarkRouter } from '@/lib/server/routes/bookmarks/bookmarks'
 
 
 const healthCheckerRouter = t.router({
@@ -16,7 +17,7 @@ const healthCheckerRouter = t.router({
   }),
 })
 
-export const appRouter = t.mergeRouters(userRouter, selectionRouter, healthCheckerRouter)
+export const appRouter = t.mergeRouters(userRouter, selectionRouter, bookmarkRouter, healthCheckerRouter)
 
 
 export const createSSRHelper = () =>

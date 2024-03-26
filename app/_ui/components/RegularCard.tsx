@@ -1,9 +1,10 @@
 import Image from 'next/image'
-import { FC } from 'react'
+import { type FC } from 'react'
+import { useUser } from '@clerk/nextjs'
+import useBookmarks from '@/app/_hooks/useBookmarks'
 
 interface RegularCardProps {
   id: string
-  is_bookmarked: boolean
   title: string
   year: number
   category: string
@@ -16,14 +17,14 @@ const RegularCard: FC<RegularCardProps> = ({
   title,
   year,
   category,
-  is_bookmarked,
   rating,
-  imageString
+  imageString,
 }) => {
   const categoryIcon =
-    category === 'Movie'
-      ? '/icon-category-movie.svg'
-      : '/icon-category-tv.svg'
+    category === 'Movie' ? '/icon-category-movie.svg' : '/icon-category-tv.svg'
+
+  const { isSignedIn } = useUser()
+  const { is_bookmarked, toggleBookmark } = useBookmarks(id)
 
   return (
     <div className="relative w-40 entertainment-pure-white md:w-56">
@@ -34,23 +35,30 @@ const RegularCard: FC<RegularCardProps> = ({
         height={174}
         alt="trending image"
       />
-      <div className="absolute flex content-center justify-center top-2 right-2 md:top-4 md:right-4">
-        {is_bookmarked ? (
-          <Image
-            src="/icon-bookmark-full.svg"
-            height={32}
-            width={32}
-            alt="bookmark icon"
-          />
-        ) : (
-          <Image
-            src="/icon-bookmark-empty.svg"
-            height={32}
-            width={32}
-            alt="bookmark icon"
-          />
-        )}
-      </div>
+      {isSignedIn ? (
+        <div
+          onClick={() => toggleBookmark()}
+          className="absolute flex content-center justify-center top-2 right-2 md:top-4 md:right-4"
+        >
+          {is_bookmarked.data?.bookmarked ? (
+            <Image
+              src="/icon-bookmark-full.svg"
+              height={32}
+              width={32}
+              alt="bookmark icon"
+            />
+          ) : (
+            <Image
+              src="/icon-bookmark-empty.svg"
+              height={32}
+              width={32}
+              alt="bookmark icon"
+            />
+          )}
+        </div>
+      ) : (
+        <></>
+      )}
       <div className="w-full">
         <div className="flex gap-1 text-[11px] md:text-sm font-light items-center opacity-75">
           {year}
