@@ -5,7 +5,6 @@ import useBookmarks from '@/app/_hooks/useBookmarks'
 
 interface RegularCardProps {
   id: string
-  is_bookmarked: boolean
   title: string
   year: number
   category: string
