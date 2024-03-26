@@ -1,6 +1,7 @@
-import { type FC } from "react"
+import { type FC } from 'react'
 import Image from 'next/image'
 import { useUser } from '@clerk/nextjs'
+import useBookmarks from '@/app/_hooks/useBookmarks'
 
 interface TrendingCardProps {
   id: string
@@ -12,13 +13,19 @@ interface TrendingCardProps {
   imageString: string
 }
 
-const TrendingCard: FC<TrendingCardProps> = ({id, is_bookmarked, title, year, category, rating, imageString }) => {
+const TrendingCard: FC<TrendingCardProps> = ({
+  id,
+  title,
+  year,
+  category,
+  rating,
+  imageString,
+}) => {
   const categoryIcon =
-    category === "Movie"
-      ? "/icon-category-movie.svg"
-      : "/icon-category-tv.svg";
+    category === 'Movie' ? '/icon-category-movie.svg' : '/icon-category-tv.svg'
 
-  const {isSignedIn} = useUser()
+  const { isSignedIn } = useUser()
+  const { is_bookmarked, toggleBookmark } = useBookmarks(id)
 
   return (
     <div className="relative entertainment-pure-white w-60 md:w-auto">
@@ -30,8 +37,11 @@ const TrendingCard: FC<TrendingCardProps> = ({id, is_bookmarked, title, year, ca
         alt="trending image"
       />
       {isSignedIn ? (
-        <div className="absolute flex content-center justify-center top-2 right-2 md:top-4 md:right-6">
-          {is_bookmarked ? (
+        <div
+          onClick={() => toggleBookmark()}
+          className="absolute flex content-center justify-center top-2 right-2 md:top-4 md:right-6"
+        >
+          {is_bookmarked.data?.bookmarked ? (
             <Image
               src="/icon-bookmark-full.svg"
               height={32}
@@ -69,6 +79,6 @@ const TrendingCard: FC<TrendingCardProps> = ({id, is_bookmarked, title, year, ca
       </div>
     </div>
   )
-};
+}
 
 export default TrendingCard
