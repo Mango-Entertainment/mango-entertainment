@@ -31,12 +31,20 @@ export const bookmarkRouter = t.router({
           },
         },
         create: {
-            user_id: input.user_id,
-            selection_id: input.selection_id,
-            bookmarked: input.bookmarked,
+          user: {
+            connect: {
+              id: input.user_id,
+            },
+          },
+          selection: {
+            connect: {
+              id: input.selection_id,
+            },
+          },
+          bookmarked: input.bookmarked,
         },
         update: {
-            bookmarked: input.bookmarked,
+          bookmarked: input.bookmarked,
         },
       })
       return result

@@ -14,8 +14,8 @@ datasource db {
 }
 
 model User {
-  id      String   @id @default(uuid())
-  clerk_id String
+  // id      String   @id @default(uuid())
+  id String @id @unique
   name      String   
   email    String @unique
   role String @default("user")
@@ -63,4 +63,5 @@ model Bookmarks {
   bookmarked Boolean
 
   @@unique([user_id, selection_id], name: "user_selection")
+  @@index([user_id, selection_id])
 }

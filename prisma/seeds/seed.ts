@@ -4,6 +4,16 @@ const prisma = new PrismaClient()
 const data = require('./data.json')
 
 async function main() {
+  const deleteRegularThumb = prisma.regularThumb.deleteMany()
+  const deleteSelection = prisma.selection.deleteMany()
+  const deleteTrendingThumb = prisma.trendingThumb.deleteMany()
+  await prisma.$transaction([
+    deleteRegularThumb,
+    deleteTrendingThumb,
+    deleteSelection
+  ])
+
+
   data.map(async (selection: any) => {
     const record_id = crypto.randomUUID()
     const regular_id = crypto.randomUUID()
@@ -11,7 +21,7 @@ async function main() {
     const { title, year, rating, category, isTrending, thumbnail } = selection
     const { regular, trending } = thumbnail
 
-    if(trending) {
+    if(isTrending) {
       const addTrending = await prisma.selection.upsert({
         where: { id: record_id },
         update: {},

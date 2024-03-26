@@ -12,7 +12,7 @@ export const userRouter = t.router({
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
       return prisma.user.findFirst({
-        where: { clerk_id: input.id },
+        where: { id: input.id },
       })
     }),
   createUser: t.procedure
@@ -22,7 +22,7 @@ export const userRouter = t.router({
     .mutation(({ ctx, input }) => {
       return prisma.user.create({
         data: {
-          clerk_id: input.clerkId,
+          id: input.clerkId,
           name: input.name,
           email: input.email,
         },
