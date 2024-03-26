@@ -23,7 +23,6 @@ const Trending = ({search} : {search: string}) => {
               <TrendingCard
                 key={selection.id}
                 id={selection.id}
-                is_bookmarked={selection.is_bookmarked}
                 title={selection.title}
                 rating={selection.rating}
                 category={selection.category}
