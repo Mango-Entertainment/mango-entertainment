@@ -49,4 +49,19 @@ export const bookmarkRouter = t.router({
       })
       return result
     }),
+  getBookmarks: t.procedure
+    .input(z.object({ search: z.string(), user_id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const bookmarks = await prisma.bookmarks.findMany({
+        where: {
+          user_id: input.user_id,
+          bookmarked: true,
+        },
+      })
+      return {
+        status: 'success',
+        results: bookmarks.length,
+        data: bookmarks,
+      }
+    }),
 })

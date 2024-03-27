@@ -1,12 +1,19 @@
 import { trpc } from "@/lib/server/trpc";
 import TrendingCard from "@/app/_ui/components/TrendingCard";
+import { type RouterOutputs } from "@/app/api/trpc/trpc-router";
+import { type FC } from "react";
+
+type TrendingSectionProps = {
+  bookmarks: RouterOutputs["getBookmarks"] | undefined
+  search: string
+}
 
 const getTrendingData = (search: string) => {
   const trendingData = trpc.getTrending.useQuery({search})
   return trendingData.data
 }
 
-const Trending = ({search} : {search: string}) => {
+const Trending:FC<TrendingSectionProps> = ({search, bookmarks}) => {
   const trendingData = getTrendingData(search)
   if(trendingData && trendingData.results < 1) return <></>
   return (
@@ -18,6 +25,7 @@ const Trending = ({search} : {search: string}) => {
           id="carousel"
         >
           {trendingData.data.map((selection) => {
+            const bookmarked = bookmarks?.data.filter((bookmark) => bookmark.selection_id === selection.id)[0] ?? {bookmarked: false}
             if (!selection.TrendingThumb?.large) return
             return (
               <TrendingCard
@@ -28,6 +36,7 @@ const Trending = ({search} : {search: string}) => {
                 category={selection.category}
                 year={selection.year}
                 imageString={selection.TrendingThumb?.large.slice(8)}
+                bookmarked={bookmarked.bookmarked}
               />
             )
           })}

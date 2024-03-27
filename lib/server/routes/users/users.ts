@@ -13,6 +13,9 @@ export const userRouter = t.router({
     .query(({ ctx, input }) => {
       return prisma.user.findFirst({
         where: { id: input.id },
+        include: {
+          bookmarks: true
+        }
       })
     }),
   createUser: t.procedure

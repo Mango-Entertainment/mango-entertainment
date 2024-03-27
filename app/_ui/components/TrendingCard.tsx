@@ -10,6 +10,7 @@ interface TrendingCardProps {
   category: string
   rating: string
   imageString: string
+  bookmarked: boolean
 }
 
 const TrendingCard: FC<TrendingCardProps> = ({
@@ -19,12 +20,13 @@ const TrendingCard: FC<TrendingCardProps> = ({
   category,
   rating,
   imageString,
+  bookmarked,
 }) => {
   const categoryIcon =
     category === 'Movie' ? '/icon-category-movie.svg' : '/icon-category-tv.svg'
 
   const { isSignedIn } = useUser()
-  const { is_bookmarked, toggleBookmark } = useBookmarks(id)
+  const { toggleBookmark } = useBookmarks(id)
 
   return (
     <div className="relative entertainment-pure-white w-60 md:w-auto">
@@ -40,7 +42,7 @@ const TrendingCard: FC<TrendingCardProps> = ({
           onClick={() => toggleBookmark()}
           className="absolute flex content-center justify-center top-2 right-2 md:top-4 md:right-6"
         >
-          {is_bookmarked.data?.bookmarked ? (
+          {bookmarked ? (
             <Image
               src="/icon-bookmark-full.svg"
               height={32}
