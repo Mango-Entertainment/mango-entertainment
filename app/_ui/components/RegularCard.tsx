@@ -25,8 +25,8 @@ const RegularCard: FC<RegularCardProps> = ({
   const categoryIcon =
     category === 'Movie' ? '/icon-category-movie.svg' : '/icon-category-tv.svg'
 
-  const { isSignedIn } = useUser()
-  const { toggleBookmark } = useBookmarks(id)
+  const { isSignedIn, user } = useUser()
+  const toggleBookmark = useBookmarks()
 
   return (
     <div className="relative w-40 entertainment-pure-white md:w-56">
@@ -39,7 +39,7 @@ const RegularCard: FC<RegularCardProps> = ({
       />
       {isSignedIn ? (
         <div
-          onClick={() => toggleBookmark()}
+          onClick={() => toggleBookmark({selection_id: id, user_id: user.id})}
           className="absolute flex content-center justify-center top-2 right-2 md:top-4 md:right-4"
         >
           {bookmarked ? (
