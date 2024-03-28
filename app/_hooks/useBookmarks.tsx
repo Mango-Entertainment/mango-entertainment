@@ -1,25 +1,28 @@
-import { useUser } from '@clerk/nextjs'
 import { trpc } from '@/lib/server/trpc'
 
-const useBookmarks = (selection_id: string) => {
-  const { user } = useUser()
-  const user_id = user?.id ?? ''
-  const is_bookmarked = trpc.getBookmark.useQuery({ user_id, selection_id })
-  const set_bookmarked = trpc.createBookmark.useMutation({
-    onSettled: async () => {
-      await is_bookmarked.refetch()
+const useBookmarks = () => {
+  const utils = trpc.useUtils()
+  const { mutateAsync } = trpc.createBookmark.useMutation({
+    onSuccess: async () => {
+      await utils.getBookmarks.refetch()
+      await utils.getBookmarkedMovies.refetch()
+      await utils.getBookmarkedSeries.refetch()
     },
   })
 
-  const toggleBookmark = async () => {
-    set_bookmarked.mutate({
+  const toggleBookmark = async ({
+    selection_id,
+    user_id,
+  }: {
+    selection_id: string
+    user_id: string
+  }) => {
+    await mutateAsync({
       user_id: user_id,
-      selection_id: selection_id,
-      bookmarked: !is_bookmarked.data?.bookmarked,
+      selection_id: selection_id
     })
-    
   }
-  return { is_bookmarked, toggleBookmark}
+  return toggleBookmark
 }
 
 export default useBookmarks

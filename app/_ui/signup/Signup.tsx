@@ -61,7 +61,7 @@ const Signup = () => {
     },
   })
 
-console.log(dirtyFields)
+// console.log(dirtyFields)
 
   const signUpWithEmail = async ({
     emailAddress,

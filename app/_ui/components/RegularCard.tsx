@@ -10,6 +10,7 @@ interface RegularCardProps {
   category: string
   rating: string
   imageString: string
+  bookmarked: boolean
 }
 
 const RegularCard: FC<RegularCardProps> = ({
@@ -19,12 +20,13 @@ const RegularCard: FC<RegularCardProps> = ({
   category,
   rating,
   imageString,
+  bookmarked,
 }) => {
   const categoryIcon =
     category === 'Movie' ? '/icon-category-movie.svg' : '/icon-category-tv.svg'
 
-  const { isSignedIn } = useUser()
-  const { is_bookmarked, toggleBookmark } = useBookmarks(id)
+  const { isSignedIn, user } = useUser()
+  const toggleBookmark = useBookmarks()
 
   return (
     <div className="relative w-40 entertainment-pure-white md:w-56">
@@ -37,10 +39,10 @@ const RegularCard: FC<RegularCardProps> = ({
       />
       {isSignedIn ? (
         <div
-          onClick={() => toggleBookmark()}
+          onClick={() => toggleBookmark({selection_id: id, user_id: user.id})}
           className="absolute flex content-center justify-center top-2 right-2 md:top-4 md:right-4"
         >
-          {is_bookmarked.data?.bookmarked ? (
+          {bookmarked ? (
             <Image
               src="/icon-bookmark-full.svg"
               height={32}

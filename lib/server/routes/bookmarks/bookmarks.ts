@@ -17,12 +17,18 @@ export const bookmarkRouter = t.router({
   createBookmark: t.procedure
     .input(
       z.object({
-        bookmarked: z.boolean(),
         user_id: z.string(),
         selection_id: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const updateBookmarkValue = await prisma.bookmarks.findFirst({
+        where: {
+            user_id: input.user_id ?? null,
+            selection_id: input.selection_id ?? null,
+        },
+      })
+      
       const result = await prisma.bookmarks.upsert({
         where: {
           user_selection: {
@@ -41,12 +47,27 @@ export const bookmarkRouter = t.router({
               id: input.selection_id,
             },
           },
-          bookmarked: input.bookmarked,
+          bookmarked: true,
         },
         update: {
-          bookmarked: input.bookmarked,
+          bookmarked: !updateBookmarkValue?.bookmarked,
         },
       })
       return result
+    }),
+  getBookmarks: t.procedure
+    .input(z.object({ search: z.string(), user_id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const bookmarks = await prisma.bookmarks.findMany({
+        where: {
+          user_id: input.user_id,
+          bookmarked: true,
+        },
+      })
+      return {
+        status: 'success',
+        results: bookmarks.length,
+        data: bookmarks,
+      }
     }),
 })
