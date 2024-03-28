@@ -2,13 +2,12 @@ import { trpc } from '@/lib/server/trpc'
 import queryClient from '@/lib/server/query-client'
 
 const useBookmarks = () => {
+  const utils = trpc.useUtils()
   const { mutateAsync } = trpc.createBookmark.useMutation({
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: [
-          ['getBookmarkedMovies', 'getBookmarkedSeries', 'getBookmarks'],
-        ],
-      })
+      await utils.getBookmarks.refetch()
+      await utils.getBookmarkedMovies.refetch()
+      await utils.getBookmarkedSeries.refetch()
     },
   })
 
@@ -21,7 +20,7 @@ const useBookmarks = () => {
   }) => {
     await mutateAsync({
       user_id: user_id,
-      selection_id: selection_id,
+      selection_id: selection_id
     })
   }
   return toggleBookmark
