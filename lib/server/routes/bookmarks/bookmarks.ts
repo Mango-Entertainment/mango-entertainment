@@ -24,11 +24,11 @@ export const bookmarkRouter = t.router({
     .mutation(async ({ ctx, input }) => {
       const updateBookmarkValue = await prisma.bookmarks.findFirst({
         where: {
-            user_id: input.user_id ?? null,
-            selection_id: input.selection_id ?? null,
+          user_id: input.user_id ?? null,
+          selection_id: input.selection_id ?? null,
         },
       })
-      
+
       const result = await prisma.bookmarks.upsert({
         where: {
           user_selection: {
