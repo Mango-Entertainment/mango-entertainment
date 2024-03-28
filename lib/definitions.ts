@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 const User = z.object({
   id: z.string(),
-  email: z.string().email({ message: "Invalid email address" }),
+  email: z.string().email({ message: 'Invalid email address' }),
   password: z.string().min(7, { message: 'Must be 7 or more characters long' }),
 })
 

@@ -10,9 +10,8 @@ async function main() {
   await prisma.$transaction([
     deleteRegularThumb,
     deleteTrendingThumb,
-    deleteSelection
+    deleteSelection,
   ])
-
 
   data.map(async (selection: any) => {
     const record_id = crypto.randomUUID()
@@ -21,7 +20,7 @@ async function main() {
     const { title, year, rating, category, isTrending, thumbnail } = selection
     const { regular, trending } = thumbnail
 
-    if(isTrending) {
+    if (isTrending) {
       const addTrending = await prisma.selection.upsert({
         where: { id: record_id },
         update: {},
@@ -37,18 +36,17 @@ async function main() {
               small: regular.small,
               medium: regular.medium,
               large: regular.large,
-            }
+            },
           },
           TrendingThumb: {
             create: {
               id: trending_id,
               small: trending.small,
               large: trending.large,
-            }
-          }
-        }
+            },
+          },
+        },
       })
-
     } else {
       const newSelection = await prisma.selection.upsert({
         where: { id: record_id },
@@ -65,14 +63,11 @@ async function main() {
               small: regular.small,
               medium: regular.medium,
               large: regular.large,
-            }
+            },
           },
         },
       })
-  
     }
-
-
   })
 }
 

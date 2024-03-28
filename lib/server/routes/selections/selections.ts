@@ -2,7 +2,6 @@ import { z } from 'zod'
 import { t } from '@/lib/server/trpc-server'
 import prisma from '@/prisma/prisma.db'
 
-
 export const selectionRouter = t.router({
   getRecommended: t.procedure
     .input(z.object({ search: z.string() }))
@@ -17,7 +16,7 @@ export const selectionRouter = t.router({
         },
         include: {
           RegularThumb: true,
-          // bookmarks: 
+          // bookmarks:
         },
       })
       return {
@@ -100,26 +99,26 @@ export const selectionRouter = t.router({
           bookmarked: true,
           selection: {
             is: {
-              category: "Movie",
+              category: 'Movie',
               title: {
-                mode: "insensitive",
-                contains: input.search
+                mode: 'insensitive',
+                contains: input.search,
               },
-            }
-          }
+            },
+          },
         },
         include: {
           selection: {
             include: {
-              RegularThumb: true
-            }
-          }
-        }
+              RegularThumb: true,
+            },
+          },
+        },
       })
       return {
         status: 'success',
         results: selections.length,
-        data: selections.map((item) => item.selection)
+        data: selections.map((item) => item.selection),
       }
     }),
   getBookmarkedSeries: t.procedure
@@ -150,7 +149,7 @@ export const selectionRouter = t.router({
       return {
         status: 'success',
         results: selections.length,
-        data: selections.map((item) => item.selection)
+        data: selections.map((item) => item.selection),
       }
     }),
 })
