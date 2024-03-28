@@ -1,5 +1,4 @@
 import { trpc } from '@/lib/server/trpc'
-import queryClient from '@/lib/server/query-client'
 
 const useBookmarks = () => {
   const utils = trpc.useUtils()

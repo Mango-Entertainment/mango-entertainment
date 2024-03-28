@@ -25,8 +25,8 @@ const TrendingCard: FC<TrendingCardProps> = ({
   const categoryIcon =
     category === 'Movie' ? '/icon-category-movie.svg' : '/icon-category-tv.svg'
 
-  const { isSignedIn } = useUser()
-  const { toggleBookmark } = useBookmarks(id)
+  const { isSignedIn, user } = useUser()
+  const toggleBookmark = useBookmarks()
 
   return (
     <div className="relative entertainment-pure-white w-60 md:w-auto">
@@ -39,7 +39,7 @@ const TrendingCard: FC<TrendingCardProps> = ({
       />
       {isSignedIn ? (
         <div
-          onClick={() => toggleBookmark()}
+          onClick={() => toggleBookmark({ selection_id: id, user_id: user.id })}
           className="absolute flex content-center justify-center top-2 right-2 md:top-4 md:right-6"
         >
           {bookmarked ? (
