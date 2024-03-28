@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useSignUp, useUser } from '@clerk/nextjs'
 import Link from 'next/link'
-import Image from 'next/image'
 import { zodResolver } from '@hookform/resolvers/zod'
 import queryClient from '@/lib/server/query-client'
 import { trpc } from '@/lib/server/trpc'
@@ -60,8 +59,6 @@ const Signup = () => {
       })
     },
   })
-
-// console.log(dirtyFields)
 
   const signUpWithEmail = async ({
     emailAddress,
@@ -124,14 +121,7 @@ const Signup = () => {
 
   if (verifying) {
     return (
-      <div className="flex justify-center mt-12 grid justify-items-center md:mt-20">
-        <Image
-          className="mb-14 md:mb-20"
-          src="/logo.svg"
-          alt="icon"
-          width={32}
-          height={25.6}
-        />
+      <div className="flex justify-center mt-12 justify-items-center md:mt-20">
         <div className="h-auto bg-entertainment-semi-dark-blue rounded-xl md:rounded-3xl w-80 md:w-96">
           <div className="p-6 md:p-8 text-center">
             <h1 className="mb-6 text-3xl font-light text-entertainment-pure-white">
@@ -166,13 +156,6 @@ const Signup = () => {
   } else {
     return (
       <div className="justify-center mt-12 grid justify-items-center md:mt-20">
-        <Image
-          className="mb-14 md:mb-20"
-          src="/logo.svg"
-          alt="icon"
-          width={32}
-          height={25.6}
-        />
         <div className="h-auto bg-entertainment-semi-dark-blue rounded-xl md:rounded-3xl w-80 md:w-96">
           <div className="p-6 md:p-8">
             <h1 className="mb-6 text-3xl font-light text-entertainment-pure-white">

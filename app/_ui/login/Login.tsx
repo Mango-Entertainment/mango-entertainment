@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { z } from 'zod'
@@ -62,14 +61,7 @@ const Login = () => {
     router.replace('/')
   }
   return (
-    <div className="justify-center mt-12 grid justify-items-center md:mt-20">
-      <Image
-        className="mb-14 md:mb-20"
-        src="/logo.svg"
-        alt="icon"
-        width={32}
-        height={25.6}
-      />
+    <div className="justify-center mt-12 flex justify-items-center md:mt-20">
       <div className="h-auto bg-entertainment-semi-dark-blue rounded-xl md:rounded-3xl w-80 md:w-96">
         <div className="p-6 md:p-8">
           <h1 className="mb-6 text-3xl font-light text-entertainment-pure-white">
