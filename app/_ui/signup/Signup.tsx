@@ -147,13 +147,6 @@ const Signup = () => {
           </p>
           <Form {...form}>
             <form onSubmit={handleVerify}>
-              {/* <input
-                  value={code}
-                  className="h-37 mb-3 block w-full border-0 border-b-2 border-entertainment-greyish-blue bg-transparent pb-4 pl-4 text-sm font-light text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
-                  id="code"
-                  name="code"
-                  onChange={(e) => setCode(e.target.value)}
-                /> */}
               <div className="my-4 flex justify-center">
                 <InputOTP
                   value={code}
