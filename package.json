@@ -14,6 +14,7 @@
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seeds/seed.ts"
+
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.3",

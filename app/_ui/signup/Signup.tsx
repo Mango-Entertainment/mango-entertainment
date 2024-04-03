@@ -19,11 +19,14 @@ import {
   FormLabel,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import Verify from '@/app/_ui/components/Verify'
+import VerifyForm from '@/app/_ui/components/VerifyForm'
+import { FormProvider, useFormContext } from 'react-hook-form'
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp'
 
 const FormFieldsSchema = z
   .object({
-    name: z.string({ required_error: 'Name is required' }),
+    firstName: z.string({ required_error: 'First name is required' }),
+    lastName: z.string({ required_error: 'Last name is required' }),
     email: z.string({ required_error: 'Email is required' }).email(),
     password1: z
       .string({ required_error: 'Password is required' })
@@ -45,16 +48,18 @@ const Signup = () => {
   const { isLoaded, signUp, setActive } = useSignUp()
   const [clerkError, setClerkError] = useState<string | null>(null)
   const router = useRouter()
-  const [name, setName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
+  const [code, setCode] = useState<string>('')
   const [verifying, setVerifying] = useState(false)
 
-  const form = useForm<FormFields>({ resolver: zodResolver(FormFieldsSchema), mode: 'onTouched', defaultValues: {name: ''} })
+  const form = useForm<FormFields>({ resolver: zodResolver(FormFieldsSchema), mode: 'onTouched', defaultValues: {firstName: '', lastName: ''} })
 
   const { mutate } = trpc.createUser.useMutation({
     onSettled: () => {
-      setName('')
-      setEmail('')
+      // setName('')
+      // setEmail('')
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
@@ -69,11 +74,13 @@ const Signup = () => {
   const signUpWithEmail = async ({
     emailAddress,
     password,
-    name,
+    firstName,
+    lastName,
   }: {
     emailAddress: string
     password: string
-    name: string
+    firstName: string
+    lastName: string
   }) => {
     if (!isLoaded) {
       return
@@ -83,12 +90,15 @@ const Signup = () => {
       await signUp.create({
         emailAddress,
         password,
+        firstName,
+        lastName,
       })
       // send the email.
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
 
       // change the UI to our pending section.
-      setName(name)
+      setFirstName(firstName)
+      setLastName(lastName)
       setEmail(emailAddress)
       setVerifying(true)
     } catch (err) {
@@ -99,13 +109,84 @@ const Signup = () => {
     }
   }
 
- 
+  const handleVerify = async (e: FormEvent ) => {
+   e.preventDefault()
+   if (!isLoaded) return
 
+   try {
+     const completeSignUp = await signUp.attemptEmailAddressVerification({
+       code,
+     })
+     if (completeSignUp.status !== 'complete') {
+       console.log(JSON.stringify(completeSignUp, null, 2))
+     }
+
+     if (completeSignUp.status === 'complete') {
+       await setActive({ session: completeSignUp.createdSessionId })
+       console.log(JSON.stringify(completeSignUp, null, 2))
+       // ADD USERS NAME, EMAIL, AND USER ID TO OUR DATABASE
+       const clerkId: string = completeSignUp.createdUserId ?? ''
+       mutate({ firstName, lastName, email, clerkId })
+
+       router.replace('/')
+     }
+   } catch (err) {
+     console.log('Error:', JSON.stringify(err, null, 2))
+   }
+ }
   if (verifying) {
-    return (
-      <Verify handleVerify={handleVerify} code={code} setCode={setCode} />
-    )
-  }
+  return (
+    <div className="mt-12 flex justify-center justify-items-center md:mt-20">
+      <div className="h-auto w-80 rounded-xl bg-entertainment-semi-dark-blue md:w-96 md:rounded-3xl">
+        <div className="p-6 text-center md:p-8">
+          <h1 className="mb-6 text-3xl font-light text-entertainment-pure-white">
+            Verification Code
+          </h1>
+          <p className="font-light text-entertainment-pure-white">
+            Check your email for the code 📧
+          </p>
+          <Form {...form}>
+            <form onSubmit={handleVerify}>
+              {/* <input
+                  value={code}
+                  className="h-37 mb-3 block w-full border-0 border-b-2 border-entertainment-greyish-blue bg-transparent pb-4 pl-4 text-sm font-light text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
+                  id="code"
+                  name="code"
+                  onChange={(e) => setCode(e.target.value)}
+                /> */}
+              <div className="my-4 flex justify-center">
+                <InputOTP
+                  value={code}
+                  className="border-entertainment-greyish-blue text-entertainment-pure-white"
+                  maxLength={6}
+                  onChange={(code) => setCode(code)}
+                >
+                  <InputOTPGroup>
+                    <InputOTPSlot index={0} />
+                    <InputOTPSlot index={1} />
+                    <InputOTPSlot index={2} />
+                  </InputOTPGroup>
+                  <InputOTPGroup>
+                    <InputOTPSlot index={3} />
+                    <InputOTPSlot index={4} />
+                    <InputOTPSlot index={5} />
+                  </InputOTPGroup>
+                </InputOTP>
+              </div>
+              <Button
+                className="mb-6 h-12 w-full rounded-md bg-entertainment-red text-sm font-light text-entertainment-pure-white hover:bg-entertainment-pure-white hover:text-entertainment-dark-blue"
+                type="submit"
+              >
+                Complete sign up
+              </Button>
+            </form>
+          </Form>
+        </div>
+      </div>
+    </div>
+  )
+}
+
   if (isSignedIn) {
     return router.replace('/')
   } else {
@@ -120,7 +201,8 @@ const Signup = () => {
               <form
                 onSubmit={form.handleSubmit((d) =>
                   signUpWithEmail({
-                    name: d.name,
+                    firstName: d.firstName,
+                    lastName: d.lastName,
                     emailAddress: d.email,
                     password: d.password1,
                   }),
@@ -128,15 +210,30 @@ const Signup = () => {
               >
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="firstName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="hidden">Name</FormLabel>
+                      <FormLabel className="hidden">First Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Name" {...field} />
+                        <Input placeholder="First name" {...field} />
                       </FormControl>
                       <FormDescription className="hidden">
-                        This is the field for your name.
+                        This is the field for your first name.
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="hidden">Last name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Last name" {...field} />
+                      </FormControl>
+                      <FormDescription className="hidden">
+                        This is the field for your last name.
                       </FormDescription>
                     </FormItem>
                   )}

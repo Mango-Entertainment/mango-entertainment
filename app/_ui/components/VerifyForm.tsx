@@ -25,17 +25,13 @@ import { useRouter } from 'next/navigation'
 import queryClient from '@/lib/server/query-client'
 
 
-type Props = {
-  
-}
-
 const FormSchema = z.object({
   pin: z
     .string()
     .min(6, { message: 'Your one-time password must be 6 characters.' }),
 })
 
-const Verify = (props: Props) => {
+const VerifyForm = () => {
   const [code, setCode] = useState<string>('')
   const { isLoaded, signUp, setActive } = useSignUp()
   const router = useRouter()
@@ -45,22 +41,22 @@ const Verify = (props: Props) => {
     defaultValues: { pin: '' },
   })
 
-  const { mutate } = trpc.createUser.useMutation({
-    onSettled: () => {
-      // setName('')
-      // setEmail('')
-    },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: [
-          ['getUsers'],
-          { input: { limit: 10, page: 1 }, type: 'query' },
-        ],
-      })
-    },
-  })
+  // const { mutate } = trpc.createUser.useMutation({
+  //   onSettled: () => {
+  //     props.setName('')
+  //     props.setEmail('')
+  //   },
+  //   onSuccess: async () => {
+  //     await queryClient.invalidateQueries({
+  //       queryKey: [
+  //         ['getUsers'],
+  //         { input: { limit: 10, page: 1 }, type: 'query' },
+  //       ],
+  //     })
+  //   },
+  // })
 
-   const handleVerify = async (e: FormEvent) => {
+   const handleVerify = async (e: FormEvent, ) => {
      e.preventDefault()
      if (!isLoaded) return
 
@@ -138,4 +134,4 @@ const Verify = (props: Props) => {
   )
 }
 
-export default Verify
+export default VerifyForm
