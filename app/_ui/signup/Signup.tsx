@@ -19,8 +19,6 @@ import {
   FormLabel,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import VerifyForm from '@/app/_ui/components/VerifyForm'
-import { FormProvider, useFormContext } from 'react-hook-form'
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp'
 
 const FormFieldsSchema = z
