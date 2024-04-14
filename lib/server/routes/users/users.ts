@@ -35,23 +35,5 @@ export const userRouter = t.router({
           id: input.clerkId,
         },
       })
-    }),
-  updateUser: t.procedure
-    .input(z.object({ clerkId: z.string(), email: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      const result = await prisma.user.upsert({
-        where: {
-          email: input.email,
-        },
-        create: {
-          id: input.clerkId,
-          email: input.email,
-          name: '',
-        },
-        update: {
-          id: input.clerkId,
-        },
-      })
-      return result
-    }),
+    })
 })
