@@ -1,6 +1,7 @@
 'use client'
 import Image from 'next/image'
 import { type ChangeEvent } from 'react';
+import { Input } from "@/components/ui/input"
 
 const Search = ({
   search,
@@ -18,7 +19,7 @@ const Search = ({
         width={32}
         alt="search icon"
       />
-      <input
+      <Input
         className="block w-full text-base font-light bg-transparent border-0 md:text-2xl text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
         type="text"
         placeholder="Search for movies or TV series"

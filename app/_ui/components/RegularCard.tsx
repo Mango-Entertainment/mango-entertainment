@@ -2,6 +2,14 @@ import Image from 'next/image'
 import { type FC } from 'react'
 import { useUser } from '@clerk/nextjs'
 import useBookmarks from '@/app/_hooks/useBookmarks'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 
 interface RegularCardProps {
   id: string
@@ -29,40 +37,43 @@ const RegularCard: FC<RegularCardProps> = ({
   const toggleBookmark = useBookmarks()
 
   return (
-    <div className="relative w-40 entertainment-pure-white md:w-56">
-      <Image
-        className="mb-1 rounded-lg md:mb-2"
-        src={imageString}
-        width={280}
-        height={174}
-        alt="trending image"
-      />
-      {isSignedIn ? (
-        <div
-          onClick={() => toggleBookmark({selection_id: id, user_id: user.id})}
-          className="absolute flex content-center justify-center top-2 right-2 md:top-4 md:right-4"
-        >
-          {bookmarked ? (
-            <Image
-              src="/icon-bookmark-full.svg"
-              height={32}
-              width={32}
-              alt="bookmark icon"
-            />
-          ) : (
-            <Image
-              src="/icon-bookmark-empty.svg"
-              height={32}
-              width={32}
-              alt="bookmark icon"
-            />
-          )}
-        </div>
-      ) : (
-        <></>
-      )}
-      <div className="w-full">
-        <div className="flex gap-1 text-[11px] md:text-sm font-light items-center opacity-75">
+    <Card variant={'regular'}>
+      <CardContent>
+        <Image
+          className="mb-1 rounded-lg md:mb-2"
+          src={imageString}
+          width={280}
+          height={174}
+          alt="trending image"
+        />
+        {isSignedIn ? (
+          <CardHeader
+            onClick={() =>
+              toggleBookmark({ selection_id: id, user_id: user.id })
+            }
+          >
+            {bookmarked ? (
+              <Image
+                src="/icon-bookmark-full.svg"
+                height={32}
+                width={32}
+                alt="bookmark icon"
+              />
+            ) : (
+              <Image
+                src="/icon-bookmark-empty.svg"
+                height={32}
+                width={32}
+                alt="bookmark icon"
+              />
+            )}
+          </CardHeader>
+        ) : (
+          <></>
+        )}
+      </CardContent>
+      <CardFooter>
+        <CardDescription className="gap-1 text-[11px] md:text-sm">
           {year}
           <span className="text-sm opacity-50 md:text-xl">•</span>
           <Image
@@ -75,10 +86,10 @@ const RegularCard: FC<RegularCardProps> = ({
           {category}
           <span className="text-sm opacity-50 md:text-xl">•</span>
           {rating}
-        </div>
-        <div className="text-sm font-medium md:text-lg">{title}</div>
-      </div>
-    </div>
+        </CardDescription>
+        <CardTitle className="md:text-lg">{title}</CardTitle>
+      </CardFooter>
+    </Card>
   )
 }
 

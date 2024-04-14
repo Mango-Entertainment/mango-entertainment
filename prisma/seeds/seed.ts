@@ -1,16 +1,18 @@
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
-const data = require('./data.json')
+import data from './data.json'
 
 async function main() {
   const deleteRegularThumb = prisma.regularThumb.deleteMany()
   const deleteSelection = prisma.selection.deleteMany()
   const deleteTrendingThumb = prisma.trendingThumb.deleteMany()
+  // const deleteUsers = prisma.user.deleteMany()
   await prisma.$transaction([
     deleteRegularThumb,
     deleteTrendingThumb,
     deleteSelection,
+    // deleteUsers,
   ])
 
   data.map(async (selection: any) => {

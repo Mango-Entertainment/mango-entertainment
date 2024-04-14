@@ -20,14 +20,15 @@ export const userRouter = t.router({
     }),
   createUser: t.procedure
     .input(
-      z.object({ clerkId: z.string(), name: z.string(), email: z.string() }),
+      z.object({ clerkId: z.string(), firstName: z.string(), lastName: z.string(), email: z.string() }),
     )
     .mutation(({ ctx, input }) => {
       return prisma.user.upsert({
         where: { email: input.email },
         create: {
           id: input.clerkId,
-          name: input.name,
+          firstName: input.firstName,
+          lastName: input.lastName,
           email: input.email,
         },
         update: {
