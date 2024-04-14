@@ -2,14 +2,6 @@ import { type FC } from 'react'
 import Image from 'next/image'
 import { useUser } from '@clerk/nextjs'
 import useBookmarks from '@/app/_hooks/useBookmarks'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 
 interface TrendingCardProps {
   id: string
@@ -37,8 +29,7 @@ const TrendingCard: FC<TrendingCardProps> = ({
   const toggleBookmark = useBookmarks()
 
   return (
-    <Card variant={'trending'}>
-      <CardContent>
+    <div className="entertainment-pure-white relative md:w-auto w-60">
         <Image
           className="rounded-lg"
           src={imageString}
@@ -47,10 +38,11 @@ const TrendingCard: FC<TrendingCardProps> = ({
           alt="trending image"
         />
         {isSignedIn ? (
-          <CardHeader
+          <div
             onClick={() =>
               toggleBookmark({ selection_id: id, user_id: user.id })
             }
+            className="absolute right-2 top-2 flex content-center justify-center md:right-6 md:top-4"
           >
             {bookmarked ? (
               <Image
@@ -67,29 +59,29 @@ const TrendingCard: FC<TrendingCardProps> = ({
                 alt="bookmark icon"
               />
             )}
-          </CardHeader>
+          </div>
         ) : (
           <></>
         )}
-      </CardContent>
-      <CardFooter className="absolute bottom-0 rounded-b-lg bg-gradient-to-b from-transparent to-black/75 p-3 md:p-6">
-        <CardDescription className="gap-2 text-xs md:text-base">
-          {year}
-          <span className="text-sm opacity-50 md:text-xl">•</span>
-          <Image
-            className="h-3"
-            src={categoryIcon}
-            height={12}
-            width={12}
-            alt={`${category} icon`}
-          />
-          {category}
-          <span className="text-sm opacity-50 md:text-xl">•</span>
-          {rating}
-        </CardDescription>
-        <CardTitle className="md:text-2xl">{title}</CardTitle>
-      </CardFooter>
-    </Card>
+        <div className="absolute bottom-0 w-full rounded-b-lg bg-gradient-to-b from-transparent to-black/75 p-3 md:p-6">
+          <div className="flex items-center gap-2 text-xs font-light opacity-75 md:text-base">
+            {year}
+            <span className="text-sm opacity-50 md:text-xl">•</span>
+            <Image
+              className="h-3"
+              src={categoryIcon}
+              height={12}
+              width={12}
+              alt={`${category} icon`}
+            />
+            {category}
+            <span className="text-sm opacity-50 md:text-xl">•</span>
+            {rating}
+          </div>
+          <div className="text-sm font-medium md:text-2xl">{title}</div>
+        </div>
+      
+    </div>
   )
 }
 
