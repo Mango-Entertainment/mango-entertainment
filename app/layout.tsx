@@ -36,7 +36,7 @@ const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
         >
           <TrpcProvider>
             <Navbar />
-            <div>{children}</div>
+            <div className='overflow-x-hidden'>{children}</div>
           </TrpcProvider>
         </body>
       </html>

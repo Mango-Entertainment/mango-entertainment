@@ -77,11 +77,11 @@ const Login = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="hidden">Email address</FormLabel>
+                    <FormLabel className="sr-only">Email address</FormLabel>
                     <FormControl>
                       <Input placeholder="Email address" {...field} />
                     </FormControl>
-                    <FormDescription className="hidden">
+                    <FormDescription className="sr-only">
                       This is the field for your email address.
                     </FormDescription>
                   </FormItem>
@@ -92,7 +92,7 @@ const Login = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="hidden">Password</FormLabel>
+                    <FormLabel className="sr-only">Password</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Password"
@@ -100,7 +100,7 @@ const Login = () => {
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription className="hidden">
+                    <FormDescription className="sr-only">
                       This is the field for your password.
                     </FormDescription>
                   </FormItem>

@@ -154,14 +154,14 @@ const CarouselContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const { carouselRef, orientation } = useCarousel()
+  const { carouselRef } = useCarousel()
 
   return (
     <div ref={carouselRef} className="overflow-hidden">
       <div
         ref={ref}
         className={cn(
-          "flex",
+          "grid grid-flow-col grid-cols-[30%] gap-2",
           className
         )}
         {...props}
@@ -175,7 +175,6 @@ const CarouselItem = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const { orientation } = useCarousel()
 
   return (
     <div
@@ -183,8 +182,7 @@ const CarouselItem = React.forwardRef<
       role="group"
       aria-roledescription="slide"
       className={cn(
-        'min-w-0 shrink-0 grow-0 basis-1/1 md:basis-1/3',
-        orientation === 'horizontal' ? 'pl-4 first-of-type:pl-0' : 'pt-4',
+        'min-w-0 shrink-0 grow-0',
         className,
       )}
       {...props}
@@ -205,7 +203,7 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        'absolute h-8 w-8 rounded-full',
+        'absolute h-5 w-5 lg:h-8 lg:w-8 rounded-full',
         orientation === 'horizontal'
           ? 'left-4 top-1/2 -translate-y-3/4'
           : '-top-12 left-1/2 -translate-x-1/2 rotate-90',
@@ -234,7 +232,7 @@ const CarouselNext = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        'absolute h-8 w-8 rounded-full',
+        'absolute h-5 w-5 rounded-full lg:h-8 lg:w-8',
         orientation === 'horizontal'
           ? 'right-4 top-1/2 -translate-y-3/4'
           : '-bottom-12 left-1/2 -translate-x-1/2 rotate-90',

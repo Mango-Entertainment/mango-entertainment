@@ -204,11 +204,11 @@ const Signup = () => {
                   name="firstName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="hidden">First Name</FormLabel>
+                      <FormLabel className="sr-only">First Name</FormLabel>
                       <FormControl>
                         <Input placeholder="First name" {...field} />
                       </FormControl>
-                      <FormDescription className="hidden">
+                      <FormDescription className="sr-only">
                         This is the field for your first name.
                       </FormDescription>
                     </FormItem>
@@ -219,11 +219,11 @@ const Signup = () => {
                   name="lastName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="hidden">Last name</FormLabel>
+                      <FormLabel className="sr-only">Last name</FormLabel>
                       <FormControl>
                         <Input placeholder="Last name" {...field} />
                       </FormControl>
-                      <FormDescription className="hidden">
+                      <FormDescription className="sr-only">
                         This is the field for your last name.
                       </FormDescription>
                     </FormItem>
@@ -234,11 +234,11 @@ const Signup = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="hidden">Email Address</FormLabel>
+                      <FormLabel className="sr-only">Email Address</FormLabel>
                       <FormControl>
                         <Input placeholder="Email Address" {...field} />
                       </FormControl>
-                      <FormDescription className="hidden">
+                      <FormDescription className="sr-only">
                         This is the field for your email address.
                       </FormDescription>
                     </FormItem>
@@ -249,7 +249,7 @@ const Signup = () => {
                   name="password1"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="hidden">Password</FormLabel>
+                      <FormLabel className="sr-only">Password</FormLabel>
                       <FormControl>
                         <Input
                           type="password"
@@ -257,7 +257,7 @@ const Signup = () => {
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription className="hidden">
+                      <FormDescription className="sr-only">
                         This is the field for your password.
                       </FormDescription>
                     </FormItem>
@@ -268,7 +268,7 @@ const Signup = () => {
                   name="password2"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="hidden">Repeat Password</FormLabel>
+                      <FormLabel className="sr-only">Repeat Password</FormLabel>
                       <FormControl>
                         <Input
                           type="password"
@@ -276,7 +276,7 @@ const Signup = () => {
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription className="hidden">
+                      <FormDescription className="sr-only">
                         This is the field to confirm your password by repeating
                         it.
                       </FormDescription>

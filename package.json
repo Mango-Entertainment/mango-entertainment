@@ -30,6 +30,7 @@
     "@trpc/server": "^10.45.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "embla-carousel": "^8.0.2",
     "embla-carousel-react": "^8.0.1",
     "input-otp": "^1.2.3",
     "lucide-react": "^0.363.0",
