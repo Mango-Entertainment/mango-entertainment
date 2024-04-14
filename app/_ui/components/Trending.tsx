@@ -30,11 +30,11 @@ const Trending: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
   } = usePrevNextButtons(emblaApi)
   if (trendingData && trendingData.results < 1) return <></>
   return (
-    <div className="ml-4 border border-orange-500 text-entertainment-pure-white">
+    <div className="ml-4 text-entertainment-pure-white">
       <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">Trending</h1>
       <section>
         <div className="overflow-hidden" ref={emblaRef}>
-          <div className="mb-8 flex w-max touch-pan-y gap-4 md:gap-10">
+          <div className="mb-2 flex w-max touch-pan-y gap-4 md:gap-6">
             {trendingData?.data.map((selection) => {
               const bookmarked = bookmarks?.data.filter(
                 (bookmark) => bookmark.selection_id === selection.id,
@@ -55,8 +55,8 @@ const Trending: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
             })}
           </div>
         </div>
-        <div className="items-right mt-2 grid grid-cols-1 justify-items-end md:mt-4">
-          <div className="grid w-24 grid-cols-2 items-center gap-1 md:mr-12 lg:mr-24">
+        <div className="grid grid-cols-1 justify-items-end">
+          <div className="grid w-24 grid-cols-2 gap-1 md:mr-4">
             <PrevButton
               onClick={onPrevButtonClick}
               disabled={prevBtnDisabled}
