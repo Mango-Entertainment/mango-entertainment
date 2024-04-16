@@ -8,15 +8,11 @@ import {
   NextButton,
   usePrevNextButtons,
 } from '@/components/ui/arrowbuttons'
+import TrendingSkeleton from '@/app/_ui/components/TrendingSkeleton'
 
 type TrendingSectionProps = {
   bookmarks: RouterOutputs['getBookmarks'] | undefined
   search: string
-}
-
-const getTrendingData = (search: string) => {
-  const trendingData = trpc.getTrending.useQuery({ search })
-  return trendingData.data
 }
 
 const Trending: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
@@ -24,14 +20,25 @@ const Trending: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
     containScroll: false,
     align: 'start',
   })
-  const trendingData = getTrendingData(search)
+  const { data, isLoading } = trpc.getTrending.useQuery({ search })
   const {
     prevBtnDisabled,
     nextBtnDisabled,
     onPrevButtonClick,
     onNextButtonClick,
   } = usePrevNextButtons(emblaApi)
-  if (trendingData && trendingData.results < 1) {
+
+  if (isLoading) {
+    return (
+      <div className="ml-4 text-entertainment-pure-white">
+        <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">
+          Trending
+        </h1>
+        <TrendingSkeleton />
+      </div>
+    )
+  }
+  if (data && data.length < 1) {
     return (
       <div className="ml-4 text-entertainment-pure-white">
         <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">
@@ -49,24 +56,28 @@ const Trending: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
       <section>
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="mb-2 flex w-max touch-pan-y gap-4 md:gap-6">
-            {trendingData?.data.map((selection) => {
-              const bookmarked = bookmarks?.data.filter(
-                (bookmark) => bookmark.selection_id === selection.id,
-              )[0] ?? { bookmarked: false }
-              if (!selection.TrendingThumb?.large) return
-              return (
-                <TrendingCard
-                  id={selection.id}
-                  title={selection.title}
-                  rating={selection.rating}
-                  category={selection.category}
-                  year={selection.year}
-                  imageString={selection.TrendingThumb?.large.slice(8)}
-                  bookmarked={bookmarked.bookmarked}
-                  key={selection.id}
-                />
-              )
-            })}
+            {data
+              ? data.map((selection) => {
+                  const bookmarked = bookmarks?.data.filter(
+                    (bookmark) => bookmark.selection_id === selection.id,
+                  )[0] ?? { bookmarked: false }
+
+                  if (!selection.TrendingThumb?.large) return
+
+                  return (
+                    <TrendingCard
+                      id={selection.id}
+                      title={selection.title}
+                      rating={selection.rating}
+                      category={selection.category}
+                      year={selection.year}
+                      imageString={selection.TrendingThumb?.large.slice(8)}
+                      bookmarked={bookmarked.bookmarked}
+                      key={selection.id}
+                    />
+                  )
+                })
+              : null}
           </div>
         </div>
         <div className="grid grid-cols-1 justify-items-end">

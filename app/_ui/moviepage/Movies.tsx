@@ -5,11 +5,7 @@ import Search from '@/app/_ui/components/Search'
 import SectionComponent from '@/app/_ui/components/SectionComponent'
 import { type ChangeEvent, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
-
-const getMovieData = (search: string) => {
-  const movieData = trpc.getMovies.useQuery({ search })
-  return movieData.data
-}
+import SkeletonSectionComponent from '@/app/_ui/components/SkeletonSectionComponent'
 
 const Movies = () => {
   const [search, setSearch] = useState('')
@@ -19,7 +15,7 @@ const Movies = () => {
     user_id: user?.id ?? '',
   })
 
-  const sectionData = getMovieData(search)
+  const { data, isLoading } = trpc.getMovies.useQuery({ search })
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
@@ -28,11 +24,15 @@ const Movies = () => {
   return (
     <div className="text-entertainment-greyish-blue">
       <Search search={search} handleChange={handleChange} />
-      <SectionComponent
-        section="Movies"
-        sectionData={sectionData}
-        bookmarks={bookmarks?.data}
-      />
+      {isLoading ? (
+        <SkeletonSectionComponent section="Recommended" />
+      ) : (
+        <SectionComponent
+          section="Movies"
+          sectionData={data}
+          bookmarks={bookmarks?.data}
+        />
+      )}
     </div>
   )
 }

@@ -19,11 +19,7 @@ export const selectionRouter = t.router({
           // bookmarks:
         },
       })
-      return {
-        status: 'success',
-        results: selections.length,
-        data: selections,
-      }
+      return selections
     }),
 
   getTrending: t.procedure
@@ -41,11 +37,7 @@ export const selectionRouter = t.router({
           TrendingThumb: true,
         },
       })
-      return {
-        status: 'success',
-        results: selections.length,
-        data: selections,
-      }
+      return selections
     }),
 
   getMovies: t.procedure
@@ -63,11 +55,7 @@ export const selectionRouter = t.router({
           RegularThumb: true,
         },
       })
-      return {
-        status: 'success',
-        results: selections.length,
-        data: selections,
-      }
+      return selections
     }),
   getSeries: t.procedure
     .input(z.object({ search: z.string() }))
@@ -84,11 +72,7 @@ export const selectionRouter = t.router({
           RegularThumb: true,
         },
       })
-      return {
-        status: 'success',
-        results: selections.length,
-        data: selections,
-      }
+      return selections
     }),
   getBookmarkedMovies: t.procedure
     .input(z.object({ search: z.string(), user_id: z.string() }))
@@ -115,11 +99,7 @@ export const selectionRouter = t.router({
           },
         },
       })
-      return {
-        status: 'success',
-        results: selections.length,
-        data: selections.map((item) => item.selection),
-      }
+      return selections
     }),
   getBookmarkedSeries: t.procedure
     .input(z.object({ search: z.string(), user_id: z.string() }))
@@ -146,10 +126,6 @@ export const selectionRouter = t.router({
           },
         },
       })
-      return {
-        status: 'success',
-        results: selections.length,
-        data: selections.map((item) => item.selection),
-      }
+      return selections
     }),
 })
