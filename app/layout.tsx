@@ -32,7 +32,7 @@ const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${outfit.className} grid h-screen max-w-full grid-cols-1 overflow-x-hidden bg-entertainment-dark-blue lg:grid-cols-[160px_1fr]`}
+          className={`${outfit.className} grid max-w-full grid-cols-1 items-start overflow-x-hidden bg-entertainment-dark-blue lg:grid-cols-[160px_1fr]`}
         >
           <TrpcProvider>
             <Navbar />

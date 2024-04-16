@@ -11,7 +11,7 @@ const Search = ({
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }) => {
   return (
-    <div className="flex items-center my-2 ml-4 md:my-4 md:ml-6 lg:ml-0 lg:mt-12">
+    <div className="flex items-center my-2 ml-4 md:my-4 pr-4 lg:mt-12">
       <Image
         className="w-6 h-6 md:w-8 md:h-8"
         src="icon-search.svg"

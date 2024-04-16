@@ -6,7 +6,7 @@ import useEmblaCarousel from 'embla-carousel-react'
 import {
   PrevButton,
   NextButton,
-  usePrevNextButtons
+  usePrevNextButtons,
 } from '@/components/ui/arrowbuttons'
 
 type TrendingSectionProps = {
@@ -20,15 +20,29 @@ const getTrendingData = (search: string) => {
 }
 
 const Trending: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({containScroll: false, align: 'start'})
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    containScroll: false,
+    align: 'start',
+  })
   const trendingData = getTrendingData(search)
   const {
     prevBtnDisabled,
     nextBtnDisabled,
     onPrevButtonClick,
-    onNextButtonClick
+    onNextButtonClick,
   } = usePrevNextButtons(emblaApi)
-  if (trendingData && trendingData.results < 1) return <></>
+  if (trendingData && trendingData.results < 1) {
+    return (
+      <div className="ml-4 text-entertainment-pure-white">
+        <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">
+          Trending
+        </h1>
+        <p className="text-center font-light opacity-75 lg:text-xl">
+          No results found
+        </p>
+      </div>
+    )
+  }
   return (
     <div className="ml-4 text-entertainment-pure-white">
       <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">Trending</h1>
@@ -70,6 +84,5 @@ const Trending: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
       </section>
     </div>
   )
-
 }
 export default Trending
