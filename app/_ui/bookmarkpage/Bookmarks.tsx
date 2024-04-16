@@ -5,17 +5,8 @@ import Search from '@/app/_ui/components/Search'
 import SectionComponent from '@/app/_ui/components/SectionComponent'
 import { type ChangeEvent, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
-
-const getBookmarkedSeriesData = (search: string, user_id: string) => {
-  const seriesData = trpc.getBookmarkedSeries.useQuery({ search, user_id })
-
-  return seriesData.data
-}
-
-const getBookmarkedMovieData = (search: string, user_id: string) => {
-  const movieData = trpc.getBookmarkedMovies.useQuery({ search, user_id })
-  return movieData.data
-}
+import SkeletonSectionComponent from '@/app/_ui/components/SkeletonSectionComponent'
+import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
 
 const Bookmarks = () => {
   const [search, setSearch] = useState('')
@@ -26,24 +17,43 @@ const Bookmarks = () => {
     search: search,
     user_id: user?.id ?? '',
   })
-  const bookmarkedSeriesData = getBookmarkedSeriesData(search, user_id)
-  const bookmarkedMovieData = getBookmarkedMovieData(search, user_id)
+
+  const bookmarkedSeries = trpc.getBookmarkedSeries.useQuery({
+    search,
+    user_id,
+  })
+  const bookmarkedMovie = trpc.getBookmarkedMovies.useQuery({
+    search,
+    user_id,
+  })
+
+  const bookmarkedSeriesData = bookmarkedSeries.data?.map(
+    (item) => item.selection,
+  )
+
+  const bookmarkedMovieData = bookmarkedMovie.data?.map(
+    (item) => item.selection,
+  )
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }
-
+  if (!bookmarkedMovie || !bookmarkedSeries) return
   return (
     <div className="text-entertainment-greyish-blue">
       <Search search={search} handleChange={handleChange} />
-      {bookmarkedMovieData?.data && (
+      {bookmarkedMovie.isLoading ? (
+        <SkeletonSectionComponent section="Movies" />
+      ) : (
         <SectionComponent
           section="Movies"
           sectionData={bookmarkedMovieData}
           bookmarks={bookmarks?.data}
         />
       )}
-      {bookmarkedMovieData?.data && (
+      {bookmarkedSeries.isLoading ? (
+        <SkeletonSectionComponent section="TV Series" />
+      ) : (
         <SectionComponent
           section="TV Series"
           sectionData={bookmarkedSeriesData}
