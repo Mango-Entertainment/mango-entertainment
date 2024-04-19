@@ -1,12 +1,12 @@
 'use client'
-import {type SyntheticEvent, useState } from 'react'
-import { useSignIn } from '@clerk/nextjs'
+import { type SyntheticEvent, useState } from 'react'
+import { useSignIn, useUser } from '@clerk/nextjs'
 import type { NextPage } from 'next'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { hasErrorType } from '@/lib/utils/utils'
-
+import { useRouter } from 'next/navigation'
 
 type PasswordState = 'neutral' | 'success' | 'warn' | 'fail'
 const colors: { [k in PasswordState]?: string } = {
@@ -21,9 +21,10 @@ const SignInPage: NextPage = () => {
   const [code, setCode] = useState('')
   const [successfulCreation, setSuccessfulCreation] = useState(false)
   const [complete, setComplete] = useState(false)
-  const [secondFactor, setSecondFactor] = useState(false)
   const [passwordState, setPasswordState] = useState<PasswordState>('neutral')
 
+  const router = useRouter()
+    const { isSignedIn } = useUser()
   const { isLoaded, signIn, setActive } = useSignIn()
 
   if (!isLoaded) {
@@ -40,13 +41,12 @@ const SignInPage: NextPage = () => {
       .then((_) => {
         setSuccessfulCreation(true)
       })
-      .catch ((err) => { 
-        if(hasErrorType(err)) {
-            const message = err.errors[0]?.message ?? null
-            console.log('error', err.errors[0].longMessage)
+      .catch((err) => {
+        if (hasErrorType(err)) {
+          const message = err.errors[0]?.message ?? null
+          console.log('error', err.errors[0].longMessage)
         }
-    })
-    }
+      })
   }
 
   async function reset(e: SyntheticEvent) {
@@ -58,21 +58,26 @@ const SignInPage: NextPage = () => {
         password,
       })
       .then((result) => {
-        if (result.status === 'needs_second_factor') {
-          setSecondFactor(true)
-        } else if (result.status === 'complete') {
+        if (result.status === 'complete') {
           void setActive({ session: result.createdSessionId })
           setComplete(true)
+          setTimeout(() => {
+            router.replace('/')
+          }, 3000)
         } else {
           console.log(result)
         }
       })
-      .catch ((err) => { 
-        if(hasErrorType(err)) {
-            const message = err.errors[0]?.message ?? null
-            console.log('error', err.errors[0].longMessage)
+      .catch((err) => {
+        if (hasErrorType(err)) {
+          const message = err.errors[0]?.message ?? null
+          console.log('error', err.errors[0].longMessage)
         }
-    })
+      })
+  }
+
+  if (isSignedIn) {
+    router.replace('/')
   }
 
   return (
@@ -99,7 +104,6 @@ const SignInPage: NextPage = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-
                 <Button
                   className="mb-6 h-12 w-full rounded-md bg-entertainment-red text-sm font-light text-entertainment-pure-white hover:bg-entertainment-pure-white hover:text-entertainment-dark-blue"
                   type="submit"
@@ -108,10 +112,7 @@ const SignInPage: NextPage = () => {
                 </Button>
                 <p className="text-center text-sm font-light text-entertainment-pure-white">
                   Remembered password?
-                  <Link
-                    className="ml-2 text-entertainment-red"
-                    href="/sign-in"
-                  >
+                  <Link className="ml-2 text-entertainment-red" href="/sign-in">
                     Login
                   </Link>
                 </p>
@@ -170,8 +171,7 @@ const SignInPage: NextPage = () => {
               </>
             )}
 
-            {complete && 'You successfully changed you password'}
-            {secondFactor && '2FA is required, this UI does not handle that'}
+            {complete && <p className='text-entertainment-pure-white'>You successfully changed you password</p>}
           </form>
         </div>
       </div>
