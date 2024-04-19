@@ -1,7 +1,9 @@
 'use client'
 import Image from 'next/image'
-import { type ChangeEvent } from 'react';
-import { Input } from "@/components/ui/input"
+import React, { type ChangeEvent, useRef, useState } from 'react'
+import { Input } from '@/components/ui/input'
+import { useHotkeys } from 'react-hotkeys-hook'
+import { Key } from 'ts-key-enum'
 
 const Search = ({
   search,
@@ -10,20 +12,42 @@ const Search = ({
   search: string
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }) => {
+  const [focus, setFocus] = useState<boolean>(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+  useHotkeys(
+    `${Key.Meta}+k, ${Key.Control}+k`,
+    () => {
+      setFocus(!focus)
+      console.log(focus)
+      // if (focus) {
+      //   inputRef.current?.focus()
+      // } else {
+      //   inputRef.current?.blur()
+      // }
+    }
+  )
+
+  // useHotkeys(Key.Escape, () => {
+  //   if (document.activeElement === inputRef.current) {
+  //     inputRef.current?.blur()
+  //   }
+  // })
+
   return (
-    <div className="flex items-center my-2 ml-4 md:my-4 pr-4 lg:mt-12">
+    <div className="my-2 ml-4 flex items-center pr-4 md:my-4 lg:mt-12">
       <Image
-        className="w-6 h-6 md:w-8 md:h-8"
+        className="h-6 w-6 md:h-8 md:w-8"
         src="icon-search.svg"
         height={32}
         width={32}
         alt="search icon"
       />
       <Input
-        className="block w-full text-base font-light bg-transparent border-0 md:text-2xl text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white"
+        className="block w-full border-0 bg-transparent text-base font-light text-entertainment-pure-white caret-entertainment-red focus:border-entertainment-pure-white md:text-2xl"
         type="text"
-        placeholder="Search for movies or TV series"
+        placeholder="Search for movies or TV series ⌘/^ K"
         value={search}
+        ref={inputRef}
         onChange={(e) => handleChange(e)}
       />
     </div>

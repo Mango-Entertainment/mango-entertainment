@@ -27,6 +27,8 @@ export const metadata = {
   },
 }
 
+
+
 const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <ClerkProvider>
