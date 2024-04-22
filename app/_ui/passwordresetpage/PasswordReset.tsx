@@ -71,7 +71,7 @@ const SignInPage: NextPage = () => {
       .catch((err) => {
         if (hasErrorType(err)) {
           const message = err.errors[0]?.message ?? null
-          console.log('error', err.errors[0].longMessage)
+          console.log('error', message)
         }
       })
   }
