@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import React, { type ChangeEvent, useRef, useState } from 'react'
+import React, { type ChangeEvent, useRef, useState, KeyboardEventHandler } from 'react'
 import { Input } from '@/components/ui/input'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Key } from 'ts-key-enum'
@@ -12,26 +12,16 @@ const Search = ({
   search: string
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }) => {
-  const [focus, setFocus] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
-  useHotkeys(
-    `${Key.Meta}+k, ${Key.Control}+k`,
-    () => {
-      setFocus(!focus)
-      console.log(focus)
-      // if (focus) {
-      //   inputRef.current?.focus()
-      // } else {
-      //   inputRef.current?.blur()
-      // }
+  const handleKeyPress = (e: KeyboardEvent) => {
+    if (e.key === 'Escape' && e.target instanceof HTMLElement) {
+      e.target.blur()
     }
-  )
+  }
 
-  // useHotkeys(Key.Escape, () => {
-  //   if (document.activeElement === inputRef.current) {
-  //     inputRef.current?.blur()
-  //   }
-  // })
+  useHotkeys(`${Key.Meta}+k, ${Key.Control}+k`, () => {
+      inputRef.current?.focus()
+  })
 
   return (
     <div className="my-2 ml-4 flex items-center pr-4 md:my-4 lg:mt-12">
@@ -49,6 +39,7 @@ const Search = ({
         value={search}
         ref={inputRef}
         onChange={(e) => handleChange(e)}
+        onKeyDown={(e) => handleKeyPress(e)}
       />
     </div>
   )
