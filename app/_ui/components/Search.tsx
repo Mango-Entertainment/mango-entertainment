@@ -1,6 +1,12 @@
 'use client'
 import Image from 'next/image'
-import React, { type ChangeEvent, useRef, useState, KeyboardEventHandler } from 'react'
+import React, {
+  type ChangeEvent,
+  useRef,
+  useState,
+  KeyboardEventHandler,
+  type KeyboardEvent,
+} from 'react'
 import { Input } from '@/components/ui/input'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Key } from 'ts-key-enum'
@@ -13,9 +19,9 @@ const Search = ({
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const handleKeyPress = (e: KeyboardEvent) => {
-    if (e.key === 'Escape' && e.target instanceof HTMLElement) {
-      e.target.blur()
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Escape') {
+      e.currentTarget.blur()
     }
   }
 
