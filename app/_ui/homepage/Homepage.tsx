@@ -11,11 +11,10 @@ const Homepage = () => {
   const [search, setSearch] = useState('')
   const { user } = useUser()
   const bookmarks = trpc.getBookmarks.useQuery({search: search, user_id: user?.id ?? ""})
-
+  
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }
-
 
   return (
     <div className="text-entertainment-greyish-blue">
