@@ -11,7 +11,7 @@ import {
 import TrendingSkeleton from '@/app/_ui/components/TrendingSkeleton'
 
 type TrendingSectionProps = {
-  bookmarks: RouterOutputs['getBookmarks'] | undefined
+  bookmarks: RouterOutputs['bookmarks']['getBookmarks'] | undefined
   search: string
 }
 
@@ -20,7 +20,7 @@ const Trending: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
     containScroll: false,
     align: 'start',
   })
-  const { data, isLoading } = trpc.getTrending.useQuery({ search })
+  const { data, isLoading } = trpc.selections.getTrending.useQuery({ search })
   const {
     prevBtnDisabled,
     nextBtnDisabled,

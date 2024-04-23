@@ -3,9 +3,9 @@ import { type FC } from 'react'
 import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
 
 type SectionComponentProps = {
-  sectionData: RouterOutputs['getRecommended'] | undefined
+  sectionData: RouterOutputs['selections']['getRecommended']| undefined
   section: string
-  bookmarks: RouterOutputs['getBookmarks'] | undefined
+  bookmarks: RouterOutputs['bookmarks']['getBookmarks'] | undefined
 }
 
 const SectionComponent: FC<SectionComponentProps> = ({

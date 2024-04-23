@@ -10,12 +10,12 @@ import SkeletonSectionComponent from '@/app/_ui/components/SkeletonSectionCompon
 const Movies = () => {
   const [search, setSearch] = useState('')
   const { user } = useUser()
-  const bookmarks = trpc.getBookmarks.useQuery({
+  const bookmarks = trpc.bookmarks.getBookmarks.useQuery({
     search: search,
     user_id: user?.id ?? '',
   })
 
-  const { data, isLoading } = trpc.getMovies.useQuery({ search })
+  const { data, isLoading } = trpc.selections.getMovies.useQuery({ search })
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)

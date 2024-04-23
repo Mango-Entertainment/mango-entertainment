@@ -5,12 +5,12 @@ import { type FC } from 'react'
 import SkeletonSectionComponent from '@/app/_ui/components/SkeletonSectionComponent'
 
 type RecommendedSectionProps = {
-  bookmarks: RouterOutputs['getBookmarks'] | undefined
+  bookmarks: RouterOutputs['bookmarks']['getBookmarks'] | undefined
   search: string
 }
 
 const Recommended:FC<RecommendedSectionProps> = ({ search, bookmarks } ) => {
-  const {data, isLoading} = trpc.getRecommended.useQuery({ search })
+  const {data, isLoading} = trpc.selections.getRecommended.useQuery({ search })
 
   if (!data) null
   if(isLoading) return <SkeletonSectionComponent section="Recommended" />

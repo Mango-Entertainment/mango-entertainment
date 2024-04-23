@@ -3,12 +3,12 @@ import { t } from '@/lib/server/trpc-server'
 import prisma from '@/prisma/prisma.db'
 
 export const userRouter = t.router({
-  getUsers: t.procedure
+  getAll: t.procedure
     .input(z.object({ search: z.string() }))
     .query(({ ctx }) => {
       return prisma.user.findMany()
     }),
-  getUserById: t.procedure
+  getById: t.procedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
       return prisma.user.findFirst({
@@ -18,7 +18,7 @@ export const userRouter = t.router({
         },
       })
     }),
-  createUser: t.procedure
+  create: t.procedure
     .input(
       z.object({ clerkId: z.string(), firstName: z.string(), lastName: z.string(), email: z.string() }),
     )

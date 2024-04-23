@@ -6,23 +6,22 @@ import SectionComponent from '@/app/_ui/components/SectionComponent'
 import { type ChangeEvent, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import SkeletonSectionComponent from '@/app/_ui/components/SkeletonSectionComponent'
-import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
 
 const Bookmarks = () => {
   const [search, setSearch] = useState('')
 
   const { user } = useUser()
   const user_id = user?.id ?? ''
-  const bookmarks = trpc.getBookmarks.useQuery({
+  const bookmarks = trpc.bookmarks.getBookmarks.useQuery({
     search: search,
     user_id: user?.id ?? '',
   })
 
-  const bookmarkedSeries = trpc.getBookmarkedSeries.useQuery({
+  const bookmarkedSeries = trpc.selections.getBookmarkedSeries.useQuery({
     search,
     user_id,
   })
-  const bookmarkedMovie = trpc.getBookmarkedMovies.useQuery({
+  const bookmarkedMovie = trpc.selections.getBookmarkedMovies.useQuery({
     search,
     user_id,
   })

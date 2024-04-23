@@ -10,7 +10,7 @@ import { useUser } from '@clerk/nextjs'
 const Homepage = () => {
   const [search, setSearch] = useState('')
   const { user } = useUser()
-  const bookmarks = trpc.getBookmarks.useQuery({search: search, user_id: user?.id ?? ""})
+  const bookmarks = trpc.bookmarks.getBookmarks.useQuery({search: search, user_id: user?.id ?? ""})
   
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)

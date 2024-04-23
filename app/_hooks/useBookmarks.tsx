@@ -2,11 +2,11 @@ import { trpc } from '@/lib/server/trpc'
 
 const useBookmarks = () => {
   const utils = trpc.useUtils()
-  const { mutateAsync } = trpc.createBookmark.useMutation({
+  const { mutateAsync } = trpc.bookmarks.createBookmark.useMutation({
     onSuccess: async () => {
-      await utils.getBookmarks.refetch()
-      await utils.getBookmarkedMovies.refetch()
-      await utils.getBookmarkedSeries.refetch()
+      await utils.bookmarks.getBookmarks.refetch()
+      await utils.selections.getBookmarkedMovies.refetch()
+      await utils.selections.getBookmarkedSeries.refetch()
     },
   })
 
