@@ -6,11 +6,13 @@ import SuperJSON from 'superjson'
 import { selectionRouter } from '@/lib/server/routes/selections/selections'
 import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
 import { bookmarkRouter } from '@/lib/server/routes/bookmarks/bookmarks'
+import { tmdbRouter } from '@/lib/server/routes/tmdb/tmdb'
 
 export const appRouter = t.router({
   users: userRouter,
   selections: selectionRouter,
   bookmarks: bookmarkRouter,
+  tmdb: tmdbRouter
 })
 
 export const createSSRHelper = () =>

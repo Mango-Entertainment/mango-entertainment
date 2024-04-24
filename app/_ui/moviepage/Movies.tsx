@@ -2,7 +2,7 @@
 
 import { trpc } from '@/lib/server/trpc'
 import Search from '@/app/_ui/components/Search'
-import SectionComponent from '@/app/_ui/components/SectionComponent'
+import MovieSectionComponent from '@/app/_ui/components/MovieSectionComponent'
 import { type ChangeEvent, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import SkeletonSectionComponent from '@/app/_ui/components/SkeletonSectionComponent'
@@ -15,7 +15,8 @@ const Movies = () => {
     user_id: user?.id ?? '',
   })
 
-  const { data, isLoading } = trpc.selections.getMovies.useQuery({ search })
+  const { data, isLoading } = trpc.tmdb.getMovies.useQuery({ search })
+  // console.log(movieList)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
@@ -27,7 +28,7 @@ const Movies = () => {
       {isLoading ? (
         <SkeletonSectionComponent section="Recommended" />
       ) : (
-        <SectionComponent
+        <MovieSectionComponent
           section="Movies"
           sectionData={data}
           bookmarks={bookmarks?.data}
