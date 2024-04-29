@@ -1,11 +1,11 @@
 'use client'
 
 import { trpc } from '@/lib/server/trpc'
-import SectionComponent from '@/app/_ui/components/SectionComponent'
 import Search from '../components/Search'
 import { type ChangeEvent, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import SkeletonSectionComponent from '@/app/_ui/components/SkeletonSectionComponent'
+import SeriesSectionComponent from '@/app/_ui/components/SeriesSectionComponent'
 
 const Series = () => {
   const [search, setSearch] = useState('')
@@ -16,7 +16,7 @@ const Series = () => {
     user_id: user?.id ?? '',
   })
 
-  const { data, isLoading } = trpc.selections.getSeries.useQuery({ search })
+  const { data, isLoading } = trpc.tmdb.getSeries.useQuery({ search })
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
@@ -28,7 +28,7 @@ const Series = () => {
       {isLoading ? (
         <SkeletonSectionComponent section="Recommended" />
       ) : (
-        <SectionComponent
+        <SeriesSectionComponent
           section="TV Series"
           sectionData={data}
           bookmarks={bookmarks?.data}

@@ -24,25 +24,56 @@ export type TmdbMovieListData = {
   total_results: number
 }
 
- const fetchOptions = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization:
-            `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
-        }
-    }
-    
-const movieListUrl = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1'
-  
-function fetchMovieList<T>(url: string): Promise<T> {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return fetch(url, fetchOptions).then((response) => {
-    // fetching the reponse body data
-    return response.json<T>()
-  })
+export type TmdbSeriesListData = {
+  page: number
+  results: Array<{
+    adult: boolean
+    backdrop_path: string
+    genre_ids: number[]
+    id: number
+    origin_country: string[]
+    original_language: string
+    original_name: string
+    overview: string
+    popularity: number
+    poster_path: string
+    first_air_date: string
+    name: string
+    vote_average: number
+    vote_count: number
+  }>
+  total_pages: number
+  total_results: number
 }
 
+const fetchOptions = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
+  },
+}
+
+const movieListUrl =
+  'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1'
+const seriesListUrl =
+  'https://api.themoviedb.org/3/tv/popular?language=en-US&page=1'
+
+const trendingMovieUrl =
+  'https://api.themoviedb.org/3/trending/movie/day'
+
+const trendingSeriesUrl =
+  'https://api.themoviedb.org/3/trending/tv/day'
+
+const trendingPersonUrl =
+  'https://api.themoviedb.org/3/trending/person/day'
+
+function fetchSelectionList<T>(url: string): Promise<T> {
+  return fetch(url, fetchOptions).then((response): Promise<T> => {
+    // fetching the reponse body data
+    return response.json()
+  })
+}
 
 export const tmdbRouter = t.router({
   getRecommended: t.procedure
@@ -64,46 +95,32 @@ export const tmdbRouter = t.router({
       return selections
     }),
 
-  getTrending: t.procedure
+  getTrendingMovies: t.procedure
     .input(z.object({ search: z.string() }))
     .query(async ({ ctx, input }) => {
-      const selections = await prisma.selection.findMany({
-        where: {
-          title: {
-            mode: 'insensitive',
-            contains: input.search,
-          },
-          is_trending: true,
-        },
-        include: {
-          TrendingThumb: true,
-        },
-      })
-      return selections
+      const trendingMovies =
+        await fetchSelectionList<TmdbMovieListData>(trendingMovieUrl)
+      return trendingMovies
+    }),
+  getTrendingSeries: t.procedure
+    .input(z.object({ search: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const trendingSeries =
+        await fetchSelectionList<TmdbSeriesListData>(trendingSeriesUrl)
+      return trendingSeries
     }),
 
   getMovies: t.procedure
     .input(z.object({ search: z.string() }))
     .query(async ({ ctx, input }) => {
-      const movies = await fetchMovieList<TmdbMovieListData>(movieListUrl)
-       return movies
+      const movies = await fetchSelectionList<TmdbMovieListData>(movieListUrl)
+      return movies
     }),
   getSeries: t.procedure
     .input(z.object({ search: z.string() }))
     .query(async ({ ctx, input }) => {
-      const selections = await prisma.selection.findMany({
-        where: {
-          title: {
-            mode: 'insensitive',
-            contains: input.search,
-          },
-          category: 'TV Series',
-        },
-        include: {
-          RegularThumb: true,
-        },
-      })
-      return selections
+      const series = await fetchSelectionList<TmdbSeriesListData>(seriesListUrl)
+      return series
     }),
   getBookmarkedMovies: t.procedure
     .input(z.object({ search: z.string(), user_id: z.string() }))
