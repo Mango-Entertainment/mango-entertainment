@@ -5,7 +5,7 @@ import Search from '@/app/_ui/components/Search'
 import SectionComponent from '@/app/_ui/components/Deprecated/SectionComponent'
 import { type ChangeEvent, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
-import SkeletonSectionComponent from '@/app/_ui/components/Deprecated/SkeletonSectionComponent'
+import SkeletonSectionComponent from '@/app/_ui/components/SkeletonSectionComponent'
 
 const Bookmarks = () => {
   const [search, setSearch] = useState('')

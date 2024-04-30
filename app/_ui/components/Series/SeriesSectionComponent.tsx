@@ -26,7 +26,6 @@ const SeriesSectionComponent: FC<SeriesSectionComponentProps> = ({
     )
   }
 
-  console.log(sectionData)
   return (
     <div className="ml-4 text-entertainment-pure-white">
       <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl lg:mb-8">
@@ -34,15 +33,16 @@ const SeriesSectionComponent: FC<SeriesSectionComponentProps> = ({
       </h1>
       <div className="mb-8 grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-4 md:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))]">
         {sectionData?.results?.map((selection) => {
-          // const bookmarked = bookmarks?.data.filter(
-          //   (bookmark) => bookmark.selection_id === selection.id,
-          // )[0] ?? { bookmarked: false }
+          const bookmarked = bookmarks?.data.filter(
+            (bookmark) => bookmark.selection_id === selection.id,
+          )[0] ?? { bookmarked: false }
           return (
             <SeriesCard
               key={selection.id}
               id={selection.id}
               name={selection.name}
               poster_path={selection.poster_path}
+              bookmarked={bookmarked.bookmarked}
               release_date={selection.first_air_date}
             />
           )

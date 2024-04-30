@@ -8,8 +8,7 @@ import {
   NextButton,
   usePrevNextButtons,
 } from '@/components/ui/arrowbuttons'
-import TrendingSkeleton from '@/app/_ui/components/Deprecated/TrendingSkeleton'
-import { useUser } from '@clerk/nextjs'
+import TrendingSkeleton from '@/app/_ui/components/TrendingSkeleton'
 
 type TrendingSectionProps = {
   bookmarks: RouterOutputs['bookmarks']['getBookmarks'] | undefined
@@ -34,7 +33,7 @@ const TrendingSeries: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
     return (
       <div className="ml-4 text-entertainment-pure-white">
         <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">
-          Trending
+          Trending Series
         </h1>
         <TrendingSkeleton />
       </div>
@@ -44,7 +43,7 @@ const TrendingSeries: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
     return (
       <div className="ml-4 text-entertainment-pure-white">
         <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">
-          Trending
+          Trending Series
         </h1>
         <p className="text-center font-light opacity-75 lg:text-xl">
           No results found

@@ -16,6 +16,7 @@ type MovieCardProps = {
     title: string
     poster_path: string
     release_date: string
+    bookmarked: boolean
 }
 
 const MovieCard: FC<MovieCardProps> = ({
@@ -23,6 +24,7 @@ const MovieCard: FC<MovieCardProps> = ({
   title,
   poster_path,
   release_date,
+  bookmarked,
 }) => {
   const categoryIcon = '/icon-category-movie.svg'
 
@@ -41,11 +43,11 @@ const MovieCard: FC<MovieCardProps> = ({
         />
         {isSignedIn ? (
           <CardHeader
-            // onClick={() =>
-            //   toggleBookmark({ selection_id: id, user_id: user.id })
-            // }
+            onClick={() =>
+              toggleBookmark({ selection_id: id, user_id: user.id })
+            }
           >
-            {/* {bookmarked ? (
+            {bookmarked ? (
               <Image
                 src="/icon-bookmark-full.svg"
                 height={32}
@@ -59,7 +61,7 @@ const MovieCard: FC<MovieCardProps> = ({
                 width={32}
                 alt="bookmark icon"
               />
-            )} */}
+            )}
           </CardHeader>
         ) : (
           <></>

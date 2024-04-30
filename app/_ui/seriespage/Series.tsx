@@ -5,7 +5,7 @@ import Search from '../components/Search'
 import { type ChangeEvent, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import SkeletonSectionComponent from '@/app/_ui/components/SkeletonSectionComponent'
-import SeriesSectionComponent from '@/app/_ui/components/SeriesSectionComponent'
+import SeriesSectionComponent from '@/app/_ui/components/Series/SeriesSectionComponent'
 
 const Series = () => {
   const [search, setSearch] = useState('')

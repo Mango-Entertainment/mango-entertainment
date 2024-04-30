@@ -2,7 +2,7 @@ import { trpc } from '@/lib/server/trpc'
 import SectionComponent from '@/app/_ui/components/Deprecated/SectionComponent'
 import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
 import { type FC } from 'react'
-import SkeletonSectionComponent from '@/app/_ui/components/Deprecated/SkeletonSectionComponent'
+import SkeletonSectionComponent from '@/app/_ui/components/SkeletonSectionComponent'
 
 type RecommendedSectionProps = {
   bookmarks: RouterOutputs['bookmarks']['getBookmarks'] | undefined
