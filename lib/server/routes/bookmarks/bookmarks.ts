@@ -4,7 +4,7 @@ import prisma from '@/prisma/prisma.db'
 
 export const bookmarkRouter = t.router({
   getBookmark: t.procedure
-    .input(z.object({ user_id: z.string(), selection_id: z.string() }))
+    .input(z.object({ user_id: z.string(), selection_id: z.number() }))
     .query(async ({ ctx, input }) => {
       const is_bookmarked = await prisma.bookmarks.findFirst({
         where: {
@@ -18,7 +18,7 @@ export const bookmarkRouter = t.router({
     .input(
       z.object({
         user_id: z.string(),
-        selection_id: z.string(),
+        selection_id: z.number(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -42,11 +42,7 @@ export const bookmarkRouter = t.router({
               id: input.user_id,
             },
           },
-          selection: {
-            connect: {
-              id: input.selection_id,
-            },
-          },
+          selection_id: input.selection_id,
           bookmarked: true,
         },
         update: {

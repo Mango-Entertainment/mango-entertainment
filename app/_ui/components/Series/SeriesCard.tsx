@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { type FC } from 'react'
 import { useUser } from '@clerk/nextjs'
+import { useQuery } from '@tanstack/react-query'
 import useBookmarks from '@/app/_hooks/useBookmarks'
 import {
   Card,
@@ -16,6 +17,7 @@ type SeriesCardProps = {
     name: string
     poster_path: string
     release_date: string
+    bookmarked: boolean
 }
 
 const SeriesCard: FC<SeriesCardProps> = ({
@@ -23,6 +25,7 @@ const SeriesCard: FC<SeriesCardProps> = ({
   name,
   poster_path,
   release_date,
+  bookmarked,
 }) => {
   const categoryIcon = '/icon-category-series.svg'
 
@@ -41,11 +44,11 @@ const SeriesCard: FC<SeriesCardProps> = ({
         />
         {isSignedIn ? (
           <CardHeader
-            // onClick={() =>
-            //   toggleBookmark({ selection_id: id, user_id: user.id })
-            // }
+            onClick={() =>
+              toggleBookmark({ selection_id: id, user_id: user.id })
+            }
           >
-            {/* {bookmarked ? (
+            {bookmarked ? (
               <Image
                 src="/icon-bookmark-full.svg"
                 height={32}
@@ -59,7 +62,7 @@ const SeriesCard: FC<SeriesCardProps> = ({
                 width={32}
                 alt="bookmark icon"
               />
-            )} */}
+            )}
           </CardHeader>
         ) : (
           <></>

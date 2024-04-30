@@ -5,7 +5,7 @@ import Search from '@/app/_ui/components/Search'
 import MovieSectionComponent from '@/app/_ui/components/Movies/MovieSectionComponent'
 import { type ChangeEvent, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
-import SkeletonSectionComponent from '@/app/_ui/components/Depricated/SkeletonSectionComponent'
+import SkeletonSectionComponent from '@/app/_ui/components/Deprecated/SkeletonSectionComponent'
 
 const Movies = () => {
   const [search, setSearch] = useState('')

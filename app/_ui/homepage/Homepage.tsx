@@ -1,6 +1,6 @@
 'use client'
 
-import Recommended from '@/app/_ui/components/Depricated/Recommended'
+import Recommended from '@/app/_ui/components/Deprecated/Recommended'
 import Search from '@/app/_ui/components/Search'
 import { type ChangeEvent, useState } from 'react'
 import { trpc } from '@/lib/server/trpc'
@@ -12,8 +12,12 @@ import TrendingSeries from '@/app/_ui/components/Series/TrendingSeries'
 const Homepage = () => {
   const [search, setSearch] = useState('')
   const { user } = useUser()
-  const bookmarks = trpc.bookmarks.getBookmarks.useQuery({search: search, user_id: user?.id ?? ""})
-  
+  // const bookmarks = trpc.bookmarks.getBookmarks.useQuery({search: search, user_id: user?.id ?? ""})
+  const {data, isLoading} = trpc.bookmarks.getBookmarks.useQuery({
+    search: search,
+    user_id: user?.id ?? '',
+  })
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }
@@ -21,8 +25,8 @@ const Homepage = () => {
   return (
     <div className="text-entertainment-greyish-blue">
       <Search search={search} handleChange={handleChange} />
-      <TrendingSeries search={search} bookmarks={bookmarks?.data} />
-      <TrendingMovies search={search} bookmarks={bookmarks?.data} />
+      <TrendingSeries search={search} bookmarks={data} />
+      <TrendingMovies search={search} bookmarks={data} />
     </div>
   )
 }

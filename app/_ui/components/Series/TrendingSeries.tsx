@@ -8,7 +8,8 @@ import {
   NextButton,
   usePrevNextButtons,
 } from '@/components/ui/arrowbuttons'
-import TrendingSkeleton from '@/app/_ui/components/Depricated/TrendingSkeleton'
+import TrendingSkeleton from '@/app/_ui/components/Deprecated/TrendingSkeleton'
+import { useUser } from '@clerk/nextjs'
 
 type TrendingSectionProps = {
   bookmarks: RouterOutputs['bookmarks']['getBookmarks'] | undefined
@@ -21,6 +22,7 @@ const TrendingSeries: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
     align: 'start',
   })
   const { data, isLoading } = trpc.tmdb.getTrendingSeries.useQuery({ search })
+
   const {
     prevBtnDisabled,
     nextBtnDisabled,
@@ -52,25 +54,27 @@ const TrendingSeries: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
   }
   return (
     <div className="ml-4 text-entertainment-pure-white">
-      <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">Trending</h1>
+      <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">
+        Trending Series
+      </h1>
       <section>
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="mb-2 flex w-max touch-pan-y gap-4 md:gap-6">
             {data
               ? data.results.map((selection) => {
-                  // const bookmarked = bookmarks?.data.filter(
-                  //   (bookmark) => bookmark.selection_id === selection.id,
-                  // )[0] ?? { bookmarked: false }
-
-                 return (
-                   <SeriesCard
-                     key={selection.id}
-                     id={selection.id}
-                     name={selection.name}
-                     poster_path={selection.poster_path}
-                     release_date={selection.first_air_date}
-                   />
-                 )
+                const bookmarked = bookmarks?.data.filter(
+                  (bookmark) => bookmark.selection_id === selection.id,
+                )[0] ?? { bookmarked: false }
+                  return (
+                    <SeriesCard
+                      key={selection.id}
+                      id={selection.id}
+                      name={selection.name}
+                      poster_path={selection.poster_path}
+                      bookmarked={bookmarked.bookmarked}
+                      release_date={selection.first_air_date}
+                    />
+                  )
                 })
               : null}
           </div>

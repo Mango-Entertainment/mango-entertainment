@@ -3,8 +3,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  // previewFeatures = ["fullTextSearch"]
-  // output   = "./generated/client"
 }
 
 datasource db {
@@ -14,7 +12,6 @@ datasource db {
 }
 
 model User {
-  // id      String   @id @default(uuid())
   id String @id @unique
   firstName      String  
   lastName      String   
@@ -25,41 +22,11 @@ model User {
   bookmarks Bookmarks[]
 }
 
-model Selection {
-  id      String   @id @default(uuid())
-  title   String   @db.VarChar(255)
-  year    Int      @db.Integer
-  category String  @db.VarChar(255)
-  rating  String   @db.VarChar(255)
-  is_trending Boolean @db.Boolean
-  RegularThumb RegularThumb?
-  TrendingThumb TrendingThumb?
-  bookmarks Bookmarks[]
-}
-
-model RegularThumb {
-  id      String   @id @default(uuid())
-  large   String   @db.VarChar(255)
-  small   String   @db.VarChar(255)
-  medium   String   @db.VarChar(255)
-  selection_id String @unique
-  Selection Selection @relation(fields:[selection_id], references:[id], onDelete: NoAction, onUpdate: NoAction)
-}
-
-model TrendingThumb {
-  id      String   @id @default(uuid())
-  large   String   @db.VarChar(255)
-  small   String   @db.VarChar(255)
-  selection_id String @unique
-  Selection Selection @relation(fields:[selection_id], references:[id], onDelete: NoAction, onUpdate: NoAction)
-}
-
 model Bookmarks {
   id      String   @id @default(uuid())
   user_id String
-  selection_id String
+  selection_id Int
   user  User @relation(fields: [user_id], references: [id])
-  selection Selection @relation(fields:[selection_id], references:[id])
   assignedAt DateTime @default(now())
   bookmarked Boolean
 

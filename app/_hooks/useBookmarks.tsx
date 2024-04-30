@@ -5,8 +5,6 @@ const useBookmarks = () => {
   const { mutateAsync } = trpc.bookmarks.createBookmark.useMutation({
     onSuccess: async () => {
       await utils.bookmarks.getBookmarks.refetch()
-      await utils.selections.getBookmarkedMovies.refetch()
-      await utils.selections.getBookmarkedSeries.refetch()
     },
   })
 
@@ -14,7 +12,7 @@ const useBookmarks = () => {
     selection_id,
     user_id,
   }: {
-    selection_id: string
+    selection_id: number
     user_id: string
   }) => {
     await mutateAsync({

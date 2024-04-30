@@ -8,7 +8,7 @@ import {
   NextButton,
   usePrevNextButtons,
 } from '@/components/ui/arrowbuttons'
-import TrendingSkeleton from '@/app/_ui/components/Depricated/TrendingSkeleton'
+import TrendingSkeleton from '@/app/_ui/components/Deprecated/TrendingSkeleton'
 
 type TrendingSectionProps = {
   bookmarks: RouterOutputs['bookmarks']['getBookmarks'] | undefined
@@ -52,15 +52,15 @@ const TrendingMovies: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
   }
   return (
     <div className="ml-4 text-entertainment-pure-white">
-      <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">Trending</h1>
+      <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">Trending Movies</h1>
       <section>
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="mb-2 flex w-max touch-pan-y gap-4 md:gap-6">
             {data
               ? data.results.map((selection) => {
-                  // const bookmarked = bookmarks?.data.filter(
-                  //   (bookmark) => bookmark.selection_id === selection.id,
-                  // )[0] ?? { bookmarked: false }
+                  const bookmarked = bookmarks?.data.filter(
+                    (bookmark) => bookmark.selection_id === selection.id,
+                  )[0] ?? { bookmarked: false }
 
                 return (
                   <MovieCard

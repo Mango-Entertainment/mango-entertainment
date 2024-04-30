@@ -2,10 +2,10 @@
 
 import { trpc } from '@/lib/server/trpc'
 import Search from '@/app/_ui/components/Search'
-import SectionComponent from '@/app/_ui/components/SectionComponent'
+import SectionComponent from '@/app/_ui/components/Deprecated/SectionComponent'
 import { type ChangeEvent, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
-import SkeletonSectionComponent from '@/app/_ui/components/SkeletonSectionComponent'
+import SkeletonSectionComponent from '@/app/_ui/components/Deprecated/SkeletonSectionComponent'
 
 const Bookmarks = () => {
   const [search, setSearch] = useState('')

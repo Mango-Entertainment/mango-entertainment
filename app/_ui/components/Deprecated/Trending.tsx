@@ -1,5 +1,5 @@
 import { trpc } from '@/lib/server/trpc'
-import TrendingCard from '@/app/_ui/components/Depricated/TrendingCard'
+import TrendingCard from '@/app/_ui/components/Deprecated/TrendingCard'
 import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
 import { type FC } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'

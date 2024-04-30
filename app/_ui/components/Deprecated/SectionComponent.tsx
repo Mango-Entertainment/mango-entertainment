@@ -1,4 +1,4 @@
-import RegularCard from '@/app/_ui/components/Depricated/RegularCard'
+import RegularCard from '@/app/_ui/components/Deprecated/RegularCard'
 import { type FC } from 'react'
 import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
 
