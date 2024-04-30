@@ -1,5 +1,5 @@
 import { trpc } from '@/lib/server/trpc'
-import TrendingCard from '@/app/_ui/components/TrendingCard'
+import MovieCard from '@/app/_ui/components/Movies/MovieCard'
 import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
 import { type FC } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -8,19 +8,19 @@ import {
   NextButton,
   usePrevNextButtons,
 } from '@/components/ui/arrowbuttons'
-import TrendingSkeleton from '@/app/_ui/components/TrendingSkeleton'
+import TrendingSkeleton from '@/app/_ui/components/Depricated/TrendingSkeleton'
 
 type TrendingSectionProps = {
   bookmarks: RouterOutputs['bookmarks']['getBookmarks'] | undefined
   search: string
 }
 
-const Trending: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
+const TrendingMovies: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     containScroll: false,
     align: 'start',
   })
-  const { data, isLoading } = trpc.selections.getTrending.useQuery({ search })
+  const { data, isLoading } = trpc.tmdb.getTrendingMovies.useQuery({ search })
   const {
     prevBtnDisabled,
     nextBtnDisabled,
@@ -38,7 +38,7 @@ const Trending: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
       </div>
     )
   }
-  if (data && data.length < 1) {
+  if (data && data?.results?.length < 1) {
     return (
       <div className="ml-4 text-entertainment-pure-white">
         <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">
@@ -57,25 +57,20 @@ const Trending: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="mb-2 flex w-max touch-pan-y gap-4 md:gap-6">
             {data
-              ? data.map((selection) => {
-                  const bookmarked = bookmarks?.data.filter(
-                    (bookmark) => bookmark.selection_id === selection.id,
-                  )[0] ?? { bookmarked: false }
+              ? data.results.map((selection) => {
+                  // const bookmarked = bookmarks?.data.filter(
+                  //   (bookmark) => bookmark.selection_id === selection.id,
+                  // )[0] ?? { bookmarked: false }
 
-                  if (!selection.TrendingThumb?.large) return
-
-                  return (
-                    <TrendingCard
-                      id={selection.id}
-                      title={selection.title}
-                      rating={selection.rating}
-                      category={selection.category}
-                      year={selection.year}
-                      imageString={selection.TrendingThumb?.large.slice(8)}
-                      bookmarked={bookmarked.bookmarked}
-                      key={selection.id}
-                    />
-                  )
+                return (
+                  <MovieCard
+                    key={selection.id}
+                    id={selection.id}
+                    title={selection.title}
+                    poster_path={selection.poster_path}
+                    release_date={selection.release_date}
+                  />
+                )
                 })
               : null}
           </div>
@@ -96,4 +91,4 @@ const Trending: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
     </div>
   )
 }
-export default Trending
+export default TrendingMovies

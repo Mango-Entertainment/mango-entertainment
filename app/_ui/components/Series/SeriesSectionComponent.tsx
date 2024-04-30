@@ -1,6 +1,6 @@
 import { type FC } from 'react'
 import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
-import SeriesCard from '@/app/_ui/components/SeriesCard'
+import SeriesCard from '@/app/_ui/components/Series/SeriesCard'
 
 type SeriesSectionComponentProps = {
   sectionData: RouterOutputs['tmdb']['getSeries']| undefined

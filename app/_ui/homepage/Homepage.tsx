@@ -1,11 +1,13 @@
 'use client'
 
-import Recommended from '@/app/_ui/components/Recommended'
+import Recommended from '@/app/_ui/components/Depricated/Recommended'
 import Search from '@/app/_ui/components/Search'
-import Trending from '@/app/_ui/components/Trending'
 import { type ChangeEvent, useState } from 'react'
 import { trpc } from '@/lib/server/trpc'
 import { useUser } from '@clerk/nextjs'
+import TrendingMovies from '@/app/_ui/components/Movies/TrendingMovies'
+import TrendingSeries from '@/app/_ui/components/Series/TrendingSeries'
+
 
 const Homepage = () => {
   const [search, setSearch] = useState('')
@@ -19,8 +21,8 @@ const Homepage = () => {
   return (
     <div className="text-entertainment-greyish-blue">
       <Search search={search} handleChange={handleChange} />
-      <Trending search={search} bookmarks={bookmarks?.data} />
-      <Recommended search={search} bookmarks={bookmarks?.data} />
+      <TrendingSeries search={search} bookmarks={bookmarks?.data} />
+      <TrendingMovies search={search} bookmarks={bookmarks?.data} />
     </div>
   )
 }
