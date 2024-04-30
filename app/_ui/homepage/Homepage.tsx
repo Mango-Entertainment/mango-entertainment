@@ -13,9 +13,16 @@ const Homepage = () => {
   const [search, setSearch] = useState('')
   const { user } = useUser()
   // const bookmarks = trpc.bookmarks.getBookmarks.useQuery({search: search, user_id: user?.id ?? ""})
-  const {data, isLoading} = trpc.bookmarks.getBookmarks.useQuery({
+  const movies = trpc.bookmarks.getBookmarks.useQuery({
     search: search,
     user_id: user?.id ?? '',
+    selection_type: 'Movie',
+  })
+
+  const series = trpc.bookmarks.getBookmarks.useQuery({
+    search: search,
+    user_id: user?.id ?? '',
+    selection_type: 'TV Series',
   })
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,8 +32,8 @@ const Homepage = () => {
   return (
     <div className="text-entertainment-greyish-blue">
       <Search search={search} handleChange={handleChange} />
-      <TrendingSeries search={search} bookmarks={data} />
-      <TrendingMovies search={search} bookmarks={data} />
+      <TrendingSeries search={search} bookmarks={series.data} />
+      <TrendingMovies search={search} bookmarks={movies.data} />
     </div>
   )
 }

@@ -129,22 +129,7 @@ export const tmdbRouter = t.router({
         where: {
           user_id: input.user_id,
           bookmarked: true,
-          selection: {
-            is: {
-              category: 'Movie',
-              title: {
-                mode: 'insensitive',
-                contains: input.search,
-              },
-            },
-          },
-        },
-        include: {
-          selection: {
-            include: {
-              RegularThumb: true,
-            },
-          },
+         
         },
       })
       return selections
@@ -156,22 +141,7 @@ export const tmdbRouter = t.router({
         where: {
           user_id: input.user_id,
           bookmarked: true,
-          selection: {
-            is: {
-              category: 'TV Series',
-              title: {
-                mode: 'insensitive',
-                contains: input.search,
-              },
-            },
-          },
-        },
-        include: {
-          selection: {
-            include: {
-              RegularThumb: true,
-            },
-          },
+          
         },
       })
       return selections

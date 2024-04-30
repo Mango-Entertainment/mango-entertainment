@@ -17,31 +17,36 @@ const Bookmarks = () => {
     user_id: user?.id ?? '',
   })
 
-  const bookmarkedSeries = trpc.selections.getBookmarkedSeries.useQuery({
+  const bookmarkedSeries = trpc.bookmarks.getBookmarks.useQuery({
     search,
     user_id,
+    selection_type: 'TV Series',
   })
-  const bookmarkedMovie = trpc.selections.getBookmarkedMovies.useQuery({
+
+  const bookmarkedMovies = trpc.bookmarks.getBookmarks.useQuery({
     search,
     user_id,
+    selection_type: 'Movie',
   })
 
-  const bookmarkedSeriesData = bookmarkedSeries.data?.map(
-    (item) => item.selection,
-  )
+  console.log(bookmarkedMovies)
 
-  const bookmarkedMovieData = bookmarkedMovie.data?.map(
-    (item) => item.selection,
-  )
+  // const bookmarkedSeriesData = bookmarkedSeries.data?.results.map(
+  //   (item) => item.selection,
+  // )
+
+  // const bookmarkedMovieData = bookmarkedMovie.data?.results.map(
+  //   (item) => item.selection,
+  // )
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }
-  if (!bookmarkedMovie || !bookmarkedSeries) return
+  if (!bookmarkedMovies || !bookmarkedSeries) return
   return (
     <div className="text-entertainment-greyish-blue">
       <Search search={search} handleChange={handleChange} />
-      {bookmarkedMovie.isLoading ? (
+      {bookmarkedMovies.isLoading ? (
         <SkeletonSectionComponent section="Movies" />
       ) : (
         <SectionComponent

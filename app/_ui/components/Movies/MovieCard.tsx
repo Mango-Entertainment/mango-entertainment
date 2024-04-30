@@ -44,7 +44,7 @@ const MovieCard: FC<MovieCardProps> = ({
         {isSignedIn ? (
           <CardHeader
             onClick={() =>
-              toggleBookmark({ selection_id: id, user_id: user.id })
+              toggleBookmark({ selection_id: id, user_id: user.id, selection_type: 'Movie' })
             }
           >
             {bookmarked ? (

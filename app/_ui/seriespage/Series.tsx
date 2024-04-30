@@ -14,6 +14,7 @@ const Series = () => {
   const bookmarks = trpc.bookmarks.getBookmarks.useQuery({
     search: search,
     user_id: user?.id ?? '',
+    selection_type: 'TV Series',
   })
 
   const { data, isLoading } = trpc.tmdb.getSeries.useQuery({ search })

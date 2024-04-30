@@ -29,6 +29,7 @@ model Bookmarks {
   user  User @relation(fields: [user_id], references: [id])
   assignedAt DateTime @default(now())
   bookmarked Boolean
+  selection_type String
 
   @@unique([user_id, selection_id], name: "user_selection")
   @@index([user_id, selection_id])
