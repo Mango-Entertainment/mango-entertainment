@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { t } from '@/lib/server/trpc-server'
+import { trpc } from '@/lib/server/trpc'
 import prisma from '@/prisma/prisma.db'
 
 export type TmdbMovieListData = {
@@ -46,6 +47,79 @@ export type TmdbSeriesListData = {
   total_results: number
 }
 
+export type TmdbMovieDetailsData = {
+  adult: boolean,
+  backdrop_path: string
+  belongs_to_collection: {
+    id: number
+    name: string
+    poster_path: string
+    backdrop_path: string
+  },
+  budget: number
+  genres: [
+    {
+      Id: number
+      name: string
+    },
+    {
+      id: number
+      name: string
+    },
+    {
+      id: number
+      name: string
+    }
+  ],
+  homepage: string
+  id: number
+  imdb_id: string
+  origin_country: [
+    string
+  ],
+  original_language: string
+  original_title: string
+  overview: string
+  popularity: number
+  poster_path: string
+  production_companies: [
+    {
+      Id: number
+      logo_path: string
+      name: string
+      origin_country: string
+    },
+    {
+      Id: number
+      logo_path: string
+      name: string
+      origin_country: string
+    }
+  ],
+  production_countries: [
+    {
+      iso_3166_1: string,
+      name: string
+    }
+  ],
+  release_date: string
+  revenue: number,
+  runtime: number,
+  spoken_languages: [
+    {
+      english_name: string
+      iso_639_1: string
+      name: string
+    }
+  ],
+  status: string
+  tagline: string
+  title: string
+  video: boolean
+  vote_average: number
+  vote_count: number
+}
+
 const fetchOptions = {
   method: 'GET',
   headers: {
@@ -67,6 +141,10 @@ const trendingSeriesUrl =
 
 const trendingPersonUrl =
   'https://api.themoviedb.org/3/trending/person/day'
+
+const seriesDetailsUrl = 'https://api.themoviedb.org/3/tv/'
+const movieDetailsUrl = 'https://api.themoviedb.org/3/movie/'
+
 
 function fetchSelectionList<T>(url: string): Promise<T> {
   return fetch(url, fetchOptions).then((response): Promise<T> => {
@@ -122,6 +200,20 @@ export const tmdbRouter = t.router({
       const series = await fetchSelectionList<TmdbSeriesListData>(seriesListUrl)
       return series
     }),
+    getMovieDetails: t.procedure
+    .input(z.object({ movie_id: z.number() }))
+    .query(async ({ ctx, input }) => {
+      const movies = await fetchSelectionList<TmdbMovieDetailsData>(
+        `${movieDetailsUrl}${input.movie_id}`,
+      )
+      return movies
+    }),
+    getSeriesDetails: t.procedure
+    .input(z.object({ search: z.string(), series_id: z.number() }))
+    .query(async ({ ctx, input }) => {
+      const series = await fetchSelectionList<TmdbSeriesListData>(`${seriesDetailsUrl}${input.series_id}`)
+      return series
+    }),
   getBookmarkedMovies: t.procedure
     .input(z.object({ search: z.string(), user_id: z.string() }))
     .query(async ({ ctx, input }) => {
@@ -129,9 +221,10 @@ export const tmdbRouter = t.router({
         where: {
           user_id: input.user_id,
           bookmarked: true,
-         
+          selection_type: 'Movie',
         },
       })
+
       return selections
     }),
   getBookmarkedSeries: t.procedure
@@ -141,7 +234,7 @@ export const tmdbRouter = t.router({
         where: {
           user_id: input.user_id,
           bookmarked: true,
-          
+          selection_type: 'TV Series',
         },
       })
       return selections
