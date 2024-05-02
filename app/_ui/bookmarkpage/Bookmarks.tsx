@@ -68,7 +68,7 @@ const BookmarkedMovies: FC<BookmarkSection> = ({ user_id, search }) => {
   return (
     <>
       <h2 className="text-entertainment-pure-white">Movie Bookmarks</h2>
-      <ul className="text-entertainment-pure-white">
+      <ul className="flex flex-wrap gap-4 text-entertainment-pure-white">
         {data?.map((selection) => {
           return (
             <BookmarkMovieCard
