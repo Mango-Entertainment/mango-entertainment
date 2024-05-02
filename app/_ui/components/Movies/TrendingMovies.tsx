@@ -65,11 +65,8 @@ const TrendingMovies: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
                 return (
                   <MovieCard
                     key={selection.id}
-                    id={selection.id}
-                    title={selection.title}
-                    poster_path={selection.poster_path}
+                    movie_card_data={selection}
                     bookmarked={bookmarked.bookmarked}
-                    release_date={selection.release_date}
                   />
                 )
                 })

@@ -25,7 +25,6 @@ const MovieSectionComponent: FC<MovieSectionComponentProps> = ({
       </div>
     )
   }
-
   return (
     <div className="ml-4 text-entertainment-pure-white">
       <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl lg:mb-8">
@@ -36,14 +35,12 @@ const MovieSectionComponent: FC<MovieSectionComponentProps> = ({
           const bookmarked = bookmarks?.data.filter(
             (bookmark) => bookmark.selection_id === selection.id,
           )[0] ?? { bookmarked: false }
+console.log(selection)
           return (
             <MovieCard
               key={selection.id}
-              id={selection.id}
-              title={selection.title}
-              poster_path={selection.poster_path}
               bookmarked={bookmarked.bookmarked}
-              release_date={selection.release_date}
+              movie_card_data={selection}
             />
           )
         })}

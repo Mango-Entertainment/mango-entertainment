@@ -59,7 +59,6 @@ const Bookmarks = () => {
 }
 
 const BookmarkedMovies: FC<BookmarkSection> = ({ user_id, search }) => {
-  const toggleBookmark = useBookmarks()
   const { data, isLoading } = trpc.tmdb.getBookmarkedMovies.useQuery({
     search: search,
     user_id: user_id,
@@ -75,6 +74,7 @@ const BookmarkedMovies: FC<BookmarkSection> = ({ user_id, search }) => {
             <BookmarkMovieCard
               key={selection.selection_id}
               id={selection.selection_id}
+              search={search}
             />
           )
         })}

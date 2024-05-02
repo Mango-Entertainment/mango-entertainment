@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { type FC } from 'react'
 import { useUser } from '@clerk/nextjs'
 import useBookmarks from '@/app/_hooks/useBookmarks'
+import { type MovieCardData } from '@/lib/server/routes/tmdb/tmdb'
 import {
   Card,
   CardContent,
@@ -11,32 +12,25 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 
-type MovieCardProps = {
-    id: number
-    title: string
-    poster_path: string
-    release_date: string
-    bookmarked: boolean
+export type MovieCardProps = {
+ movie_card_data: MovieCardData
+ bookmarked: boolean
 }
 
 const MovieCard: FC<MovieCardProps> = ({
-  id,
-  title,
-  poster_path,
-  release_date,
+  movie_card_data,
   bookmarked,
 }) => {
   const categoryIcon = '/icon-category-movie.svg'
-
   const { isSignedIn, user } = useUser()
   const toggleBookmark = useBookmarks()
-
+  if(!movie_card_data) return
   return (
     <Card variant={'regular'}>
       <CardContent>
         <Image
           className="mb-1 rounded-lg md:mb-2"
-          src={`https://image.tmdb.org/t/p/original${poster_path}`}
+          src={`https://image.tmdb.org/t/p/original${movie_card_data.poster_path}`}
           width={280}
           height={174}
           alt="trending image"
@@ -44,7 +38,12 @@ const MovieCard: FC<MovieCardProps> = ({
         {isSignedIn ? (
           <CardHeader
             onClick={() =>
-              toggleBookmark({ selection_id: id, user_id: user.id, selection_type: 'Movie' })
+              toggleBookmark({
+                selection_id: movie_card_data.id,
+                user_id: user.id,
+                selection_type: 'Movie',
+                movie_data: movie_card_data,
+              })
             }
           >
             {bookmarked ? (
@@ -69,7 +68,7 @@ const MovieCard: FC<MovieCardProps> = ({
       </CardContent>
       <CardFooter>
         <CardDescription className="gap-1 text-[11px] md:text-sm">
-          {release_date}
+          {movie_card_data.release_date}
           {/* <span className="text-sm opacity-50 md:text-xl">•</span> */}
           {/* <Image
             className="h-3"
@@ -82,7 +81,7 @@ const MovieCard: FC<MovieCardProps> = ({
           {/* <span className="text-sm opacity-50 md:text-xl">•</span> */}
           {/* {rating} */}
         </CardDescription>
-        <CardTitle className="md:text-lg">{title}</CardTitle>
+        <CardTitle className="md:text-lg">{movie_card_data.title}</CardTitle>
       </CardFooter>
     </Card>
   )

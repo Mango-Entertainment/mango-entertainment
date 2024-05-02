@@ -3,46 +3,43 @@ import { t } from '@/lib/server/trpc-server'
 import { trpc } from '@/lib/server/trpc'
 import prisma from '@/prisma/prisma.db'
 
-export type TmdbMovieListData = {
-  page: number
-  results: Array<{
-    adult: boolean
-    backdrop_path: string
-    genre_ids: number[]
-    id: number
-    original_language: string
-    original_title: string
-    overview: string
-    popularity: number
-    poster_path: string
-    release_date: string
-    title: string
-    video: boolean
-    vote_average: number
-    vote_count: number
-  }>
-  total_pages: number
-  total_results: number
+export type MovieCardData = {
+  adult: boolean
+  backdrop_path: string
+  genre_ids: number[]
+  id: number
+  original_language: string
+  original_title: string
+  overview: string
+  popularity: number
+  poster_path: string
+  release_date: string
+  title: string
+  video: boolean
+  vote_average: number
+  vote_count: number
 }
 
-export type TmdbSeriesListData = {
+export type SeriesCardData = {
+  adult: boolean
+  backdrop_path: string
+  genre_ids: number[]
+  id: number
+  origin_country: string[]
+  original_language: string
+  original_name: string
+  overview: string
+  popularity: number
+  poster_path: string
+  first_air_date: string
+  name: string
+  vote_average: number
+  vote_count: number
+}
+
+export interface TmdbListData<T> {
   page: number
-  results: Array<{
-    adult: boolean
-    backdrop_path: string
-    genre_ids: number[]
-    id: number
-    origin_country: string[]
-    original_language: string
-    original_name: string
-    overview: string
-    popularity: number
-    poster_path: string
-    first_air_date: string
-    name: string
-    vote_average: number
-    vote_count: number
-  }>
+  results: T[]
   total_pages: number
   total_results: number
 }
@@ -177,27 +174,28 @@ export const tmdbRouter = t.router({
     .input(z.object({ search: z.string() }))
     .query(async ({ ctx, input }) => {
       const trendingMovies =
-        await fetchSelectionList<TmdbMovieListData>(trendingMovieUrl)
+        await fetchSelectionList<TmdbListData<MovieCardData>>(trendingMovieUrl)
       return trendingMovies
     }),
   getTrendingSeries: t.procedure
     .input(z.object({ search: z.string() }))
     .query(async ({ ctx, input }) => {
       const trendingSeries =
-        await fetchSelectionList<TmdbSeriesListData>(trendingSeriesUrl)
+        await fetchSelectionList<TmdbListData<SeriesCardData>>(trendingSeriesUrl)
       return trendingSeries
     }),
 
   getMovies: t.procedure
     .input(z.object({ search: z.string() }))
     .query(async ({ ctx, input }) => {
-      const movies = await fetchSelectionList<TmdbMovieListData>(movieListUrl)
+      const movies = await fetchSelectionList<TmdbListData<MovieCardData>>(movieListUrl)
       return movies
     }),
   getSeries: t.procedure
     .input(z.object({ search: z.string() }))
     .query(async ({ ctx, input }) => {
-      const series = await fetchSelectionList<TmdbSeriesListData>(seriesListUrl)
+      const series =
+        await fetchSelectionList<TmdbListData<SeriesCardData>>(seriesListUrl)
       return series
     }),
     getMovieDetails: t.procedure
@@ -211,7 +209,7 @@ export const tmdbRouter = t.router({
     getSeriesDetails: t.procedure
     .input(z.object({ search: z.string(), series_id: z.number() }))
     .query(async ({ ctx, input }) => {
-      const series = await fetchSelectionList<TmdbSeriesListData>(`${seriesDetailsUrl}${input.series_id}`)
+      const series = await fetchSelectionList<TmdbListData<SeriesCardData>>(`${seriesDetailsUrl}${input.series_id}`)
       return series
     }),
   getBookmarkedMovies: t.procedure

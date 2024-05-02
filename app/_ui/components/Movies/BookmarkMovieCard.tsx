@@ -14,9 +14,10 @@ import { trpc } from '@/lib/server/trpc'
 
 type BookmarkedMovieCardProps = {
   id: number
+  search: string
 }
 
-const BookmarkMovieCard: FC<BookmarkedMovieCardProps> = ({ id }) => {
+const BookmarkMovieCard: FC<BookmarkedMovieCardProps> = ({ id, search }) => {
   const { data, isLoading } = trpc.tmdb.getMovieDetails.useQuery({
     movie_id: id,
   })
@@ -24,7 +25,13 @@ const BookmarkMovieCard: FC<BookmarkedMovieCardProps> = ({ id }) => {
 
   const { isSignedIn, user } = useUser()
   const toggleBookmark = useBookmarks()
-
+  const bookmark = trpc.bookmarks.getBookmark.useQuery({
+    user_id: user?.id ?? '',
+    selection_id: id,
+    selection_type: 'Movie'
+  })
+  if (isLoading) return <>loading</>
+  if(!bookmark.data?.bookmarked) return
   return (
     <Card variant={'regular'}>
       <CardContent>
