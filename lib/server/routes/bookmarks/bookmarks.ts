@@ -167,4 +167,41 @@ export const bookmarkRouter = t.router({
         data: bookmarks,
       }
     }),
+  getBookmarkedMovies: t.procedure
+    .input(z.object({ search: z.string(), user_id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const selections = await prisma.bookmarks.findMany({
+        where: {
+          user_id: input.user_id,
+          bookmarked: true,
+          selection_type: 'Movie',
+        },
+      })
+      const movieList = await Promise.all(selections.map(async (selection) => {
+        const data = await prisma.movies.findFirst({
+          where: {
+            id: selection.selection_id,
+          },
+        })
+        return data
+      }))
+
+      return {
+        status: 'success',
+        results: movieList.length,
+        data: movieList ?? [],
+      }
+    }),
+  getBookmarkedSeries: t.procedure
+    .input(z.object({ search: z.string(), user_id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const selections = await prisma.bookmarks.findMany({
+        where: {
+          user_id: input.user_id,
+          bookmarked: true,
+          selection_type: 'TV Series',
+        },
+      })
+      return selections
+    }),
 })

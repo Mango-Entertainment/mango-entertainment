@@ -189,7 +189,12 @@ export const tmdbRouter = t.router({
     .input(z.object({ search: z.string() }))
     .query(async ({ ctx, input }) => {
       const movies = await fetchSelectionList<TmdbListData<MovieCardData>>(movieListUrl)
-      return movies
+      const movieList = movies.results
+      return {
+        status: 'success',
+        results: movieList.length,
+        data: movieList,
+      }
     }),
   getSeries: t.procedure
     .input(z.object({ search: z.string() }))
@@ -211,30 +216,5 @@ export const tmdbRouter = t.router({
     .query(async ({ ctx, input }) => {
       const series = await fetchSelectionList<TmdbListData<SeriesCardData>>(`${seriesDetailsUrl}${input.series_id}`)
       return series
-    }),
-  getBookmarkedMovies: t.procedure
-    .input(z.object({ search: z.string(), user_id: z.string() }))
-    .query(async ({ ctx, input }) => {
-      const selections = await prisma.bookmarks.findMany({
-        where: {
-          user_id: input.user_id,
-          bookmarked: true,
-          selection_type: 'Movie',
-        },
-      })
-
-      return selections
-    }),
-  getBookmarkedSeries: t.procedure
-    .input(z.object({ search: z.string(), user_id: z.string() }))
-    .query(async ({ ctx, input }) => {
-      const selections = await prisma.bookmarks.findMany({
-        where: {
-          user_id: input.user_id,
-          bookmarked: true,
-          selection_type: 'TV Series',
-        },
-      })
-      return selections
     }),
 })

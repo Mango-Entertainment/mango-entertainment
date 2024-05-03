@@ -13,8 +13,7 @@ const useBookmarks = () => {
   const utils = trpc.useUtils()
   const { mutateAsync } = trpc.bookmarks.createBookmark.useMutation({
     onSuccess: async () => {
-      await utils.bookmarks.getBookmarks.refetch()
-      await utils.bookmarks.getBookmark.refetch()
+      await utils.bookmarks.invalidate()
     },
   })
 

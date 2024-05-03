@@ -11,12 +11,13 @@ import { useQuery } from '@tanstack/react-query'
 import BookmarkMovieCard from '../components/Movies/BookmarkMovieCard'
 import useBookmarks from '@/app/_hooks/useBookmarks'
 import BookmarkSeriesCard from '../components/Series/BookmarkSeriesCard'
+import MovieSectionComponent from '../components/Movies/MovieSectionComponent'
+import SeriesSectionComponent from '../components/Series/SeriesSectionComponent'
 
 interface BookmarkSection {
   search: string
   user_id: string
 }
-
 
 const Bookmarks = () => {
   const [search, setSearch] = useState('')
@@ -24,39 +25,67 @@ const Bookmarks = () => {
   const { user } = useUser()
   const user_id = user?.id ?? ''
 
+    const bookmarks = trpc.bookmarks.getBookmarks.useQuery({
+      search: search,
+      user_id: user?.id ?? '',
+    })
+
+    const movieBookmarks = trpc.bookmarks.getBookmarks.useQuery({
+      search: search,
+      user_id: user?.id ?? '',
+      selection_type: 'Movie',
+    })
+
+    const bookmarkedSeries = trpc.bookmarks.getBookmarkedSeries.useQuery({
+      search,
+      user_id,
+    })
+    const bookmarkedMovies = trpc.bookmarks.getBookmarkedMovies.useQuery({
+      search,
+      user_id,
+    })
+
+    // const bookmarkedSeriesData = bookmarkedSeries.data?.map(
+    //   (item) => item,
+    // )
+
+    // const bookmarkedMovieData = bookmarkedMovies.data?.map(
+    //   (item) => item,
+    // )
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }
-  // return (
-  //   <div className="text-entertainment-greyish-blue">
-  //     <Search search={search} handleChange={handleChange} />
-  //     {bookmarkedMovies.isLoading ? (
-  //       <SkeletonSectionComponent section="Movies" />
-  //     ) : (
-  //       <SectionComponent
-  //         section="Movies"
-  //         sectionData={bookmarkedMovieData}
-  //         bookmarks={bookmarks?.data}
-  //       />
-  //     )}
-  //     {bookmarkedSeries.isLoading ? (
-  //       <SkeletonSectionComponent section="TV Series" />
-  //     ) : (
-  //       <SectionComponent
-  //         section="TV Series"
-  //         sectionData={bookmarkedSeriesData}
-  //         bookmarks={bookmarks?.data}
-  //       />
-  //     )}
-  //   </div>
-  // )
   return (
-    <>
+    <div className="text-entertainment-greyish-blue">
       <Search search={search} handleChange={handleChange} />
-      <BookmarkedMovies user_id={user_id} search={search} />
-      <BookmarkedSeries user_id={user_id} search={search} />
-    </>
+      {bookmarkedMovies.isLoading ? (
+        <SkeletonSectionComponent section="Movies" />
+      ) : (
+        <MovieSectionComponent
+          section="Movies"
+          sectionData={bookmarkedMovies.data}
+          bookmarks={movieBookmarks?.data}
+        />
+      )}
+      {/* {bookmarkedSeries.isLoading ? (
+        <SkeletonSectionComponent section="TV Series" />
+      ) : (
+        <SeriesSectionComponent
+          section="TV Series"
+          sectionData={bookmarkedSeriesData}
+          bookmarks={bookmarks?.data}
+        />
+      )} */}
+    </div>
   )
+  // return (
+  //   <>
+  //     <Search search={search} handleChange={handleChange} />
+  //     <BookmarkedMovies user_id={user_id} search={search} />
+  //     <BookmarkedSeries user_id={user_id} search={search} />
+  //   </>
+  // )
 }
 
 const BookmarkedMovies: FC<BookmarkSection> = ({ user_id, search }) => {
