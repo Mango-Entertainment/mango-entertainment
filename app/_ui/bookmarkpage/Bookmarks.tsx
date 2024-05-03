@@ -21,37 +21,43 @@ interface BookmarkSection {
 
 const Bookmarks = () => {
   const [search, setSearch] = useState('')
-  
+
   const { user } = useUser()
   const user_id = user?.id ?? ''
 
-    const bookmarks = trpc.bookmarks.getBookmarks.useQuery({
-      search: search,
-      user_id: user?.id ?? '',
-    })
+  const bookmarks = trpc.bookmarks.getBookmarks.useQuery({
+    search: search,
+    user_id: user?.id ?? '',
+  })
 
-    const movieBookmarks = trpc.bookmarks.getBookmarks.useQuery({
-      search: search,
-      user_id: user?.id ?? '',
-      selection_type: 'Movie',
-    })
+  const movieBookmarks = trpc.bookmarks.getBookmarks.useQuery({
+    search: search,
+    user_id: user?.id ?? '',
+    selection_type: 'Movie',
+  })
 
-    const bookmarkedSeries = trpc.bookmarks.getBookmarkedSeries.useQuery({
-      search,
-      user_id,
-    })
-    const bookmarkedMovies = trpc.bookmarks.getBookmarkedMovies.useQuery({
-      search,
-      user_id,
-    })
+  const seriesBookmarks = trpc.bookmarks.getBookmarks.useQuery({
+    search: search,
+    user_id: user?.id ?? '',
+    selection_type: 'TV Series',
+  })
 
-    // const bookmarkedSeriesData = bookmarkedSeries.data?.map(
-    //   (item) => item,
-    // )
+  const bookmarkedSeries = trpc.bookmarks.getBookmarkedSeries.useQuery({
+    search,
+    user_id,
+  })
+  const bookmarkedMovies = trpc.bookmarks.getBookmarkedMovies.useQuery({
+    search,
+    user_id,
+  })
 
-    // const bookmarkedMovieData = bookmarkedMovies.data?.map(
-    //   (item) => item,
-    // )
+  // const bookmarkedSeriesData = bookmarkedSeries.data?.map(
+  //   (item) => item,
+  // )
+
+  // const bookmarkedMovieData = bookmarkedMovies.data?.map(
+  //   (item) => item,
+  // )
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
@@ -68,15 +74,15 @@ const Bookmarks = () => {
           bookmarks={movieBookmarks?.data}
         />
       )}
-      {/* {bookmarkedSeries.isLoading ? (
+      {bookmarkedSeries.isLoading ? (
         <SkeletonSectionComponent section="TV Series" />
       ) : (
         <SeriesSectionComponent
           section="TV Series"
-          sectionData={bookmarkedSeriesData}
-          bookmarks={bookmarks?.data}
+          sectionData={bookmarkedSeries.data}
+          bookmarks={seriesBookmarks?.data}
         />
-      )} */}
+      )}
     </div>
   )
   // return (
