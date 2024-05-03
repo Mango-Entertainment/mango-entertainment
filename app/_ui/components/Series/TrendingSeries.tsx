@@ -67,11 +67,8 @@ const TrendingSeries: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
                   return (
                     <SeriesCard
                       key={selection.id}
-                      id={selection.id}
-                      name={selection.name}
-                      poster_path={selection.poster_path}
                       bookmarked={bookmarked.bookmarked}
-                      release_date={selection.first_air_date}
+                      series_card_data={selection}
                     />
                   )
                 })

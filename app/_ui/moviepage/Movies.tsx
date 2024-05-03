@@ -17,7 +17,6 @@ const Movies = () => {
   })
 
   const { data, isLoading } = trpc.tmdb.getMovies.useQuery({ search })
-  // console.log(movieList)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)

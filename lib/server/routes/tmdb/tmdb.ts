@@ -207,7 +207,7 @@ export const tmdbRouter = t.router({
       return movies
     }),
     getSeriesDetails: t.procedure
-    .input(z.object({ search: z.string(), series_id: z.number() }))
+    .input(z.object({ series_id: z.number() }))
     .query(async ({ ctx, input }) => {
       const series = await fetchSelectionList<TmdbListData<SeriesCardData>>(`${seriesDetailsUrl}${input.series_id}`)
       return series

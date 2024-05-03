@@ -67,35 +67,6 @@ export const bookmarkRouter = t.router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const updateBookmarkValue = await prisma.bookmarks.findFirst({
-        where: {
-          user_id: input.user_id ?? null,
-          selection_id: input.selection_id ?? null,
-          selection_type: input.selection_type ?? null,
-        },
-      })
-
-      const result = await prisma.bookmarks.upsert({
-        where: {
-          user_selection: {
-            user_id: input.user_id ?? null,
-            selection_id: input.selection_id ?? null,
-          },
-        },
-        create: {
-          user: {
-            connect: {
-              id: input.user_id,
-            },
-          },
-          selection_id: input.selection_id,
-          selection_type: input.selection_type,
-          bookmarked: true,
-        },
-        update: {
-          bookmarked: !updateBookmarkValue?.bookmarked,
-        },
-      })
       if (input.selection_type === 'Movie') {
         await prisma.movies.upsert({
           where: {
@@ -119,7 +90,59 @@ export const bookmarkRouter = t.router({
           },
           update: {},
         })
+      } else if (input.selection_type === 'TV Series') {
+        await prisma.series.upsert({
+          where: {
+            id: input.selection_id,
+          },
+          create: {
+            adult: input.series_data?.adult ?? false,
+            backdrop_path: input.series_data?.backdrop_path ?? '',
+            genre_ids: input.series_data?.genre_ids ?? [],
+            id: input.series_data?.id ?? -0,
+            origin_country: input.series_data?.origin_country ?? [],
+            original_language: input.series_data?.original_language ?? '',
+            original_name: input.series_data?.original_name ?? '',
+            overview: input.series_data?.overview ?? '',
+            popularity: input.series_data?.popularity ?? -0,
+            poster_path: input.series_data?.poster_path ?? '',
+            first_air_date: input.series_data?.first_air_date ?? '',
+            name: input.series_data?.name ?? '',
+            vote_average: input.series_data?.vote_average ?? -0,
+            vote_count: input.series_data?.vote_count ?? -0,
+          },
+          update: {},
+        })
       }
+      const updateBookmarkValue = await prisma.bookmarks.findFirst({
+        where: {
+          user_id: input.user_id ?? null,
+          selection_id: input.selection_id ?? null,
+          selection_type: input.selection_type ?? null,
+        },
+      })
+      const result = await prisma.bookmarks.upsert({
+        where: {
+          user_selection: {
+            user_id: input.user_id ?? null,
+            selection_id: input.selection_id ?? null,
+          },
+        },
+        create: {
+          user: {
+            connect: {
+              id: input.user_id,
+            },
+          },
+          selection_id: input.selection_id,
+          selection_type: input.selection_type,
+          bookmarked: true,
+        },
+        update: {
+          bookmarked: !updateBookmarkValue?.bookmarked,
+        },
+      })
+
       return result
     }),
   getBookmarks: t.procedure

@@ -10,6 +10,7 @@ import { type TmdbMovieDetailsData } from '@/lib/server/routes/tmdb/tmdb'
 import { useQuery } from '@tanstack/react-query'
 import BookmarkMovieCard from '../components/Movies/BookmarkMovieCard'
 import useBookmarks from '@/app/_hooks/useBookmarks'
+import BookmarkSeriesCard from '../components/Series/BookmarkSeriesCard'
 
 interface BookmarkSection {
   search: string
@@ -94,7 +95,13 @@ const BookmarkedSeries: FC<BookmarkSection> = ({ user_id, search }) => {
       <h2 className="text-entertainment-pure-white">Series Bookmarks</h2>
       <ul className="text-entertainment-pure-white">
         {data?.map((selection) => {
-          return <li key={selection.selection_id}>{selection.selection_id}</li>
+          return (
+            <BookmarkSeriesCard
+              key={selection.selection_id}
+              id={selection.selection_id}
+              search={search}
+            />
+          )
         })}
       </ul>
     </>

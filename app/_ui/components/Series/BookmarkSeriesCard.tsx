@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { type FC } from 'react'
 import { useUser } from '@clerk/nextjs'
-import { useQuery } from '@tanstack/react-query'
 import useBookmarks from '@/app/_hooks/useBookmarks'
 import {
   Card,
@@ -11,55 +10,56 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { type SeriesCardData } from '@/lib/server/routes/tmdb/tmdb'
+import { trpc } from '@/lib/server/trpc'
 
-export type SeriesCardProps = {
-  series_card_data: SeriesCardData
-  bookmarked: boolean
+type BookmarkedSeriesCardProps = {
+  id: number
+  search: string
 }
 
-const SeriesCard: FC<SeriesCardProps> = ({ series_card_data, bookmarked }) => {
-  const categoryIcon = '/icon-category-series.svg'
+const BookmarkSeriesCard: FC<BookmarkedSeriesCardProps> = ({ id, search }) => {
+  const { data, isLoading } = trpc.tmdb.getSeriesDetails.useQuery({
+    series_id: id,
+  })
+  const categoryIcon = '/icon-category-movie.svg'
 
   const { isSignedIn, user } = useUser()
   const toggleBookmark = useBookmarks()
-  if (!series_card_data) return
+  const bookmark = trpc.bookmarks.getBookmark.useQuery({
+    user_id: user?.id ?? '',
+    selection_id: id,
+    selection_type: 'TV Series',
+  })
+  if (isLoading) return <>loading</>
+  if (!bookmark.data?.bookmarked) return
   return (
     <Card variant={'regular'}>
       <CardContent>
-        <Image
-          className="mb-1 rounded-lg md:mb-2"
-          src={`https://image.tmdb.org/t/p/original${series_card_data.poster_path}`}
-          width={280}
-          height={174}
-          alt="trending image"
-        />
+        <div className="mb-1 flex h-60 flex-col justify-center rounded-lg md:mb-2 md:h-[336px]">
+          <Image
+            className="rounded-lg bg-origin-content backdrop-blur-md"
+            src={`https://image.tmdb.org/t/p/w342${data?.poster_path}`}
+            width={280}
+            height={336}
+            alt="trending image"
+          />
+        </div>
         {isSignedIn ? (
           <CardHeader
             onClick={() =>
               toggleBookmark({
-                selection_id: series_card_data.id,
+                selection_id: id,
                 user_id: user.id,
                 selection_type: 'TV Series',
-                series_data: series_card_data,
               })
             }
           >
-            {bookmarked ? (
-              <Image
-                src="/icon-bookmark-full.svg"
-                height={32}
-                width={32}
-                alt="bookmark icon"
-              />
-            ) : (
-              <Image
-                src="/icon-bookmark-empty.svg"
-                height={32}
-                width={32}
-                alt="bookmark icon"
-              />
-            )}
+            <Image
+              src="/icon-bookmark-full.svg"
+              height={32}
+              width={32}
+              alt="bookmark icon"
+            />
           </CardHeader>
         ) : (
           <></>
@@ -67,7 +67,7 @@ const SeriesCard: FC<SeriesCardProps> = ({ series_card_data, bookmarked }) => {
       </CardContent>
       <CardFooter>
         <CardDescription className="gap-1 text-[11px] md:text-sm">
-          {series_card_data.first_air_date}
+          {data?.release_date}
           {/* <span className="text-sm opacity-50 md:text-xl">•</span> */}
           {/* <Image
             className="h-3"
@@ -80,10 +80,10 @@ const SeriesCard: FC<SeriesCardProps> = ({ series_card_data, bookmarked }) => {
           {/* <span className="text-sm opacity-50 md:text-xl">•</span> */}
           {/* {rating} */}
         </CardDescription>
-        <CardTitle className="md:text-lg">{series_card_data.name}</CardTitle>
+        <CardTitle className="md:text-lg">{data?.name}</CardTitle>
       </CardFooter>
     </Card>
   )
 }
 
-export default SeriesCard
+export default BookmarkSeriesCard
