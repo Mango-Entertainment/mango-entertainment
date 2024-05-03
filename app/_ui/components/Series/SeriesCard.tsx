@@ -27,13 +27,15 @@ const SeriesCard: FC<SeriesCardProps> = ({ series_card_data, bookmarked }) => {
   return (
     <Card variant={'regular'}>
       <CardContent>
-        <Image
-          className="mb-1 rounded-lg md:mb-2"
-          src={`https://image.tmdb.org/t/p/original${series_card_data.poster_path}`}
-          width={280}
-          height={174}
-          alt="trending image"
-        />
+        <div className="mb-1 flex h-60 flex-col justify-center rounded-lg md:mb-2 md:h-[336px]">
+          <Image
+            className="rounded-lg bg-origin-content backdrop-blur-md"
+            src={`https://image.tmdb.org/t/p/w342${series_card_data?.poster_path}`}
+            width={280}
+            height={174}
+            alt="trending image"
+          />
+        </div>
         {isSignedIn ? (
           <CardHeader
             onClick={() =>
