@@ -30,9 +30,10 @@ const Homepage = () => {
   }
 
   return (
-    <div className="text-entertainment-greyish-blue">
+    <div className="flex flex-col text-entertainment-greyish-blue">
       <Search search={search} handleChange={handleChange} />
       <TrendingSeries search={search} bookmarks={series.data} />
+      <hr className='border-1 border-entertainment-pure-white w-4/5 self-center h-2 mt-2 mb-4'/>
       <TrendingMovies search={search} bookmarks={movies.data} />
     </div>
   )
