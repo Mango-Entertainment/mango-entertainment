@@ -1,5 +1,5 @@
 import { type FC } from 'react'
-import RegularCardSkeleton from '@/app/_ui/components/RegularCardSkeleton'
+import RegularCardSkeleton from '@/app/_ui/components/Deprecated/RegularCardSkeleton'
 
 type SkeletonSectionComponentProps = {
     section: string

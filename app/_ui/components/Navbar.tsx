@@ -3,9 +3,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import HomeIcon from '@/app/_ui/components/HomeIcon'
-import TvIcon from '@/app/_ui/components/TvIcon'
+import TvIcon from '@/app/_ui/components/Series/TvIcon'
 import BookmarkIcon from '@/app/_ui/components/BookmarkIcon'
-import MovieIcon from '@/app/_ui/components/MovieIcon'
+import MovieIcon from '@/app/_ui/components/Movies/MovieIcon'
 import Auth from '@/app/_ui/components/Auth'
 import { useAuth } from '@clerk/nextjs'
 
