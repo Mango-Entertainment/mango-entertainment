@@ -45,14 +45,14 @@ export interface TmdbListData<T> {
 }
 
 export type TmdbMovieDetailsData = {
-  adult: boolean,
+  adult: boolean
   backdrop_path: string
   belongs_to_collection: {
     id: number
     name: string
     poster_path: string
     backdrop_path: string
-  },
+  }
   budget: number
   genres: [
     {
@@ -66,14 +66,12 @@ export type TmdbMovieDetailsData = {
     {
       id: number
       name: string
-    }
-  ],
+    },
+  ]
   homepage: string
   id: number
   imdb_id: string
-  origin_country: [
-    string
-  ],
+  origin_country: [string]
   original_language: string
   original_title: string
   overview: string
@@ -91,24 +89,24 @@ export type TmdbMovieDetailsData = {
       logo_path: string
       name: string
       origin_country: string
-    }
-  ],
+    },
+  ]
   production_countries: [
     {
-      iso_3166_1: string,
+      iso_3166_1: string
       name: string
-    }
-  ],
+    },
+  ]
   release_date: string
-  revenue: number,
-  runtime: number,
+  revenue: number
+  runtime: number
   spoken_languages: [
     {
       english_name: string
       iso_639_1: string
       name: string
-    }
-  ],
+    },
+  ]
   status: string
   tagline: string
   title: string
@@ -130,18 +128,14 @@ const movieListUrl =
 const seriesListUrl =
   'https://api.themoviedb.org/3/tv/popular?language=en-US&page=1'
 
-const trendingMovieUrl =
-  'https://api.themoviedb.org/3/trending/movie/day'
+const trendingMovieUrl = 'https://api.themoviedb.org/3/trending/movie/day'
 
-const trendingSeriesUrl =
-  'https://api.themoviedb.org/3/trending/tv/day'
+const trendingSeriesUrl = 'https://api.themoviedb.org/3/trending/tv/day'
 
-const trendingPersonUrl =
-  'https://api.themoviedb.org/3/trending/person/day'
+const trendingPersonUrl = 'https://api.themoviedb.org/3/trending/person/day'
 
 const seriesDetailsUrl = 'https://api.themoviedb.org/3/tv/'
 const movieDetailsUrl = 'https://api.themoviedb.org/3/movie/'
-
 
 function fetchSelectionList<T>(url: string): Promise<T> {
   return fetch(url, fetchOptions).then((response): Promise<T> => {
@@ -181,14 +175,17 @@ export const tmdbRouter = t.router({
     .input(z.object({ search: z.string() }))
     .query(async ({ ctx, input }) => {
       const trendingSeries =
-        await fetchSelectionList<TmdbListData<SeriesCardData>>(trendingSeriesUrl)
+        await fetchSelectionList<TmdbListData<SeriesCardData>>(
+          trendingSeriesUrl,
+        )
       return trendingSeries
     }),
 
   getMovies: t.procedure
     .input(z.object({ search: z.string() }))
     .query(async ({ ctx, input }) => {
-      const movies = await fetchSelectionList<TmdbListData<MovieCardData>>(movieListUrl)
+      const movies =
+        await fetchSelectionList<TmdbListData<MovieCardData>>(movieListUrl)
       const movieList = movies.results
       return {
         status: 'success',
@@ -201,9 +198,14 @@ export const tmdbRouter = t.router({
     .query(async ({ ctx, input }) => {
       const series =
         await fetchSelectionList<TmdbListData<SeriesCardData>>(seriesListUrl)
-      return series
+      const seriesList = series.results
+      return {
+        status: 'success',
+        results: seriesList.length,
+        data: seriesList,
+      }
     }),
-    getMovieDetails: t.procedure
+  getMovieDetails: t.procedure
     .input(z.object({ movie_id: z.number() }))
     .query(async ({ ctx, input }) => {
       const movies = await fetchSelectionList<TmdbMovieDetailsData>(
@@ -211,10 +213,12 @@ export const tmdbRouter = t.router({
       )
       return movies
     }),
-    getSeriesDetails: t.procedure
+  getSeriesDetails: t.procedure
     .input(z.object({ series_id: z.number() }))
     .query(async ({ ctx, input }) => {
-      const series = await fetchSelectionList<TmdbListData<SeriesCardData>>(`${seriesDetailsUrl}${input.series_id}`)
+      const series = await fetchSelectionList<TmdbListData<SeriesCardData>>(
+        `${seriesDetailsUrl}${input.series_id}`,
+      )
       return series
     }),
 })

@@ -28,30 +28,31 @@ const Movies = () => {
         <SkeletonSectionComponent section="Recommended" />
       </div>
     )
-    if (data && data?.results < 1) {
+  if (data && data?.results < 1) {
+    return (
       <div className="text-entertainment-greyish-blue">
-      <Search search={search} handleChange={handleChange} />
-      <div className="ml-4 text-entertainment-pure-white">
-        <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">
-          Movies
-        </h1>
-        <p className="text-center font-light opacity-75 lg:text-xl">
-          No results found
-        </p>
+        <Search search={search} handleChange={handleChange} />
+        <div className="ml-4 text-entertainment-pure-white">
+          <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">
+            Movies
+          </h1>
+          <p className="text-center font-light opacity-75 lg:text-xl">
+            No results found
+          </p>
+        </div>
       </div>
-      </div>
-    }
+    )
+  }
   return (
     <div className="text-entertainment-greyish-blue">
       <Search search={search} handleChange={handleChange} />
-        <MovieSectionComponent
-          section="Movies"
-          sectionData={data}
-          bookmarks={bookmarks?.data}
-        />
+      <MovieSectionComponent
+        section="Movies"
+        sectionData={data}
+        bookmarks={bookmarks?.data}
+      />
     </div>
   )
-
 }
 
 export default Movies

@@ -3,7 +3,10 @@ import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
 import MovieCard from '@/app/_ui/components/Movies/MovieCard'
 
 type MovieSectionComponentProps = {
-  sectionData: RouterOutputs['tmdb']['getMovies'] | RouterOutputs['bookmarks']['getBookmarkedMovies'] | undefined
+  sectionData:
+    | RouterOutputs['tmdb']['getMovies']
+    | RouterOutputs['bookmarks']['getBookmarkedMovies']
+    | undefined
   section: string
   bookmarks: RouterOutputs['bookmarks']['getBookmarks'] | undefined
 }

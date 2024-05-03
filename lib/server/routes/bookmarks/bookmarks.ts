@@ -202,6 +202,18 @@ export const bookmarkRouter = t.router({
           selection_type: 'TV Series',
         },
       })
-      return selections
+      const seriesList = await Promise.all(selections.map(async (selection) => {
+        const data = await prisma.series.findFirst({
+          where: {
+            id: selection.selection_id,
+          },
+        })
+        return data
+      }))
+      return {
+        status: 'success',
+        results: seriesList.length,
+        data: seriesList ?? [],
+      }
     }),
 })
