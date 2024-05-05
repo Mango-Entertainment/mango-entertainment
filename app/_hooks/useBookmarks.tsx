@@ -5,8 +5,8 @@ type ToggleBookmarkArgs={
   selection_id: number
   user_id: string
   selection_type: string
-  movie_data: MovieCardData
-  series_data: SeriesCardData
+  movie_data?: MovieCardData
+  series_data?: SeriesCardData
 }
 
 const useBookmarks = () => {

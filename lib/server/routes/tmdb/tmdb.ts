@@ -145,25 +145,6 @@ function fetchSelectionList<T>(url: string): Promise<T> {
 }
 
 export const tmdbRouter = t.router({
-  getRecommended: t.procedure
-    .input(z.object({ search: z.string() }))
-    .query(async ({ ctx, input }) => {
-      const selections = await prisma.selection.findMany({
-        where: {
-          title: {
-            mode: 'insensitive',
-            contains: input.search,
-          },
-          is_trending: false,
-        },
-        include: {
-          RegularThumb: true,
-          // bookmarks:
-        },
-      })
-      return selections
-    }),
-
   getTrendingMovies: t.procedure
     .input(z.object({ search: z.string() }))
     .query(async ({ ctx, input }) => {
