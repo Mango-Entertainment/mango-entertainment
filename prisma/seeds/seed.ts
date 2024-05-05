@@ -1,7 +1,10 @@
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
-async function main() {return}
+async function main() {
+  await prisma.bookmarks.deleteMany()
+  return
+}
 
 main()
   .then(async () => {
