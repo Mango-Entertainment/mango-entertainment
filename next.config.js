@@ -2,6 +2,8 @@
 const nextConfig = {}
 
 module.exports = {
+  output: 'standalone',
+  crossOrigin: 'anonymous',
   nextConfig,
   eslint: {
     // Warning: This allows production builds to successfully complete even if
