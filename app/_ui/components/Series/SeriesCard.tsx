@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { type FC } from 'react'
 import { useUser } from '@clerk/nextjs'
-import { useQuery } from '@tanstack/react-query'
 import useBookmarks from '@/app/_hooks/useBookmarks'
 import {
   Card,
@@ -33,7 +32,7 @@ const SeriesCard: FC<SeriesCardProps> = ({ series_card_data, bookmarked }) => {
             src={`https://image.tmdb.org/t/p/w342${series_card_data?.poster_path}`}
             width={280}
             height={174}
-            alt="trending image"
+            alt="poster image"
           />
         </div>
         {isSignedIn ? (

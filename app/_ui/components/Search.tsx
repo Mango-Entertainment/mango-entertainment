@@ -3,8 +3,6 @@ import Image from 'next/image'
 import React, {
   type ChangeEvent,
   useRef,
-  useState,
-  KeyboardEventHandler,
   type KeyboardEvent,
 } from 'react'
 import { Input } from '@/components/ui/input'

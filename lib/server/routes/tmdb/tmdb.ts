@@ -1,7 +1,5 @@
 import { z } from 'zod'
 import { t } from '@/lib/server/trpc-server'
-import { trpc } from '@/lib/server/trpc'
-import prisma from '@/prisma/prisma.db'
 
 export type MovieCardData = {
   adult: boolean
@@ -136,6 +134,8 @@ const trendingPersonUrl = 'https://api.themoviedb.org/3/trending/person/day'
 
 const seriesDetailsUrl = 'https://api.themoviedb.org/3/tv/'
 const movieDetailsUrl = 'https://api.themoviedb.org/3/movie/'
+const movieSearchListUrl = 'https://api.themoviedb.org/3/search/movie'
+const seriesSearchListUrl = 'https://api.themoviedb.org/3/search/tv'
 
 function fetchSelectionList<T>(url: string): Promise<T> {
   return fetch(url, fetchOptions).then((response): Promise<T> => {
@@ -146,15 +146,13 @@ function fetchSelectionList<T>(url: string): Promise<T> {
 
 export const tmdbRouter = t.router({
   getTrendingMovies: t.procedure
-    .input(z.object({ search: z.string() }))
-    .query(async ({ ctx, input }) => {
+    .query(async () => {
       const trendingMovies =
         await fetchSelectionList<TmdbListData<MovieCardData>>(trendingMovieUrl)
       return trendingMovies
     }),
   getTrendingSeries: t.procedure
-    .input(z.object({ search: z.string() }))
-    .query(async ({ ctx, input }) => {
+    .query(async () => {
       const trendingSeries =
         await fetchSelectionList<TmdbListData<SeriesCardData>>(
           trendingSeriesUrl,
@@ -165,9 +163,10 @@ export const tmdbRouter = t.router({
   getMovies: t.procedure
     .input(z.object({ search: z.string() }))
     .query(async ({ ctx, input }) => {
+      const queryUrl = input.search ? `${movieSearchListUrl}?query=${input.search}` : movieListUrl
       const movies =
-        await fetchSelectionList<TmdbListData<MovieCardData>>(movieListUrl)
-      const movieList = movies.results
+        await fetchSelectionList<TmdbListData<MovieCardData>>(queryUrl)
+      const movieList = movies.results.filter((result) => result.poster_path !== null)
       return {
         status: 'success',
         results: movieList.length,
@@ -177,9 +176,10 @@ export const tmdbRouter = t.router({
   getSeries: t.procedure
     .input(z.object({ search: z.string() }))
     .query(async ({ ctx, input }) => {
+      const queryUrl = input.search ? `${seriesSearchListUrl}?query=${input.search}` : seriesListUrl
       const series =
-        await fetchSelectionList<TmdbListData<SeriesCardData>>(seriesListUrl)
-      const seriesList = series.results
+        await fetchSelectionList<TmdbListData<SeriesCardData>>(queryUrl)
+      const seriesList = series.results.filter((result) => result.poster_path !== null)
       return {
         status: 'success',
         results: seriesList.length,
