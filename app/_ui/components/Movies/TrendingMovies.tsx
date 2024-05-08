@@ -12,15 +12,14 @@ import TrendingSkeleton from '@/app/_ui/components/TrendingSkeleton'
 
 type TrendingSectionProps = {
   bookmarks: RouterOutputs['bookmarks']['getBookmarks'] | undefined
-  search: string
 }
 
-const TrendingMovies: FC<TrendingSectionProps> = ({ search, bookmarks }) => {
+const TrendingMovies: FC<TrendingSectionProps> = ({ bookmarks }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     containScroll: false,
     align: 'start',
   })
-  const { data, isLoading } = trpc.tmdb.getTrendingMovies.useQuery({ search })
+  const { data, isLoading } = trpc.tmdb.getTrendingMovies.useQuery()
   const {
     prevBtnDisabled,
     nextBtnDisabled,

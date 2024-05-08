@@ -183,7 +183,7 @@ export const bookmarkRouter = t.router({
             id: selection.selection_id,
           },
         })
-        return data
+        return data?.title.toLowerCase().includes(input.search.toLowerCase()) ? data : null
       }))
 
       return {
@@ -208,7 +208,7 @@ export const bookmarkRouter = t.router({
             id: selection.selection_id,
           },
         })
-        return data
+        return data?.name.toLowerCase().includes(input.search.toLowerCase()) ? data : null
       }))
       return {
         status: 'success',

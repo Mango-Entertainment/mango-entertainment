@@ -34,7 +34,7 @@ const MovieCard: FC<MovieCardProps> = ({
             src={`https://image.tmdb.org/t/p/w342${movie_card_data?.poster_path}`}
             width={280}
             height={174}
-            alt="trending image"
+            alt="poster image"
           />
         </div>
         {isSignedIn ? (
