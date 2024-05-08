@@ -31,7 +31,7 @@ export const bookmarkRouter = t.router({
         movie_data: z
           .object({
             adult: z.boolean(),
-            backdrop_path: z.string(),
+            backdrop_path: z.string().nullable(),
             genre_ids: z.number().array(),
             id: z.number(),
             original_language: z.string(),
@@ -49,7 +49,7 @@ export const bookmarkRouter = t.router({
         series_data: z
           .object({
             adult: z.boolean(),
-            backdrop_path: z.string(),
+            backdrop_path: z.string().nullable(),
             genre_ids: z.number().array(),
             id: z.number(),
             origin_country: z.string().array(),
