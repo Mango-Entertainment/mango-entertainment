@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import Link from 'next/link'
 
 export type MovieCardProps = {
  movie_card_data: MovieCardData
@@ -87,7 +88,9 @@ const MovieCard: FC<MovieCardProps> = ({
           {/* <span className="text-sm opacity-50 md:text-xl">•</span> */}
           {/* {rating} */}
         </CardDescription>
-        <CardTitle className="md:text-lg">{movie_card_data.title}</CardTitle>
+        <Link href={`movies/${movie_card_data.id}`}>
+          <CardTitle className="md:text-lg">{movie_card_data.title}</CardTitle>
+        </Link>
       </CardFooter>
     </Card>
   )
