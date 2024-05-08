@@ -28,7 +28,7 @@ const MovieCard: FC<MovieCardProps> = ({
   return (
     <Card variant={'regular'}>
       <CardContent>
-        <div className="mb-1 flex h-60 flex-col justify-center rounded-lg md:mb-2 md:h-[336px]">
+        <div className="mb-1 flex h-60 flex-col bg-entertainment-pure-white bg-opacity-50 justify-center rounded-lg md:mb-2 md:h-[336px]">
           <Image
             className="rounded-lg bg-origin-content backdrop-blur-md"
             src={`https://image.tmdb.org/t/p/w342${movie_card_data?.poster_path}`}
