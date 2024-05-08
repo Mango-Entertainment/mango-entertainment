@@ -23,17 +23,22 @@ const SeriesCard: FC<SeriesCardProps> = ({ series_card_data, bookmarked }) => {
   const { isSignedIn, user } = useUser()
   const toggleBookmark = useBookmarks()
   if (!series_card_data) return
+
   return (
     <Card variant={'regular'}>
       <CardContent>
         <div className="mb-1 flex h-60 flex-col bg-entertainment-pure-white bg-opacity-50 justify-center rounded-lg md:mb-2 md:h-[336px]">
-          <Image
+          {series_card_data?.poster_path ?
+            <Image
             className="rounded-lg bg-origin-content backdrop-blur-md"
             src={`https://image.tmdb.org/t/p/w342${series_card_data?.poster_path}`}
             width={280}
             height={174}
             alt="poster image"
           />
+          :
+          <div className='bg-entertainment-pure-white text-xl text-center text-entertainment-greyish-blue'>{series_card_data.name ?? 'No image available'}</div>
+          }
         </div>
         {isSignedIn ? (
           <CardHeader

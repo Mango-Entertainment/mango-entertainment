@@ -166,7 +166,8 @@ export const tmdbRouter = t.router({
       const queryUrl = input.search ? `${movieSearchListUrl}?query=${input.search}` : movieListUrl
       const movies =
         await fetchSelectionList<TmdbListData<MovieCardData>>(queryUrl)
-      const movieList = movies.results.filter((result) => result.poster_path !== null)
+      // const movieList = movies.results.filter((result) => result.poster_path !== null)
+      const movieList = movies.results
       return {
         status: 'success',
         results: movieList.length,
@@ -179,7 +180,8 @@ export const tmdbRouter = t.router({
       const queryUrl = input.search ? `${seriesSearchListUrl}?query=${input.search}` : seriesListUrl
       const series =
         await fetchSelectionList<TmdbListData<SeriesCardData>>(queryUrl)
-      const seriesList = series.results.filter((result) => result.poster_path !== null)
+      // const seriesList = series.results.filter((result) => result.poster_path !== null)
+      const seriesList = series.results
       return {
         status: 'success',
         results: seriesList.length,
