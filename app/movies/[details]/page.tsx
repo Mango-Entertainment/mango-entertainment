@@ -43,17 +43,15 @@ const movieDetailsPage = ({ params }: { params: { details: string } }) => {
 
 const MovieDetailContent: FC<MovieDetailsContentProps> = ({ movieDetails }) => {
   return (
-    <div className="m-4 md:ml-0">
-      <p>Title: {movieDetails?.title}</p>
-      <p>Tagline: {movieDetails?.tagline}</p>
-      <p>Runtime: {movieDetails?.runtime}</p>
-      <p>Overview: {movieDetails?.overview}</p>
-      <p>Id: {movieDetails?.id}</p>
-      <p>Budget: {movieDetails?.budget}</p>
-      <p>Revenue: {movieDetails?.revenue}</p>
-      <p>Original Language: {movieDetails?.original_language}</p>
-      <p>Origin Country: {movieDetails?.origin_country}</p>
-      <p>Popularity: {movieDetails?.popularity}</p>
+    <div className="mx-4 mb-4 md:mt-4 md:ml-0">
+      <h1 className="text-4xl mb-2">{movieDetails?.title}</h1>
+      <p className="text-2xl italic">{movieDetails?.tagline}</p>
+      <div className="flex gap-4 my-3">
+        <p>{movieDetails.release_date}</p>
+        <p>{movieDetails?.origin_country}</p>
+        <p>{movieDetails?.runtime} min</p>
+      </div>
+      <p className='text-xl'>{movieDetails?.overview}</p>
     </div>
   )
 }
