@@ -67,7 +67,7 @@ const SeriesDetailContent: FC<SeriesDetailsContentProps> = ({ seriesDetails }) =
 const SeriesPoster: FC<SeriesDetailsContentProps> = ({ seriesDetails }) => {
   return seriesDetails.poster_path ? (
     <Image
-      className="h-auto scale-90 self-center rounded-lg md:m-4 md:scale-100"
+      className="h-auto scale-90 self-center rounded-lg drop-shadow-md md:m-4 md:scale-100"
       src={`https://image.tmdb.org/t/p/original${seriesDetails?.poster_path}`}
       width={400}
       height={250}

@@ -54,14 +54,6 @@ export type TmdbMovieDetailsData = {
   budget: number
   genres: [
     {
-      Id: number
-      name: string
-    },
-    {
-      id: number
-      name: string
-    },
-    {
       id: number
       name: string
     },
@@ -77,13 +69,7 @@ export type TmdbMovieDetailsData = {
   poster_path: string
   production_companies: [
     {
-      Id: number
-      logo_path: string
-      name: string
-      origin_country: string
-    },
-    {
-      Id: number
+      id: number
       logo_path: string
       name: string
       origin_country: string
@@ -125,14 +111,6 @@ export type TmdbSeriesDetailsData = {
       gender: number
       profile_path: null
     },
-    {
-      id: number
-      credit_id: string
-      name: string
-      original_name: string
-      gender: number
-      profile_path: null
-    }
   ],
   Episode_run_time: number[]
   first_air_date: string
