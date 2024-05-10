@@ -35,7 +35,7 @@ const MovieDetailsPage = ({ params }: { params: { details: string } }) => {
     <>
       {data.backdrop_path ? (
         <div
-          className="mt-2 bg-cover p-2 md:mt-4 md:p-8 lg:mt-12"
+          className="mt-2 bg-cover p-2 md:mx-2 md:mt-4 md:p-8 lg:mx-0 lg:mt-12"
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/original${data?.backdrop_path}})`,
           }}
@@ -79,7 +79,7 @@ const MovieDetailContent: FC<MovieDetailsContentProps> = ({ movieDetails, bookma
   return (
     <div
       className={cx(
-        'mx-4 mb-4 md:ml-0 md:mt-4',
+        'mx-4 mb-4 md:ml-0 md:mt-4 h-full',
         !movieDetails?.poster_path && 'mt-4',
       )}
     >
@@ -123,7 +123,7 @@ const MovieDetailContent: FC<MovieDetailsContentProps> = ({ movieDetails, bookma
         <p>{movieDetails?.origin_country}</p>
         <p>{movieDetails?.runtime} min</p>
       </div>
-      <p className="text-lg md:text-xl">{movieDetails?.overview}</p>
+      <p className="text-lg md:text-xl text-ellipsis">{movieDetails?.overview}</p>
     </div>
   )
 }
@@ -131,7 +131,7 @@ const MovieDetailContent: FC<MovieDetailsContentProps> = ({ movieDetails, bookma
 const MoviePoster = ({ poster_path, title }: {poster_path: string, title: string}) => {
   return poster_path ? (
     <Image
-      className="h-auto lg:h-auto scale-90 self-center rounded-lg drop-shadow-md md:h-96 md:m-4 md:scale-100"
+      className="h-auto xl:h-auto scale-90 self-center rounded-lg drop-shadow-md md:h-96 md:m-4 md:scale-100"
       src={`https://image.tmdb.org/t/p/original${poster_path}`}
       width={400}
       height={250}

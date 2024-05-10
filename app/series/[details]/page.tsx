@@ -33,7 +33,7 @@ const SeriesDetailsPage = ({ params }: { params: { details: string } }) => {
     <>
       {data.backdrop_path ? (
         <div
-          className="mt-2 bg-cover p-2  md:mt-4 md:p-8 lg:mt-12"
+          className="mt-2 md:mx-2 lg:mx-0 bg-cover p-2 md:mt-4 md:p-8 lg:mt-12"
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/original${data?.backdrop_path}})`,
           }}
@@ -140,7 +140,7 @@ const SeriesPoster = ({
 }) => {
   return poster_path ? (
     <Image
-      className="h-auto scale-90 self-center rounded-lg drop-shadow-md md:m-4 md:scale-100"
+      className="h-auto scale-90 self-center rounded-lg drop-shadow-md md:m-4 md:h-96 md:scale-100 xl:h-auto"
       src={`https://image.tmdb.org/t/p/original${poster_path}`}
       width={400}
       height={250}
