@@ -177,14 +177,18 @@ export const bookmarkRouter = t.router({
           selection_type: 'Movie',
         },
       })
-      const movieList = await Promise.all(selections.map(async (selection) => {
-        const data = await prisma.movies.findFirst({
-          where: {
-            id: selection.selection_id,
-          },
-        })
-        return data?.title.toLowerCase().includes(input.search.toLowerCase()) ? data : null
-      }))
+      const movieList = await Promise.all(
+        selections.map(async (selection) => {
+          const data = await prisma.movies.findFirst({
+            where: {
+              id: selection.selection_id,
+            },
+          })
+          return data?.title.toLowerCase().includes(input.search.toLowerCase())
+            ? data
+            : null
+        }),
+      )
 
       return {
         status: 'success',
@@ -202,14 +206,18 @@ export const bookmarkRouter = t.router({
           selection_type: 'TV Series',
         },
       })
-      const seriesList = await Promise.all(selections.map(async (selection) => {
-        const data = await prisma.series.findFirst({
-          where: {
-            id: selection.selection_id,
-          },
-        })
-        return data?.name.toLowerCase().includes(input.search.toLowerCase()) ? data : null
-      }))
+      const seriesList = await Promise.all(
+        selections.map(async (selection) => {
+          const data = await prisma.series.findFirst({
+            where: {
+              id: selection.selection_id,
+            },
+          })
+          return data?.name.toLowerCase().includes(input.search.toLowerCase())
+            ? data
+            : null
+        }),
+      )
       return {
         status: 'success',
         results: seriesList.length,
