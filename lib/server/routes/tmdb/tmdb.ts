@@ -170,7 +170,7 @@ export type TmdbSeriesDetailsData = {
   original_language: string
   original_name: string
   overview: string
-  popularity: string
+  popularity: number
   poster_path: string
   production_companies: [
     {
