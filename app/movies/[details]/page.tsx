@@ -19,14 +19,13 @@ const MovieDetailsPage = ({ params }: { params: { details: string } }) => {
   const movie_id = parseInt(params.details)
   const { data, isLoading } = trpc.tmdb.getMovieDetails.useQuery({ movie_id })
   const { isSignedIn, user } = useUser()
-  const bookmark =
-    trpc.bookmarks.getBookmark.useQuery({
-      selection_id: movie_id,
-      user_id: user?.id ?? '',
-      selection_type: 'Movie',
-    })
+  const bookmark = trpc.bookmarks.getBookmark.useQuery({
+    selection_id: movie_id,
+    user_id: user?.id ?? '',
+    selection_type: 'Movie',
+  })
   const bookmarked = bookmark?.data?.bookmarked ?? false
-  
+
   if (isLoading) {
     ;<div>is loading</div>
   }
@@ -57,7 +56,10 @@ const MovieDetailsPage = ({ params }: { params: { details: string } }) => {
   )
 }
 
-const MovieDetailContent: FC<MovieDetailsContentProps> = ({ movieDetails, bookmarked }) => {
+const MovieDetailContent: FC<MovieDetailsContentProps> = ({
+  movieDetails,
+  bookmarked,
+}) => {
   const { isSignedIn, user } = useUser()
   const toggleBookmark = useBookmarks()
   const bookmarkData = {
@@ -79,59 +81,76 @@ const MovieDetailContent: FC<MovieDetailsContentProps> = ({ movieDetails, bookma
   return (
     <div
       className={cx(
-        'mx-4 mb-4 md:ml-0 md:mt-4 h-full',
+        'mx-4 mb-4 h-full md:ml-0 md:mt-4',
         !movieDetails?.poster_path && 'mt-4',
       )}
     >
-      <div className="mb-2 flex flex-row justify-between">
-        <h1 className="text-3xl md:text-4xl w-11/12 md:w-auto">{movieDetails?.title}</h1>
-        {isSignedIn ? (
-          <CardHeader
-            className="relative right-0 justify-end mr-2 top-0 h-12 md:right-0 md:top-0 md:w-56"
-            onClick={() =>
-              toggleBookmark({
-                selection_id: movieDetails.id,
-                user_id: user?.id,
-                selection_type: 'Movie',
-                movie_data: bookmarkData,
-              })
-            }
-          >
-            {bookmarked ? (
-              <Image
-                src="/icon-bookmark-full.svg"
-                height={32}
-                width={32}
-                alt="bookmark icon"
-              />
-            ) : (
-              <Image
-                src="/icon-bookmark-empty.svg"
-                height={32}
-                width={32}
-                alt="bookmark icon"
-              />
-            )}
-          </CardHeader>
-        ) : (
-          <></>
-        )}
+      <div className=" mb-2 max-w-full">
+        <h1 className="clear-right text-3xl md:text-4xl">
+          {movieDetails?.title}
+        </h1>
+        <div className="float-right">
+          {isSignedIn ? (
+            <CardHeader
+              className="m-2 "
+              onClick={() =>
+                toggleBookmark({
+                  selection_id: movieDetails.id,
+                  user_id: user?.id,
+                  selection_type: 'Movie',
+                  movie_data: bookmarkData,
+                })
+              }
+            >
+              {bookmarked ? (
+                <Image
+                  src="/icon-bookmark-full.svg"
+                  height={32}
+                  width={32}
+                  alt="bookmark icon"
+                />
+              ) : (
+                <Image
+                  src="/icon-bookmark-empty.svg"
+                  height={32}
+                  width={32}
+                  alt="bookmark icon"
+                />
+              )}
+            </CardHeader>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
       <p className="text-xl italic md:text-2xl">{movieDetails?.tagline}</p>
-      <div className="my-3 flex gap-4">
-        <p>{movieDetails.release_date}</p>
+      <div className="my-3 flex gap-2">
+        <p>{movieDetails.release_date.slice(0, 4)}</p>
         <p>{movieDetails?.origin_country}</p>
+        <p>
+          {movieDetails?.genres.map((genre, index) =>
+            index === 0 ? `${genre.name}` : `, ${genre.name}`,
+          )}
+        </p>
         <p>{movieDetails?.runtime} min</p>
       </div>
-      <p className="text-lg md:text-xl text-ellipsis">{movieDetails?.overview}</p>
+      <p className="text-ellipsis text-lg md:text-xl">
+        {movieDetails?.overview}
+      </p>
     </div>
   )
 }
 
-const MoviePoster = ({ poster_path, title }: {poster_path: string, title: string}) => {
+const MoviePoster = ({
+  poster_path,
+  title,
+}: {
+  poster_path: string
+  title: string
+}) => {
   return poster_path ? (
     <Image
-      className="h-auto xl:h-auto scale-90 self-center rounded-lg drop-shadow-md md:h-96 md:m-4 md:scale-100"
+      className="h-auto scale-90 self-center rounded-lg drop-shadow-md md:m-4 md:h-96 md:scale-100 xl:h-auto"
       src={`https://image.tmdb.org/t/p/original${poster_path}`}
       width={400}
       height={250}
