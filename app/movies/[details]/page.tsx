@@ -124,15 +124,18 @@ const MovieDetailContent: FC<MovieDetailsContentProps> = ({
         </div>
       </div>
       <p className="text-xl italic md:text-2xl">{movieDetails?.tagline}</p>
-      <div className="my-3 flex gap-2">
-        <p>{movieDetails.release_date.slice(0, 4)}</p>
-        <p>{movieDetails?.origin_country}</p>
+      <div className="my-3 flex justify-between">
+        <p>{movieDetails?.runtime} min</p>
+        <span className="text-lg opacity-50 md:text-xl md:hidden">•</span>
         <p>
           {movieDetails?.genres.map((genre, index) =>
             index === 0 ? `${genre.name}` : `, ${genre.name}`,
           )}
         </p>
-        <p>{movieDetails?.runtime} min</p>
+        <span className="text-lg opacity-50 md:text-xl md:hidden">•</span>
+        <p>
+          {movieDetails?.origin_country} {movieDetails.release_date.slice(0, 4)}
+        </p>
       </div>
       <p className="text-ellipsis text-lg md:text-xl">
         {movieDetails?.overview}

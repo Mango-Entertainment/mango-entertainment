@@ -91,7 +91,7 @@ const MovieCard: FC<MovieCardProps> = ({
             alt={`${category} icon`}
           />
           {category} */}
-            {/* <span className="text-sm opacity-50 md:text-xl">•</span> */}
+            
             {/* {rating} */}
           </CardDescription>
         </CardFooter>

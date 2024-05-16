@@ -33,12 +33,12 @@ const SeriesDetailsPage = ({ params }: { params: { details: string } }) => {
     <>
       {data.backdrop_path ? (
         <div
-          className="mt-2 md:mx-2 lg:mx-0 bg-cover p-2 md:mt-4 md:p-8 lg:mt-12"
+          className="mt-2 w-full bg-cover md:mt-4 lg:mt-12"
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/original${data?.backdrop_path}})`,
           }}
         >
-          <div className="mx-2 flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:mx-4 md:aspect-video md:flex-row">
+          <div className="flex flex-col md:gap-2 md:flex-row md:p-4 bg-entertainment-greyish-blue bg-opacity-80 md:m-4 backdrop-blur-lg md:aspect-video">
             <SeriesPoster poster_path={data.poster_path} name={data.name} />
             <SeriesDetailContent bookmarked={bookmarked} seriesDetails={data} />
           </div>
@@ -80,12 +80,13 @@ const SeriesDetailContent: FC<SeriesDetailsContentProps> = ({
   return (
     <div
       className={cx(
-        'mx-4 mb-4 md:ml-0 md:mt-4',
+        'relative mx-4 mb-2 md:ml-0 md:mt-2',
+        // if there's no poster path, add margin top
         !seriesDetails?.poster_path && 'mt-4',
       )}
     >
       <div className="mb-2 flex flex-row justify-between">
-        <h1 className="w-11/12 text-3xl md:w-auto md:text-4xl">
+        <h1 className="w-11/12 text-3xl md:w-auto lg:text-4xl">
           {seriesDetails?.name}
         </h1>
         {isSignedIn ? (
@@ -120,13 +121,25 @@ const SeriesDetailContent: FC<SeriesDetailsContentProps> = ({
           <></>
         )}
       </div>
-      <p className="text-2xl italic">{seriesDetails?.tagline}</p>
-      <div className="my-3 flex gap-4">
-        <p>{seriesDetails.first_air_date}</p>
-        <p>{seriesDetails?.origin_country}</p>
+      <p className="text-xl italic md:text-2xl">{seriesDetails?.tagline}</p>
+      <div className="my-2 lg:my-3 flex flex-wrap justify-between">
+        <p>{seriesDetails.number_of_seasons} season(s)</p>
+        {/* <span className="text-lg opacity-50 md:text-xl md:hidden">•</span> */}
+        <p>
+          {seriesDetails?.genres.map((genre, index) =>
+            index === 0 ? `${genre.name}` : `, ${genre.name}`,
+          )}
+        </p>
+        {/* <span className="text-lg opacity-50 md:text-xl md:hidden">•</span> */}
+        <p>
+          {seriesDetails?.origin_country}{' '}
+          {seriesDetails.first_air_date.slice(0, 4)}
+        </p>
         {/* <p>{seriesDetails?.Episode_run_time[0]} min</p> */}
       </div>
-      <p className="text-xl">{seriesDetails?.overview}</p>
+      <p className="text-clip text-lg lg:text-xl">
+        {seriesDetails?.overview}
+      </p>
     </div>
   )
 }
@@ -140,7 +153,7 @@ const SeriesPoster = ({
 }) => {
   return poster_path ? (
     <Image
-      className="h-auto scale-90 self-center rounded-lg drop-shadow-md md:m-4 md:h-96 md:scale-100 xl:h-auto"
+      className="h-auto scale-90 self-center rounded-lg drop-shadow-md md:p-2 lg:p-4 md:h-96 md:scale-100 xl:h-auto"
       src={`https://image.tmdb.org/t/p/original${poster_path}`}
       width={400}
       height={250}
