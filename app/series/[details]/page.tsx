@@ -33,19 +33,19 @@ const SeriesDetailsPage = ({ params }: { params: { details: string } }) => {
     <>
       {data.backdrop_path ? (
         <div
-          className="mt-2 w-full bg-cover md:mt-4 lg:mt-12"
+          className="mt-2 w-full bg-cover md:mt-4 lg:mt-8"
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/original${data?.backdrop_path}})`,
           }}
         >
-          <div className="flex flex-col md:gap-2 md:flex-row md:p-4 bg-entertainment-greyish-blue bg-opacity-80 md:m-4 backdrop-blur-lg md:aspect-video">
+          <div className="m-4 flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:aspect-video md:flex-row md:gap-2 md:p-4">
             <SeriesPoster poster_path={data.poster_path} name={data.name} />
             <SeriesDetailContent bookmarked={bookmarked} seriesDetails={data} />
           </div>
         </div>
       ) : (
-        <div className="mt-2 aspect-video w-full bg-black bg-cover p-8 md:mt-4 lg:mt-12">
-          <div className="flex h-auto min-h-full flex-col bg-entertainment-greyish-blue bg-opacity-80 md:flex-row">
+        <div className="mt-2 aspect-video w-full bg-slate-700 bg-cover md:mt-4 lg:mt-8">
+          <div className="flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:m-4 md:aspect-video md:flex-row md:gap-2 md:p-4">
             <SeriesPoster poster_path={data.poster_path} name={data.name} />
             <SeriesDetailContent bookmarked={bookmarked} seriesDetails={data} />
           </div>
@@ -80,7 +80,7 @@ const SeriesDetailContent: FC<SeriesDetailsContentProps> = ({
   return (
     <div
       className={cx(
-        'relative mx-4 mb-2 md:ml-0 md:mt-2',
+        'relative mx-4 mb-2 md:ml-0 md:mt-2 lg:w-full lg:place-content-stretch',
         // if there's no poster path, add margin top
         !seriesDetails?.poster_path && 'mt-4',
       )}
@@ -118,11 +118,11 @@ const SeriesDetailContent: FC<SeriesDetailsContentProps> = ({
             )}
           </CardHeader>
         ) : (
-          <></>
+          <div className="relative right-0 top-0 mr-2 h-12 justify-end md:right-0 md:top-0 md:w-56"></div>
         )}
       </div>
       <p className="text-xl italic md:text-2xl">{seriesDetails?.tagline}</p>
-      <div className="my-2 lg:my-3 flex flex-wrap justify-between">
+      <div className="my-2 flex flex-wrap justify-between lg:my-3">
         <p>{seriesDetails.number_of_seasons} season(s)</p>
         {/* <span className="text-lg opacity-50 md:text-xl md:hidden">•</span> */}
         <p>
@@ -137,9 +137,7 @@ const SeriesDetailContent: FC<SeriesDetailsContentProps> = ({
         </p>
         {/* <p>{seriesDetails?.Episode_run_time[0]} min</p> */}
       </div>
-      <p className="text-clip text-lg lg:text-xl">
-        {seriesDetails?.overview}
-      </p>
+      <p className="text-clip text-lg lg:text-xl">{seriesDetails?.overview ? seriesDetails.overview : 'No description available'}</p>
     </div>
   )
 }
@@ -152,13 +150,15 @@ const SeriesPoster = ({
   name: string
 }) => {
   return poster_path ? (
-    <Image
-      className="h-auto scale-90 self-center rounded-lg drop-shadow-md md:p-2 lg:p-4 md:h-96 md:scale-100 xl:h-auto"
-      src={`https://image.tmdb.org/t/p/original${poster_path}`}
-      width={400}
-      height={250}
-      alt={`${name} poster`}
-    />
+    <div className="mx-auto aspect-[2/3] max-w-96 rounded-lg">
+      <Image
+        className="scale-90 rounded-lg"
+        src={`https://image.tmdb.org/t/p/original${poster_path}`}
+        width={400}
+        height={250}
+        alt={`${name} poster`}
+      />
+    </div>
   ) : (
     <div className="m-4 hidden aspect-[9/16] items-center justify-center rounded-lg bg-entertainment-pure-white p-4 text-center text-xl text-entertainment-greyish-blue md:flex md:text-2xl">
       {name ?? 'No image available'}

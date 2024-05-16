@@ -30,11 +30,11 @@ const SeriesSectionComponent: FC<SeriesSectionComponentProps> = ({
   }
 
   return (
-    <div className="ml-4 text-entertainment-pure-white">
-      <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl lg:mb-8">
+    <div className=" mb-10 text-entertainment-pure-white">
+      <h1 className="mb-4 ml-4 text-xl font-light md:mb-6 md:text-3xl lg:mb-8">
         {section}
       </h1>
-      <div className="flex flex-wrap gap-8 text-entertainment-pure-white lg:gap-12">
+      <div className="flex flex-wrap justify-center gap-4 text-entertainment-pure-white lg:ml-4 lg:justify-start lg:gap-8">
         {sectionData?.data.map((selection) => {
           const bookmarked = bookmarks?.data.filter(
             (bookmark) => bookmark.selection_id === selection?.id,

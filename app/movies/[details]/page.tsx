@@ -34,19 +34,19 @@ const MovieDetailsPage = ({ params }: { params: { details: string } }) => {
     <>
       {data.backdrop_path ? (
         <div
-          className="mt-2 bg-cover p-2 md:mx-2 md:mt-4 md:p-8 lg:mx-0 lg:mt-12"
+          className="mt-2 w-full bg-cover md:mt-4 lg:mt-8"
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/original${data?.backdrop_path}})`,
           }}
         >
-          <div className="mx-2 flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:mx-4 md:aspect-video md:flex-row">
+          <div className="flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg m-4 md:aspect-video md:flex-row md:gap-2 md:p-4">
             <MoviePoster poster_path={data.poster_path} title={data.title} />
             <MovieDetailContent bookmarked={bookmarked} movieDetails={data} />
           </div>
         </div>
       ) : (
-        <div className="mt-2 aspect-video w-full bg-black bg-cover p-8 md:mt-4 lg:mt-12">
-          <div className="flex h-auto min-h-full flex-col bg-entertainment-greyish-blue bg-opacity-80 md:flex-row">
+        <div className="bg-slate-700 mt-2 aspect-video w-full bg-cover md:mt-4 lg:mt-8">
+          <div className="flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:m-4 md:aspect-video md:flex-row md:gap-2 md:p-4">
             <MoviePoster poster_path={data.poster_path} title={data.title} />
             <MovieDetailContent bookmarked={bookmarked} movieDetails={data} />
           </div>
@@ -81,65 +81,62 @@ const MovieDetailContent: FC<MovieDetailsContentProps> = ({
   return (
     <div
       className={cx(
-        'mx-4 mb-4 h-full md:ml-0 md:mt-4',
+        'relative mx-4 mb-2 md:ml-0 md:mt-2 lg:w-full lg:place-content-stretch',
+        // if there's no poster path, add margin top
         !movieDetails?.poster_path && 'mt-4',
       )}
     >
-      <div className=" mb-2 max-w-full">
-        <h1 className="clear-right text-3xl md:text-4xl">
+      <div className="mb-2 flex flex-row justify-between">
+        <h1 className="w-11/12 text-3xl md:w-auto lg:text-4xl">
           {movieDetails?.title}
         </h1>
-        <div className="float-right">
-          {isSignedIn ? (
-            <CardHeader
-              className="m-2 "
-              onClick={() =>
-                toggleBookmark({
-                  selection_id: movieDetails.id,
-                  user_id: user?.id,
-                  selection_type: 'Movie',
-                  movie_data: bookmarkData,
-                })
-              }
-            >
-              {bookmarked ? (
-                <Image
-                  src="/icon-bookmark-full.svg"
-                  height={32}
-                  width={32}
-                  alt="bookmark icon"
-                />
-              ) : (
-                <Image
-                  src="/icon-bookmark-empty.svg"
-                  height={32}
-                  width={32}
-                  alt="bookmark icon"
-                />
-              )}
-            </CardHeader>
-          ) : (
-            <></>
-          )}
-        </div>
+        {isSignedIn ? (
+          <CardHeader
+            className="relative right-0 top-0 mr-2 h-12 justify-end md:right-0 md:top-0 md:w-56"
+            onClick={() =>
+              toggleBookmark({
+                selection_id: movieDetails.id,
+                user_id: user?.id,
+                selection_type: 'Movie',
+                movie_data: bookmarkData,
+              })
+            }
+          >
+            {bookmarked ? (
+              <Image
+                src="/icon-bookmark-full.svg"
+                height={32}
+                width={32}
+                alt="bookmark icon"
+              />
+            ) : (
+              <Image
+                src="/icon-bookmark-empty.svg"
+                height={32}
+                width={32}
+                alt="bookmark icon"
+              />
+            )}
+          </CardHeader>
+        ) : (
+          <div className="relative right-0 top-0 mr-2 h-12 justify-end md:right-0 md:top-0 md:w-56"></div>
+        )}
       </div>
       <p className="text-xl italic md:text-2xl">{movieDetails?.tagline}</p>
-      <div className="my-3 flex justify-between">
+      <div className="my-2 flex flex-wrap justify-between lg:my-3">
         <p>{movieDetails?.runtime} min</p>
-        <span className="text-lg opacity-50 md:text-xl md:hidden">•</span>
+        {/* <span className="text-lg opacity-50 md:hidden md:text-xl">•</span> */}
         <p>
           {movieDetails?.genres.map((genre, index) =>
             index === 0 ? `${genre.name}` : `, ${genre.name}`,
           )}
         </p>
-        <span className="text-lg opacity-50 md:text-xl md:hidden">•</span>
+        {/* <span className="text-lg opacity-50 md:hidden md:text-xl">•</span> */}
         <p>
           {movieDetails?.origin_country} {movieDetails.release_date.slice(0, 4)}
         </p>
       </div>
-      <p className="text-ellipsis text-lg md:text-xl">
-        {movieDetails?.overview}
-      </p>
+      <p className="text-clip text-lg lg:text-xl">{movieDetails?.overview ? movieDetails.overview : 'No description available'}</p>
     </div>
   )
 }
@@ -152,15 +149,17 @@ const MoviePoster = ({
   title: string
 }) => {
   return poster_path ? (
-    <Image
-      className="h-auto scale-90 self-center rounded-lg drop-shadow-md md:m-4 md:h-96 md:scale-100 xl:h-auto"
-      src={`https://image.tmdb.org/t/p/original${poster_path}`}
-      width={400}
-      height={250}
-      alt={`${title} poster`}
-    />
+    <div className="mx-auto aspect-[2/3] max-w-96 rounded-lg">
+      <Image
+        className="scale-90 rounded-lg"
+        src={`https://image.tmdb.org/t/p/original${poster_path}`}
+        width={400}
+        height={250}
+        alt={`${title} poster`}
+      />
+    </div>
   ) : (
-    <div className="m-4 hidden aspect-[9/16] items-center justify-center rounded-lg bg-entertainment-pure-white p-4 text-center text-xl text-entertainment-greyish-blue md:flex md:text-2xl">
+    <div className="m-4 hidden aspect-[2/3] items-center justify-center rounded-lg bg-entertainment-pure-white p-4 text-center text-xl text-entertainment-greyish-blue md:flex md:text-2xl">
       {title ?? 'No image available'}
     </div>
   )

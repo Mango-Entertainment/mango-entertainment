@@ -35,7 +35,7 @@ const Navbar = () => {
           </Link>
         </div>
       ) : (
-        <div></div>
+        <div className='h-5'></div>
       )}
       <div className="flex justify-end lg:justify-self-center lg:self-end">
         <div>
