@@ -1,5 +1,5 @@
 import { type FC } from 'react'
-import RegularCardSkeleton from '@/app/_ui/components/RegularCardSkeleton'
+import SkeletonCard from '@/app/_ui/components/SkeletonCard'
 
 type SkeletonSectionComponentProps = {
     section: string
@@ -14,14 +14,14 @@ const SkeletonSectionComponent: FC<SkeletonSectionComponentProps> = ({
         {section}
       </h1>
       <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-        <RegularCardSkeleton></RegularCardSkeleton>
-        <RegularCardSkeleton></RegularCardSkeleton>
-        <RegularCardSkeleton></RegularCardSkeleton>
-        <RegularCardSkeleton></RegularCardSkeleton>
-        <RegularCardSkeleton></RegularCardSkeleton>
-        <RegularCardSkeleton></RegularCardSkeleton>
-        <RegularCardSkeleton></RegularCardSkeleton>
-        <RegularCardSkeleton></RegularCardSkeleton>
+        <SkeletonCard />
+        <SkeletonCard />
+        <SkeletonCard />
+        <SkeletonCard />
+        <SkeletonCard />
+        <SkeletonCard />
+        <SkeletonCard />
+        <SkeletonCard />
       </div>
     </div>
   )

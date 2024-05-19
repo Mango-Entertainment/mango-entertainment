@@ -8,7 +8,7 @@ import {
   NextButton,
   usePrevNextButtons,
 } from '@/components/ui/arrowbuttons'
-import TrendingSkeleton from '@/app/_ui/components/TrendingSkeleton'
+import SkeletonTrending from '@/app/_ui/components/SkeletonTrending'
 
 type TrendingSectionProps = {
   bookmarks: RouterOutputs['bookmarks']['getBookmarks'] | undefined
@@ -34,7 +34,7 @@ const TrendingSeries: FC<TrendingSectionProps> = ({ bookmarks }) => {
         <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">
           Trending Series
         </h1>
-        <TrendingSkeleton />
+        <SkeletonTrending />
       </div>
     )
   }

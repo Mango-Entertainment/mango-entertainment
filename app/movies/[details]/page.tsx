@@ -5,10 +5,10 @@ import Image from 'next/image'
 import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
 import { type FC } from 'react'
 import { cx } from 'class-variance-authority'
-import { type MovieCardData } from '@/lib/server/routes/tmdb/tmdb'
 import useBookmarks from '@/app/_hooks/useBookmarks'
 import { useUser } from '@clerk/nextjs'
 import { CardHeader } from '@/components/ui/card'
+import SkeletonDetails from '@/app/_ui/components/SkeletonDetails'
 
 type MovieDetailsContentProps = {
   movieDetails: RouterOutputs['tmdb']['getMovieDetails']
@@ -27,7 +27,7 @@ const MovieDetailsPage = ({ params }: { params: { details: string } }) => {
   const bookmarked = bookmark?.data?.bookmarked ?? false
 
   if (isLoading) {
-    ;<div>is loading</div>
+    return <SkeletonDetails />
   }
   if (!data) return
   return (
@@ -125,13 +125,11 @@ const MovieDetailContent: FC<MovieDetailsContentProps> = ({
       <p className="text-xl italic md:text-2xl">{movieDetails?.tagline}</p>
       <div className="my-2 flex flex-wrap justify-between lg:my-3">
         <p>{movieDetails?.runtime} min</p>
-        {/* <span className="text-lg opacity-50 md:hidden md:text-xl">•</span> */}
         <p>
           {movieDetails?.genres.map((genre, index) =>
             index === 0 ? `${genre.name}` : `, ${genre.name}`,
           )}
         </p>
-        {/* <span className="text-lg opacity-50 md:hidden md:text-xl">•</span> */}
         <p>
           {movieDetails?.origin_country} {movieDetails.release_date.slice(0, 4)}
         </p>

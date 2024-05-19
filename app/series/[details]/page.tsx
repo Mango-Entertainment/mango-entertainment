@@ -8,6 +8,7 @@ import { cx } from 'class-variance-authority'
 import useBookmarks from '@/app/_hooks/useBookmarks'
 import { useUser } from '@clerk/nextjs'
 import { CardHeader } from '@/components/ui/card'
+import SkeletonDetails from '@/app/_ui/components/SkeletonDetails'
 
 type SeriesDetailsContentProps = {
   seriesDetails: RouterOutputs['tmdb']['getSeriesDetails']
@@ -26,7 +27,7 @@ const SeriesDetailsPage = ({ params }: { params: { details: string } }) => {
   const bookmarked = bookmark?.data?.bookmarked ?? false
 
   if (isLoading) {
-    return <div>is loading</div>
+    return <SkeletonDetails />
   }
   if (!data) return
   return (

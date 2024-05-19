@@ -4,10 +4,9 @@ import {
   NextButton,
   usePrevNextButtons,
 } from '@/components/ui/arrowbuttons'
-import RegularCardSkeleton from './RegularCardSkeleton'
+import SkeletonCard from '@/app/_ui/components/SkeletonCard'
 
-
-const TrendingSkeleton = () => {
+const SkeletonTrending = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     containScroll: false,
     align: 'start',
@@ -18,20 +17,20 @@ const TrendingSkeleton = () => {
     onPrevButtonClick,
     onNextButtonClick,
   } = usePrevNextButtons(emblaApi)
-  
+
   return (
     <div className="ml-4 text-entertainment-pure-white">
       <section>
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="mb-2 flex w-max touch-pan-y gap-4 md:gap-6">
-            <RegularCardSkeleton />
-            <RegularCardSkeleton />
-            <RegularCardSkeleton />
-            <RegularCardSkeleton />
-            <RegularCardSkeleton />
-            <RegularCardSkeleton />
-            <RegularCardSkeleton />
-            <RegularCardSkeleton />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
           </div>
         </div>
         <div className="grid grid-cols-1 justify-items-end">
@@ -50,4 +49,4 @@ const TrendingSkeleton = () => {
     </div>
   )
 }
-export default TrendingSkeleton
+export default SkeletonTrending

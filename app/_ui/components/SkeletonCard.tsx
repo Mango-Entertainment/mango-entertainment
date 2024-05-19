@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 
-const RegularCardSkeleton = () => {
+const SkeletonCard = () => {
   return (
     <Card variant={'regular'}>
       <CardContent>
@@ -25,4 +25,4 @@ const RegularCardSkeleton = () => {
   )
 }
 
-export default RegularCardSkeleton
+export default SkeletonCard
