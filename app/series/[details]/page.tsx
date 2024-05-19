@@ -26,7 +26,7 @@ const SeriesDetailsPage = ({ params }: { params: { details: string } }) => {
   const bookmarked = bookmark?.data?.bookmarked ?? false
 
   if (isLoading) {
-    ;<div>is loading</div>
+    return <div>is loading</div>
   }
   if (!data) return
   return (
@@ -123,21 +123,26 @@ const SeriesDetailContent: FC<SeriesDetailsContentProps> = ({
       </div>
       <p className="text-xl italic md:text-2xl">{seriesDetails?.tagline}</p>
       <div className="my-2 flex flex-wrap justify-between lg:my-3">
-        <p>{seriesDetails.number_of_seasons} season(s)</p>
-        {/* <span className="text-lg opacity-50 md:text-xl md:hidden">•</span> */}
+        <p>
+          {seriesDetails.number_of_seasons === 1
+            ? '1 season'
+            : `${seriesDetails.number_of_seasons} seasons`}
+        </p>
         <p>
           {seriesDetails?.genres.map((genre, index) =>
             index === 0 ? `${genre.name}` : `, ${genre.name}`,
           )}
         </p>
-        {/* <span className="text-lg opacity-50 md:text-xl md:hidden">•</span> */}
         <p>
           {seriesDetails?.origin_country}{' '}
           {seriesDetails.first_air_date.slice(0, 4)}
         </p>
-        {/* <p>{seriesDetails?.Episode_run_time[0]} min</p> */}
       </div>
-      <p className="text-clip text-lg lg:text-xl">{seriesDetails?.overview ? seriesDetails.overview : 'No description available'}</p>
+      <p className="text-clip text-lg lg:text-xl">
+        {seriesDetails?.overview
+          ? seriesDetails.overview
+          : 'No description available'}
+      </p>
     </div>
   )
 }

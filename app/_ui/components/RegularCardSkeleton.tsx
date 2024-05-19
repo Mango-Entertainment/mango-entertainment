@@ -11,15 +11,15 @@ const RegularCardSkeleton = () => {
   return (
     <Card variant={'regular'}>
       <CardContent>
-        <Skeleton className="mb-1 h-[87px] w-40 rounded-lg md:mb-2 md:h-[160px] md:w-[250px]" />
+        <Skeleton className="mb-1 h-60 w-40 rounded-lg md:mb-2 md:h-[336px] md:w-56" />
       </CardContent>
       <CardFooter>
-        <CardDescription className="mb-1 gap-1 text-[11px] md:text-sm">
-          <Skeleton className="h-[12px] w-[150px] md:w-[180px]" />
-        </CardDescription>
-        <CardTitle className="md:text-lg">
-          <Skeleton className="md:w-[150px] w-[120px] h-[15px]" />
+        <CardTitle className="mb-1 gap-1">
+          <Skeleton className="h-5 w-32 md:h-7 md:w-56" />
         </CardTitle>
+        <CardDescription>
+          <Skeleton className="md:w-42 h-4 w-28 md:h-5" />
+        </CardDescription>
       </CardFooter>
     </Card>
   )
