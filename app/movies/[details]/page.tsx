@@ -9,6 +9,7 @@ import useBookmarks from '@/app/_hooks/useBookmarks'
 import { useUser } from '@clerk/nextjs'
 import { CardHeader } from '@/components/ui/card'
 import SkeletonDetails from '@/app/_ui/components/SkeletonDetails'
+import MovieInfo from '@/app/_ui/components/Movies/MovieInfo'
 
 type MovieDetailsContentProps = {
   movieDetails: RouterOutputs['tmdb']['getMovieDetails']
@@ -39,103 +40,20 @@ const MovieDetailsPage = ({ params }: { params: { details: string } }) => {
             backgroundImage: `url(https://image.tmdb.org/t/p/original${data?.backdrop_path}})`,
           }}
         >
-          <div className="flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg m-4 md:aspect-video md:flex-row md:gap-2 md:p-4">
+          <div className="m-4 flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:aspect-video md:flex-row md:gap-2 md:p-4">
             <MoviePoster poster_path={data.poster_path} title={data.title} />
-            <MovieDetailContent bookmarked={bookmarked} movieDetails={data} />
+            <MovieInfo bookmarked={bookmarked} movieDetails={data} />
           </div>
         </div>
       ) : (
-        <div className="bg-slate-700 mt-2 aspect-video w-full bg-cover md:mt-4 lg:mt-8">
+        <div className="mt-2 aspect-video w-full bg-slate-700 bg-cover md:mt-4 lg:mt-8">
           <div className="flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:m-4 md:aspect-video md:flex-row md:gap-2 md:p-4">
             <MoviePoster poster_path={data.poster_path} title={data.title} />
-            <MovieDetailContent bookmarked={bookmarked} movieDetails={data} />
+            <MovieInfo bookmarked={bookmarked} movieDetails={data} />
           </div>
         </div>
       )}
     </>
-  )
-}
-
-const MovieDetailContent: FC<MovieDetailsContentProps> = ({
-  movieDetails,
-  bookmarked,
-}) => {
-  const { isSignedIn, user } = useUser()
-  const toggleBookmark = useBookmarks()
-  const bookmarkData = {
-    id: movieDetails.id,
-    adult: movieDetails.adult,
-    backdrop_path: movieDetails.backdrop_path,
-    genre_ids: movieDetails.genres.map((genre) => genre.id),
-    original_language: movieDetails.original_language,
-    original_title: movieDetails.original_title,
-    overview: movieDetails.overview,
-    popularity: movieDetails.popularity,
-    poster_path: movieDetails.poster_path,
-    release_date: movieDetails.release_date,
-    title: movieDetails.title,
-    video: movieDetails.video,
-    vote_average: movieDetails.vote_average,
-    vote_count: movieDetails.vote_count,
-  }
-  return (
-    <div
-      className={cx(
-        'relative mx-4 mb-2 md:ml-0 md:mt-2 lg:w-full lg:place-content-stretch',
-        // if there's no poster path, add margin top
-        !movieDetails?.poster_path && 'mt-4',
-      )}
-    >
-      <div className="mb-2 flex flex-row justify-between">
-        <h1 className="w-11/12 text-3xl md:w-auto lg:text-4xl">
-          {movieDetails?.title}
-        </h1>
-        {isSignedIn ? (
-          <CardHeader
-            className="relative right-0 top-0 mr-2 h-12 justify-end md:right-0 md:top-0 md:w-56"
-            onClick={() =>
-              toggleBookmark({
-                selection_id: movieDetails.id,
-                user_id: user?.id,
-                selection_type: 'Movie',
-                movie_data: bookmarkData,
-              })
-            }
-          >
-            {bookmarked ? (
-              <Image
-                src="/icon-bookmark-full.svg"
-                height={32}
-                width={32}
-                alt="bookmark icon"
-              />
-            ) : (
-              <Image
-                src="/icon-bookmark-empty.svg"
-                height={32}
-                width={32}
-                alt="bookmark icon"
-              />
-            )}
-          </CardHeader>
-        ) : (
-          <div className="relative right-0 top-0 mr-2 h-12 justify-end md:right-0 md:top-0 md:w-56"></div>
-        )}
-      </div>
-      <p className="text-xl italic md:text-2xl">{movieDetails?.tagline}</p>
-      <div className="my-2 flex flex-wrap justify-between lg:my-3">
-        <p>{movieDetails?.runtime} min</p>
-        <p>
-          {movieDetails?.genres.map((genre, index) =>
-            index === 0 ? `${genre.name}` : `, ${genre.name}`,
-          )}
-        </p>
-        <p>
-          {movieDetails?.origin_country} {movieDetails.release_date.slice(0, 4)}
-        </p>
-      </div>
-      <p className="text-clip text-lg lg:text-xl">{movieDetails?.overview ? movieDetails.overview : 'No description available'}</p>
-    </div>
   )
 }
 
