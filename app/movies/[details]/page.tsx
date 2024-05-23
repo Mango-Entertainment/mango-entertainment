@@ -35,12 +35,12 @@ const MovieDetailsPage = ({ params }: { params: { details: string } }) => {
     <>
       {data.backdrop_path ? (
         <div
-          className="mt-2 w-full bg-cover md:mt-4 lg:mt-8"
+          className="mt-2 max-w-full w-full bg-cover md:mt-4 lg:mt-8"
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/original${data?.backdrop_path}})`,
           }}
         >
-          <div className="m-4 flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:aspect-video md:flex-row md:gap-2 md:p-4">
+          <div className="m-4 flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:aspect-video md:flex-row md:gap-4 md:p-4">
             <MoviePoster poster_path={data.poster_path} title={data.title} />
             <MovieInfo bookmarked={bookmarked} movieDetails={data} />
           </div>
@@ -65,9 +65,10 @@ const MoviePoster = ({
   title: string
 }) => {
   return poster_path ? (
-    <div className="mx-auto aspect-[2/3] max-w-96 rounded-lg">
+    <div className="mx-auto md:mx-0 aspect-[2/3] max-w-full rounded-lg">
+      {/* <div className="mx-auto aspect-[2/3] max-w-96 rounded-lg"> */}
       <Image
-        className="scale-90 rounded-lg"
+        className=" rounded-lg"
         src={`https://image.tmdb.org/t/p/original${poster_path}`}
         width={400}
         height={250}

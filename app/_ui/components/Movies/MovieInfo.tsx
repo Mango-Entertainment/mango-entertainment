@@ -1,3 +1,4 @@
+// 'use client'
 import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { type FC } from 'react'
@@ -5,7 +6,13 @@ import { useUser } from '@clerk/nextjs'
 import useBookmarks from '@/app/_hooks/useBookmarks'
 import { cx } from 'class-variance-authority'
 import { CardHeader } from '@/components/ui/card'
-import SkeletonDetails from '@/app/_ui/components/SkeletonDetails'
+// import SkeletonDetails from '@/app/_ui/components/SkeletonDetails'
+import useEmblaCarousel from 'embla-carousel-react'
+import {
+  PrevButton,
+  NextButton,
+  usePrevNextButtons,
+} from '@/components/ui/arrowbuttons'
 import Image from 'next/image'
 
 type MovieDetailsContentProps = {
@@ -17,10 +24,22 @@ const MovieInfo: FC<MovieDetailsContentProps> = ({
   movieDetails,
   bookmarked,
 }) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    containScroll: false,
+    align: 'start',
+  })
+
+  const {
+    prevBtnDisabled,
+    nextBtnDisabled,
+    onPrevButtonClick,
+    onNextButtonClick,
+  } = usePrevNextButtons(emblaApi)
+
   return (
     <div
       className={cx(
-        'relative mx-4 my-2 md:ml-0 md:mt-2 lg:w-full lg:place-content-stretch',
+        'relative mx-4 my-2 max-w-full bg-orange-500  md:mx-2 md:mt-2 lg:place-content-stretch',
         // if there's no poster path, add margin top
         !movieDetails?.poster_path && 'mt-4',
       )}
@@ -39,20 +58,38 @@ const MovieInfo: FC<MovieDetailsContentProps> = ({
           />
         </TabsContent>
         <TabsContent
-          className="h-max-full mb-20 flex flex-col flex-wrap overflow-y-hidden md:flex-row"
+          // className="h-max-full mb-20 flex flex-col flex-wrap md:flex-row"
           value="videos"
         >
-          {movieDetails?.videos.results.map((video) => {
-            return (
-              <div key={video.id} className="w-full md:w-1/2 lg:w-1/3 pb-3 md:p-1.5">
-                <iframe
-                  className="w-full aspect-video rounded-xl"
-                  src={`https://www.youtube.com/embed/${video.key}`}
-                  allowFullScreen
-                />
+          <section className="m-auto max-w-full">
+            <div className="overflow-hidden" ref={emblaRef}>
+              <div className="mb-2 flex touch-pan-y touch-pinch-zoom gap-4">
+                {movieDetails?.videos.results.map((video) => {
+                  return (
+                    <div key={video.id} className="min-w-0 flex-[0_0_100%] ">
+                      <iframe
+                        className="aspect-video w-full rounded-xl"
+                        src={`https://www.youtube.com/embed/${video.key}`}
+                        allowFullScreen
+                      />
+                    </div>
+                  )
+                })}
               </div>
-            )
-          })}
+              <div className="grid grid-cols-1 justify-items-end">
+                <div className="grid w-24 grid-cols-2 gap-1 md:mr-4">
+                  <PrevButton
+                    onClick={onPrevButtonClick}
+                    disabled={prevBtnDisabled}
+                  />
+                  <NextButton
+                    onClick={onNextButtonClick}
+                    disabled={nextBtnDisabled}
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
         </TabsContent>
       </Tabs>
     </div>
@@ -84,11 +121,12 @@ const MovieDetailContent: FC<MovieDetailsContentProps> = ({
   }
   return (
     <div
-    // className={cx(
-    //   'relative mx-4 mb-2 md:ml-0 md:mt-2 lg:w-full lg:place-content-stretch',
-    //   // if there's no poster path, add margin top
-    //   !movieDetails?.poster_path && 'mt-4',
-    // )}
+      className="h-auto "
+      // className={cx(
+      //   'relative mx-4 mb-2 md:ml-0 md:mt-2 lg:w-full lg:place-content-stretch',
+      //   // if there's no poster path, add margin top
+      //   !movieDetails?.poster_path && 'mt-4',
+      // )}
     >
       <div className="mb-2 flex flex-row justify-between">
         <h1 className="w-11/12 text-3xl md:w-auto lg:text-4xl">
@@ -138,7 +176,7 @@ const MovieDetailContent: FC<MovieDetailsContentProps> = ({
           {movieDetails?.origin_country} {movieDetails.release_date.slice(0, 4)}
         </p>
       </div>
-      <p className="text-clip text-lg lg:text-xl">
+      <p className="bg-blue-500 text-lg lg:text-xl">
         {movieDetails?.overview
           ? movieDetails.overview
           : 'No description available'}
