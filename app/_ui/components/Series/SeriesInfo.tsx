@@ -14,13 +14,13 @@ import {
 } from '@/components/ui/arrowbuttons'
 import Image from 'next/image'
 
-type MovieDetailsContentProps = {
-  movieDetails: RouterOutputs['tmdb']['getMovieDetails']
+type SeriesDetailsContentProps = {
+  seriesDetails: RouterOutputs['tmdb']['getSeriesDetails']
   bookmarked: boolean
 }
 
-const MovieInfo: FC<MovieDetailsContentProps> = ({
-  movieDetails,
+const SeriesInfo: FC<SeriesDetailsContentProps> = ({
+  seriesDetails,
   bookmarked,
 }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -38,9 +38,9 @@ const MovieInfo: FC<MovieDetailsContentProps> = ({
   return (
     <div
       className={cx(
-        'relative mx-4 max-w-full md:mx-2 md:mt-2 md:w-full lg:place-content-stretch',
+        'relative mx-4 my-2 max-w-full md:mx-2 md:mt-2 md:w-full lg:place-content-stretch',
         // if there's no poster path, add margin top
-        !movieDetails?.poster_path && 'mt-4',
+        !seriesDetails?.poster_path && 'mt-4',
       )}
     >
       <Tabs defaultValue="details">
@@ -52,15 +52,15 @@ const MovieInfo: FC<MovieDetailsContentProps> = ({
           </TabsList>
         </div>
         <TabsContent value="details">
-          <MovieDetailContent
+          <SeriesDetailContent
             bookmarked={bookmarked}
-            movieDetails={movieDetails}
+            seriesDetails={seriesDetails}
           />
         </TabsContent>
         <TabsContent value="description">
           <p className="text-lg lg:text-xl">
-            {movieDetails?.overview
-              ? movieDetails.overview
+            {seriesDetails?.overview
+              ? seriesDetails.overview
               : 'No description available'}
           </p>
         </TabsContent>
@@ -71,9 +71,12 @@ const MovieInfo: FC<MovieDetailsContentProps> = ({
           <section className="m-auto max-w-full">
             <div className="overflow-hidden" ref={emblaRef}>
               <div className="mb-2 flex touch-pan-y touch-pinch-zoom gap-4">
-                {movieDetails?.videos.results.map((video) => {
+                {seriesDetails?.videos.results.map((video) => {
                   return (
-                    <div key={video.id} className="min-w-0 flex-[0_0_100%] ">
+                    <div
+                      key={video.id}
+                      className="w-full min-w-0 flex-[0_0_100%] "
+                    >
                       <iframe
                         className="aspect-video w-full rounded-xl"
                         src={`https://www.youtube.com/embed/${video.key}`}
@@ -103,51 +106,50 @@ const MovieInfo: FC<MovieDetailsContentProps> = ({
   )
 }
 
-const MovieDetailContent: FC<MovieDetailsContentProps> = ({
-  movieDetails,
+const SeriesDetailContent: FC<SeriesDetailsContentProps> = ({
+  seriesDetails,
   bookmarked,
 }) => {
   const { isSignedIn, user } = useUser()
   const toggleBookmark = useBookmarks()
   const bookmarkData = {
-    id: movieDetails.id,
-    adult: movieDetails.adult,
-    backdrop_path: movieDetails.backdrop_path,
-    genre_ids: movieDetails.genres.map((genre) => genre.id),
-    original_language: movieDetails.original_language,
-    original_title: movieDetails.original_title,
-    overview: movieDetails.overview,
-    popularity: movieDetails.popularity,
-    poster_path: movieDetails.poster_path,
-    release_date: movieDetails.release_date,
-    title: movieDetails.title,
-    video: movieDetails.video,
-    videos: movieDetails.videos,
-    vote_average: movieDetails.vote_average,
-    vote_count: movieDetails.vote_count,
+    id: seriesDetails.id,
+    adult: seriesDetails.adult,
+    backdrop_path: seriesDetails.backdrop_path,
+    genre_ids: seriesDetails.genres.map((genre) => genre.id),
+    origin_country: seriesDetails.origin_country,
+    original_language: seriesDetails.original_language,
+    original_name: seriesDetails.original_name,
+    overview: seriesDetails.overview,
+    popularity: seriesDetails.popularity,
+    poster_path: seriesDetails.poster_path,
+    first_air_date: seriesDetails.first_air_date,
+    name: seriesDetails.name,
+    vote_average: seriesDetails.vote_average,
+    vote_count: seriesDetails.vote_count,
   }
   return (
     <div
-      className="h-auto "
-      // className={cx(
+      className='h-auto'
+      // {cx(
       //   'relative mx-4 mb-2 md:ml-0 md:mt-2 lg:w-full lg:place-content-stretch',
       //   // if there's no poster path, add margin top
-      //   !movieDetails?.poster_path && 'mt-4',
+      //   !seriesDetails?.poster_path && 'mt-4',
       // )}
     >
       <div className="mb-2 flex flex-row justify-between">
         <h1 className="w-11/12 text-3xl md:w-auto lg:text-4xl">
-          {movieDetails?.title}
+          {seriesDetails?.name}
         </h1>
         {isSignedIn ? (
           <CardHeader
             className="relative right-0 top-0 mr-2 h-12 justify-end md:right-0 md:top-0 md:w-56"
             onClick={() =>
               toggleBookmark({
-                selection_id: movieDetails.id,
+                selection_id: seriesDetails.id,
                 user_id: user?.id,
-                selection_type: 'Movie',
-                movie_data: bookmarkData,
+                selection_type: 'TV Series',
+                series_data: bookmarkData,
               })
             }
           >
@@ -171,20 +173,25 @@ const MovieDetailContent: FC<MovieDetailsContentProps> = ({
           <div className="relative right-0 top-0 mr-2 h-12 justify-end md:right-0 md:top-0 md:w-56"></div>
         )}
       </div>
-      <p className="text-xl italic md:text-2xl">{movieDetails?.tagline}</p>
+      <p className="text-xl italic md:text-2xl">{seriesDetails?.tagline}</p>
       <div className="my-2 flex flex-wrap justify-between lg:my-3">
-        <p>{movieDetails?.runtime} min</p>
         <p>
-          {movieDetails?.genres.map((genre, index) =>
+          {seriesDetails.number_of_seasons === 1
+            ? '1 season'
+            : `${seriesDetails.number_of_seasons} seasons`}
+        </p>
+        <p>
+          {seriesDetails?.genres.map((genre, index) =>
             index === 0 ? `${genre.name}` : `, ${genre.name}`,
           )}
         </p>
         <p>
-          {movieDetails?.origin_country} {movieDetails.release_date.slice(0, 4)}
+          {seriesDetails?.origin_country}{' '}
+          {seriesDetails.first_air_date.slice(0, 4)}
         </p>
       </div>
     </div>
   )
 }
 
-export default MovieInfo
+export default SeriesInfo
