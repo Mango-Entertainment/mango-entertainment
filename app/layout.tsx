@@ -27,18 +27,20 @@ export const metadata = {
   },
 }
 
-
-
 const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${outfit.className} grid container mx-auto p-0 md:px-4 lg:px-0 grid-cols-1 items-start overflow-x-hidden bg-entertainment-dark-blue lg:grid-cols-[120px_1fr]`}
+        className={`${outfit.className} container overflow-x-hidden bg-entertainment-dark-blue p-0`}
         >
           <TrpcProvider>
-            <Navbar />
-            {children}
+            <div
+              className={`w-screen h-min-screen grid grid-cols-1 items-start lg:grid-cols-[120px_1fr]`}
+            >
+              <Navbar />
+              {children}
+            </div>
           </TrpcProvider>
         </body>
       </html>

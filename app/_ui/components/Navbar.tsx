@@ -13,7 +13,7 @@ const Navbar = () => {
   const { isSignedIn } = useAuth()
 
   return (
-    <div className="grid grid-cols-3 h-20 lg:grid-cols-1 lg:h-screen lg:grid-rows-[3fr_3fr_9fr] lg:place-items-start bg-entertainment-semi-dark-blue items-center md:w-auto md:mt-6 md:rounded-xl lg:max-h-[960px] sticky w-full lg:mx-0 lg:justify-self-center lg:w-20">
+    <div className="grid grid-cols-3 h-20 lg:grid-cols-1 lg:h-screen md:mx-4 lg:mx-0 lg:grid-rows-[3fr_3fr_9fr] lg:place-items-start bg-entertainment-semi-dark-blue items-center md:w-auto md:mt-6 md:rounded-xl lg:max-h-[960px] sticky w-full lg:mx-0 lg:justify-self-center lg:w-20">
       <div className="w-10 h-8 mt-5 mb-6 ml-4 lg:ml-0 md:ml-6 lg:mt-8 lg:justify-self-center">
         <Link href="/" className="w-8 md:w-10">
           <Image src="/mango-logo.png" alt="icon" width={64} height={50} />
