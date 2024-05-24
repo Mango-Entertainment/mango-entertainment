@@ -33,14 +33,14 @@ const MovieDetailsPage = ({ params }: { params: { details: string } }) => {
           }}
         >
           <div className="m-4 flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:aspect-video md:flex-row md:gap-4 md:p-4">
-            <DetailsPoster poster_path={data.poster_path} title={data.title} />
+            <DetailsPoster poster_path={data.poster_path} name={data.title} />
             <MovieInfo bookmarked={bookmarked} movieDetails={data} />
           </div>
         </div>
       ) : (
         <div className="mt-2 aspect-video w-full bg-slate-700 bg-cover md:mt-4 lg:mt-8">
           <div className="flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:m-4 md:aspect-video md:flex-row md:gap-2 md:p-4">
-            <DetailsPoster poster_path={data.poster_path} title={data.title} />
+            <DetailsPoster poster_path={data.poster_path} name={data.title} />
             <MovieInfo bookmarked={bookmarked} movieDetails={data} />
           </div>
         </div>
