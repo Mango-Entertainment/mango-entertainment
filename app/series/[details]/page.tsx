@@ -24,15 +24,15 @@ const SeriesDetailsPage = ({ params }: { params: { details: string } }) => {
   }
   if (!data) return
   return (
-    <>
+    <div className="p-2 md:p-4">
       {data.backdrop_path ? (
         <div
-          className="mt-2 w-full max-w-full bg-cover md:mt-4 lg:mt-8"
+          className="w-full max-w-full bg-cover md:p-4 p-2"
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/original${data?.backdrop_path}})`,
           }}
         >
-          <div className="m-4 flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:aspect-video md:flex-row md:gap-4 md:p-4">
+          <div className="flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:aspect-video md:flex-row md:gap-4 md:p-4">
             <DetailsPoster poster_path={data.poster_path} name={data.name} />
             <SeriesInfo bookmarked={bookmarked} seriesDetails={data} />
           </div>
@@ -45,7 +45,7 @@ const SeriesDetailsPage = ({ params }: { params: { details: string } }) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 
