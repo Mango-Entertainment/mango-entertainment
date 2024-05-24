@@ -21,11 +21,11 @@ const Homepage = () => {
   })
 
   return (
-    <div className="flex flex-col my-2 md:my-4 lg:mt-12 text-entertainment-greyish-blue">
-      <TrendingSeries bookmarks={series.data} />
-      <hr className="border-1 border-gradient-to-r border-from-transparent border-to-white mb-4 mt-2 h-2 w-4/5 self-center" />
-      <TrendingMovies bookmarks={movies.data} />
-    </div>
+      <div className="flex overflow-x-hidden flex-col py-4 text-entertainment-greyish-blue lg:mt-2">
+        <TrendingSeries bookmarks={series.data} />
+        <hr className="border-1 border-gradient-to-r border-from-transparent border-to-white mb-4 mt-2 h-2 w-4/5 self-center" />
+        <TrendingMovies bookmarks={movies.data} />
+      </div>
   )
 }
 

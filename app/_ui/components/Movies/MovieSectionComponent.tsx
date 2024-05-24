@@ -29,11 +29,11 @@ const MovieSectionComponent: FC<MovieSectionComponentProps> = ({
     )
   }
   return (
-    <div className="ml-4 text-entertainment-pure-white mb-10">
-      <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl lg:mb-8">
+    <div className="text-entertainment-pure-white mb-10">
+      <h1 className="ml-4 mb-4 text-xl font-light md:mb-6 md:text-3xl lg:mb-8">
         {section}
       </h1>
-      <div className="flex flex-wrap gap-8 lg:gap-12 text-entertainment-pure-white">
+      <div className="flex flex-wrap gap-4 justify-center lg:justify-start lg:ml-4 lg:gap-8 text-entertainment-pure-white">
         {sectionData?.data.map((selection) => {
           const bookmarked = bookmarks?.data.filter(
             (bookmark) => bookmark.selection_id === selection?.id,

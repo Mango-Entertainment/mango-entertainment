@@ -136,17 +136,17 @@ const SignInPage: NextPage = () => {
                           return setPasswordState('fail')
                         }
 
-                        // Strength that fails
+                        // Password Strength that fails
                         if (res?.strength?.state === 'fail') {
                           return setPasswordState('fail')
                         }
 
-                        // Strength that can be better
+                        // Password Strength that can be better
                         if (res?.strength?.state === 'pass') {
                           return setPasswordState('warn')
                         }
 
-                        // Perfection
+                        // Password Perfection
                         return setPasswordState('success')
                       },
                     })

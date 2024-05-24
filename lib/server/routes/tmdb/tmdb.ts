@@ -95,13 +95,29 @@ export type TmdbMovieDetailsData = {
   tagline: string
   title: string
   video: boolean
+  videos: {
+    results: [
+      {
+        iso_639_1: string
+        iso_3166_1: string
+        name: string
+        key: string
+        site: string
+        size: number
+        type: string
+        official: boolean
+        published_at: string
+        id: string
+      },
+    ]
+  }
   vote_average: number
   vote_count: number
 }
 
 export type TmdbSeriesDetailsData = {
   adult: boolean
-  backdrop_path: string,
+  backdrop_path: string
   created_by: [
     {
       id: number
@@ -111,23 +127,23 @@ export type TmdbSeriesDetailsData = {
       gender: number
       profile_path: null
     },
-  ],
+  ]
   Episode_run_time: number[]
   first_air_date: string
   genres: [
     {
       id: number
       name: string
-    }
-  ],
+    },
+  ]
   homepage: string
   id: number
   in_production: boolean
   languages: string[]
   last_air_date: string
   last_episode_to_air: {
-    id: number,
-    overview: string,
+    id: number
+    overview: string
     name: string
     vote_average: number
     vote_count: number
@@ -139,7 +155,7 @@ export type TmdbSeriesDetailsData = {
     season_number: number
     show_id: number
     still_path: string
-  },
+  }
   name: string
   next_episode_to_air: {
     id: number
@@ -151,19 +167,19 @@ export type TmdbSeriesDetailsData = {
     episode_number: number
     episode_type: string
     production_code: string
-    runtime: null,
+    runtime: null
     season_number: number
     show_id: number
     still_path: null
-  },
+  }
   networks: [
     {
       id: number
       logo_path: string
       name: string
       origin_country: string
-    }
-  ],
+    },
+  ]
   number_of_episodes: number
   number_of_seasons: number
   origin_country: string[]
@@ -178,14 +194,14 @@ export type TmdbSeriesDetailsData = {
       logo_path: string
       name: string
       origin_country: string
-    }
-  ],
+    },
+  ]
   production_countries: [
     {
       iso_3166_1: string
       name: string
-    }
-  ],
+    },
+  ]
   seasons: [
     {
       air_date: string
@@ -196,20 +212,36 @@ export type TmdbSeriesDetailsData = {
       poster_path: string
       season_number: number
       vote_average: number
-    }
-  ],
+    },
+  ]
   spoken_languages: [
     {
       english_name: string
       iso_639_1: string
       name: string
-    }
-  ],
+    },
+  ]
   status: string
   tagline: string
   type: string
   vote_average: number
   vote_count: number
+  videos: {
+    results: [
+      {
+        iso_639_1: string
+        iso_3166_1: string
+        name: string
+        key: string
+        site: string
+        size: number
+        type: string
+        official: boolean
+        published_at: string
+        id: string
+      },
+    ]
+  }
 }
 
 const fetchOptions = {
@@ -265,7 +297,6 @@ export const tmdbRouter = t.router({
       const queryUrl = input.search ? `${movieSearchListUrl}?query=${input.search}` : movieListUrl
       const movies =
         await fetchSelectionList<TmdbListData<MovieCardData>>(queryUrl)
-      // const movieList = movies.results.filter((result) => result.poster_path !== null)
       const movieList = movies.results
       return {
         status: 'success',
@@ -279,7 +310,6 @@ export const tmdbRouter = t.router({
       const queryUrl = input.search ? `${seriesSearchListUrl}?query=${input.search}` : seriesListUrl
       const series =
         await fetchSelectionList<TmdbListData<SeriesCardData>>(queryUrl)
-      // const seriesList = series.results.filter((result) => result.poster_path !== null)
       const seriesList = series.results
       return {
         status: 'success',
@@ -291,7 +321,7 @@ export const tmdbRouter = t.router({
     .input(z.object({ movie_id: z.number() }))
     .query(async ({ ctx, input }) => {
       const movies = await fetchSelectionList<TmdbMovieDetailsData>(
-        `${movieDetailsUrl}${input.movie_id}`,
+        `${movieDetailsUrl}${input.movie_id}?append_to_response=videos`,
       )
       return movies
     }),
@@ -299,7 +329,7 @@ export const tmdbRouter = t.router({
     .input(z.object({ series_id: z.number() }))
     .query(async ({ ctx, input }) => {
       const series = await fetchSelectionList<TmdbSeriesDetailsData>(
-        `${seriesDetailsUrl}${input.series_id}`,
+        `${seriesDetailsUrl}${input.series_id}?append_to_response=videos`,
       )
       return series
     }),

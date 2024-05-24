@@ -74,25 +74,14 @@ const SeriesCard: FC<SeriesCardProps> = ({ series_card_data, bookmarked }) => {
           <></>
         )}
       </CardContent>
-      <CardFooter>
-        <CardDescription className="gap-1 text-[11px] md:text-sm">
-          {series_card_data.first_air_date}
-          {/* <span className="text-sm opacity-50 md:text-xl">•</span> */}
-          {/* <Image
-            className="h-3"
-            src={categoryIcon}
-            height={12}
-            width={12}
-            alt={`${category} icon`}
-          />
-          {category} */}
-          {/* <span className="text-sm opacity-50 md:text-xl">•</span> */}
-          {/* {rating} */}
-        </CardDescription>
-        <Link href={`series/${series_card_data.id}`}>
+      <Link href={`series/${series_card_data.id}`}>
+        <CardFooter>
           <CardTitle className="md:text-lg">{series_card_data.name}</CardTitle>
-        </Link>
-      </CardFooter>
+          <CardDescription className="gap-1 text-[11px] md:text-sm">
+            {series_card_data.original_language.toUpperCase()} {series_card_data.first_air_date.slice(0, 4)}
+          </CardDescription>
+        </CardFooter>
+      </Link>
     </Card>
   )
 }

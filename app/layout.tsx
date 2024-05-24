@@ -34,11 +34,11 @@ const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${outfit.className} grid max-w-full lg:mr-8 grid-cols-1 items-start overflow-x-hidden bg-entertainment-dark-blue lg:grid-cols-[160px_1fr]`}
+          className={`${outfit.className} grid container mx-auto p-0 md:px-4 lg:px-0 grid-cols-1 items-start overflow-x-hidden bg-entertainment-dark-blue lg:grid-cols-[120px_1fr]`}
         >
           <TrpcProvider>
             <Navbar />
-            <div className='overflow-x-hidden'>{children}</div>
+            {children}
           </TrpcProvider>
         </body>
       </html>

@@ -55,10 +55,6 @@ const Signup = () => {
   const form = useForm<FormFields>({ resolver: zodResolver(FormFieldsSchema), mode: 'onTouched', defaultValues: {firstName: '', lastName: ''} })
 
   const { mutate } = trpc.users.create.useMutation({
-    onSettled: () => {
-      // setName('')
-      // setEmail('')
-    },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: [
