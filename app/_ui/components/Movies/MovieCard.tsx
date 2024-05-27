@@ -68,13 +68,12 @@ const MovieCard: FC<MovieCardProps> = ({ movie_card_data, bookmarked }) => {
                 alt="bookmark icon"
               />
             )}
-            <div onClick={(e) => e.stopPropagation()}></div>
           </CardHeader>
         ) : (
           <></>
         )}
       </CardContent>
-      <Link className="z-10" href={`movies/${movie_card_data.id}`}>
+      <Link href={`movies/${movie_card_data.id}`}>
         <CardFooter>
           <CardTitle className="md:text-lg">{movie_card_data.title}</CardTitle>
           <CardDescription className="gap-1 text-[11px] md:text-sm">

@@ -8,6 +8,7 @@ const cardVariants = cva('entertainment-pure-white relative', {
     variant: {
       trending: 'w-60 md:w-auto',
       regular: 'w-40 md:w-56',
+      selection: 'w-40 bg-entertainment-greyish-blue',
     },
   },
 })
