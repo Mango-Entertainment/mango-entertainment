@@ -52,7 +52,9 @@ const TrendingMovies: FC<TrendingSectionProps> = ({ bookmarks }) => {
   }
   return (
     <div className="ml-4 text-entertainment-pure-white">
-      <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">Trending Movies</h1>
+      <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">
+        Trending Movies
+      </h1>
       <section>
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="mb-2 flex w-max touch-pan-y gap-4 md:gap-6">
@@ -62,14 +64,20 @@ const TrendingMovies: FC<TrendingSectionProps> = ({ bookmarks }) => {
                     (bookmark) => bookmark.selection_id === selection.id,
                   )[0] ?? { bookmarked: false }
 
-                return (
-                  // <MovieCard
-                  //   key={selection.id}
-                  //   movie_card_data={selection}
-                  //   bookmarked={bookmarked.bookmarked}
-                  // />
-                  <SelectionCard key={selection.id} />
-                )
+                  return (
+                    // <MovieCard
+                    //   key={selection.id}
+                    //   movie_card_data={selection}
+                    //   bookmarked={bookmarked.bookmarked}
+                    // />
+                    <SelectionCard
+                      key={selection.id}
+                      id={selection.id}
+                      movie_card_data={selection}
+                      bookmarked={bookmarked.bookmarked}
+                      selection_type='Movie'
+                    />
+                  )
                 })
               : null}
           </div>
