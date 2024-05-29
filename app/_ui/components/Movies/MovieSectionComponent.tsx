@@ -1,6 +1,7 @@
 import { type FC } from 'react'
 import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
-import MovieCard from '@/app/_ui/components/Movies/MovieCard'
+import SelectionCard from '@/app/_ui/components/SelectionCard'
+
 
 type MovieSectionComponentProps = {
   sectionData:
@@ -40,10 +41,12 @@ const MovieSectionComponent: FC<MovieSectionComponentProps> = ({
           )[0] ?? { bookmarked: false }
           if (!selection) return
           return (
-            <MovieCard
-              key={selection?.id}
-              bookmarked={bookmarked?.bookmarked}
+            <SelectionCard
+              key={selection.id}
+              id={selection.id}
               movie_card_data={selection}
+              bookmarked={bookmarked.bookmarked}
+              selection_type="Movie"
             />
           )
         })}

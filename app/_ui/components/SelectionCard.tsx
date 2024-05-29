@@ -65,7 +65,7 @@ const SelectionCard: FC<SelectionCardProps> = ({
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/w500${selection.imageString}})`,
           }}
-          className="bg-cover"
+          className="bg-cover rounded-lg"
           ratio={2 / 3}
         >
           <CardContent className="flex h-full flex-col justify-between">

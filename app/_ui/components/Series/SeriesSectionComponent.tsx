@@ -1,6 +1,7 @@
 import { type FC } from 'react'
 import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
-import SeriesCard from '@/app/_ui/components/Series/SeriesCard'
+import SelectionCard from '@/app/_ui/components/SelectionCard'
+
 
 type SeriesSectionComponentProps = {
   sectionData:
@@ -41,10 +42,12 @@ const SeriesSectionComponent: FC<SeriesSectionComponentProps> = ({
           )[0] ?? { bookmarked: false }
           if (!selection) return
           return (
-            <SeriesCard
-              key={selection?.id}
-              bookmarked={bookmarked?.bookmarked}
+            <SelectionCard
+              key={selection.id}
+              id={selection.id}
               series_card_data={selection}
+              bookmarked={bookmarked.bookmarked}
+              selection_type="TV Series"
             />
           )
         })}
