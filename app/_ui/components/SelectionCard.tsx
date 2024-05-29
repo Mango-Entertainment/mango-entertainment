@@ -48,13 +48,13 @@ const SelectionCard: FC<SelectionCardProps> = ({
   const { isSignedIn, user } = useUser()
   const toggleBookmark = useBookmarks()
   if (selection_type === 'Movie') {
-    ;(selection.imageString = movie_card_data?.poster_path ?? ''),
-      (selection.title = movie_card_data?.title ?? ''),
-      (selection.year = movie_card_data?.release_date.slice(0, 4) ?? '')
+    (selection.imageString = movie_card_data?.poster_path ?? ''),
+    (selection.title = movie_card_data?.title ?? ''),
+    (selection.year = movie_card_data?.release_date.slice(0, 4) ?? '')
   } else {
-    ;(selection.imageString = series_card_data?.poster_path ?? ''),
-      (selection.title = series_card_data?.name ?? ''),
-      (selection.year = series_card_data?.first_air_date.slice(0, 4) ?? '')
+    (selection.imageString = series_card_data?.poster_path ?? ''),
+    (selection.title = series_card_data?.name ?? ''),
+    (selection.year = series_card_data?.first_air_date.slice(0, 4) ?? '')
   }
   if (!selection.title) return
 

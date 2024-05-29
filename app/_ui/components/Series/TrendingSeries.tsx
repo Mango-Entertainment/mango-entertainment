@@ -1,5 +1,4 @@
 import { trpc } from '@/lib/server/trpc'
-import SeriesCard from '@/app/_ui/components/Series/SeriesCard'
 import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
 import { type FC } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -9,6 +8,7 @@ import {
   usePrevNextButtons,
 } from '@/components/ui/arrowbuttons'
 import SkeletonTrending from '@/app/_ui/components/SkeletonTrending'
+import SelectionCard from '@/app/_ui/components/SelectionCard'
 
 type TrendingSectionProps = {
   bookmarks: RouterOutputs['bookmarks']['getBookmarks'] | undefined
@@ -64,10 +64,12 @@ const TrendingSeries: FC<TrendingSectionProps> = ({ bookmarks }) => {
                   (bookmark) => bookmark.selection_id === selection.id,
                 )[0] ?? { bookmarked: false }
                   return (
-                    <SeriesCard
+                    <SelectionCard
                       key={selection.id}
-                      bookmarked={bookmarked.bookmarked}
+                      id={selection.id}
                       series_card_data={selection}
+                      bookmarked={bookmarked.bookmarked}
+                      selection_type="TV Series"
                     />
                   )
                 })

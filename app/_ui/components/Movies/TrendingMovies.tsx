@@ -1,5 +1,4 @@
 import { trpc } from '@/lib/server/trpc'
-import MovieCard from '@/app/_ui/components/Movies/MovieCard'
 import SelectionCard from '@/app/_ui/components/SelectionCard'
 import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
 import { type FC } from 'react'
@@ -65,11 +64,6 @@ const TrendingMovies: FC<TrendingSectionProps> = ({ bookmarks }) => {
                   )[0] ?? { bookmarked: false }
 
                   return (
-                    // <MovieCard
-                    //   key={selection.id}
-                    //   movie_card_data={selection}
-                    //   bookmarked={bookmarked.bookmarked}
-                    // />
                     <SelectionCard
                       key={selection.id}
                       id={selection.id}
