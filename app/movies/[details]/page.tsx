@@ -24,7 +24,7 @@ const MovieDetailsPage = ({ params }: { params: { details: string } }) => {
   }
   if (!data) return
   return (
-    <div className='p-2 md:p-4'>
+    <div className="p-2 md:p-4">
       {data.backdrop_path ? (
         <div
           className="w-full max-w-full bg-cover p-2 md:p-4"
@@ -32,7 +32,7 @@ const MovieDetailsPage = ({ params }: { params: { details: string } }) => {
             backgroundImage: `url(https://image.tmdb.org/t/p/original${data?.backdrop_path}})`,
           }}
         >
-          <div className="flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:aspect-video md:flex-row md:gap-4 md:p-4">
+          <div className="grid grid-cols-1 p-3 gap-3 bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:aspect-video md:grid-cols-3 md:gap-6 md:p-6">
             <DetailsPoster poster_path={data.poster_path} name={data.title} />
             <MovieInfo bookmarked={bookmarked} movieDetails={data} />
           </div>
@@ -48,30 +48,5 @@ const MovieDetailsPage = ({ params }: { params: { details: string } }) => {
     </div>
   )
 }
-
-// const MoviePoster = ({
-//   poster_path,
-//   title,
-// }: {
-//   poster_path: string
-//   title: string
-// }) => {
-//   return poster_path ? (
-//     <div className="mx-auto md:mx-0 aspect-[2/3] max-w-full rounded-lg">
-//       {/* <div className="mx-auto aspect-[2/3] max-w-96 rounded-lg"> */}
-//       <Image
-//         className=" rounded-lg"
-//         src={`https://image.tmdb.org/t/p/original${poster_path}`}
-//         width={400}
-//         height={250}
-//         alt={`${title} poster`}
-//       />
-//     </div>
-//   ) : (
-//     <div className="m-4 hidden aspect-[2/3] items-center justify-center rounded-lg bg-entertainment-pure-white p-4 text-center text-xl text-entertainment-greyish-blue md:flex md:text-2xl">
-//       {title ?? 'No image available'}
-//     </div>
-//   )
-// }
 
 export default MovieDetailsPage

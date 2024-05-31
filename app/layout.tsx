@@ -32,7 +32,7 @@ const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
     <ClerkProvider>
       <html lang="en">
         <body
-        className={`${outfit.className} container overflow-x-hidden bg-entertainment-dark-blue p-0`}
+        className={`${outfit.className} overflow-x-hidden bg-entertainment-dark-blue p-0`}
         >
           <TrpcProvider>
             <div

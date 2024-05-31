@@ -11,7 +11,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from '@/components/ui/tooltip'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import useBookmarks from '@/app/_hooks/useBookmarks'
 import { useUser } from '@clerk/nextjs'
@@ -65,7 +65,7 @@ const SelectionCard: FC<SelectionCardProps> = ({
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/w500${selection.imageString}})`,
           }}
-          className="bg-cover rounded-lg"
+          className="rounded-lg bg-cover"
           ratio={2 / 3}
         >
           <CardContent className="flex h-full flex-col justify-between">
@@ -87,7 +87,7 @@ const SelectionCard: FC<SelectionCardProps> = ({
                       movie_data: movie_card_data,
                     })
                   }
-                  className="origin-center cursor-pointer p-2 transition-transform duration-500 click:scale-100 hover:scale-125 md:p-3 md:hover:scale-150"
+                  className="click:scale-100 origin-center cursor-pointer p-2 transition-transform duration-500 hover:scale-125 md:p-3 md:hover:scale-150"
                 >
                   {bookmarked ? (
                     <Image
@@ -95,7 +95,6 @@ const SelectionCard: FC<SelectionCardProps> = ({
                       height={32}
                       width={32}
                       alt="bookmark icon"
-                      // className=" origin-center transition-transform duration-500 hover:scale-125 md:hover:scale-150"
                     />
                   ) : (
                     <Image
@@ -103,7 +102,6 @@ const SelectionCard: FC<SelectionCardProps> = ({
                       height={32}
                       width={32}
                       alt="bookmark icon"
-                      // className=" origin-center transition-transform duration-500 hover:scale-125 md:hover:scale-150"
                     />
                   )}
                 </CardHeader>
@@ -115,8 +113,16 @@ const SelectionCard: FC<SelectionCardProps> = ({
               href={
                 selection_type === 'Movie' ? `movies/${id}` : `series/${id}`
               }
-              className="h-full w-full grow"
-            />
+              className="h-full w-full grow content-center"
+            >
+              {!selection.imageString ? (
+                <div className="mb-12 bg-entertainment-pure-white p-2 text-center	text-xl text-entertainment-greyish-blue">
+                  No image available
+                </div>
+              ) : (
+                <></>
+              )}
+            </Link>
           </CardContent>
         </AspectRatio>
       </Card>

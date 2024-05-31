@@ -38,14 +38,14 @@ const MovieInfo: FC<MovieDetailsContentProps> = ({
   return (
     <div
       className={cx(
-        'relative mx-4 max-w-full md:mx-2 md:mt-2 md:w-full lg:place-content-stretch',
+        'relative md:col-span-2 max-w-full md:w-full lg:place-content-stretch',
         // if there's no poster path, add margin top
         !movieDetails?.poster_path && 'mt-4',
       )}
     >
       <Tabs defaultValue="details">
         <div className="flex justify-center">
-          <TabsList className=" mb-2">
+          <TabsList className=" mb-1 md:mb-2">
             <TabsTrigger value="details">Details</TabsTrigger>
             <TabsTrigger value="description">Description</TabsTrigger>
             <TabsTrigger value="videos">Videos</TabsTrigger>
@@ -64,24 +64,22 @@ const MovieInfo: FC<MovieDetailsContentProps> = ({
               : 'No description available'}
           </p>
         </TabsContent>
-        <TabsContent
-          // className="h-max-full mb-20 flex flex-col flex-wrap md:flex-row"
-          value="videos"
-        >
+        <TabsContent value="videos">
+          {movieDetails?.videos.results.length >= 1 ? (
           <section className="m-auto max-w-full">
             <div className="overflow-hidden" ref={emblaRef}>
               <div className="mb-2 flex touch-pan-y touch-pinch-zoom gap-4">
-                {movieDetails?.videos.results.map((video) => {
-                  return (
-                    <div key={video.id} className="min-w-0 flex-[0_0_100%] ">
-                      <iframe
-                        className="aspect-video w-full rounded-xl"
-                        src={`https://www.youtube.com/embed/${video.key}`}
-                        allowFullScreen
-                      />
-                    </div>
-                  )
-                })}
+                  {movieDetails?.videos.results.map((video) => {
+                    return (
+                      <div key={video.id} className="min-w-0 flex-[1_0_100%]">
+                        <iframe
+                          className="aspect-video w-full rounded-xl"
+                          src={`https://www.youtube.com/embed/${video.key}`}
+                          allowFullScreen
+                        />
+                      </div>
+                    )
+                  })}
               </div>
               <div className="grid grid-cols-1 justify-items-end">
                 <div className="grid w-24 grid-cols-2 gap-1 md:mr-4">
@@ -97,6 +95,9 @@ const MovieInfo: FC<MovieDetailsContentProps> = ({
               </div>
             </div>
           </section>
+                ) : (
+                  <p className="text-lg lg:text-xl">No videos available</p>
+                )}
         </TabsContent>
       </Tabs>
     </div>
