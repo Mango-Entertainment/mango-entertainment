@@ -1,22 +1,20 @@
 import { type FC } from 'react'
 import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
-import MovieCard from '@/app/_ui/components/Movies/MovieCard'
+import SelectionCard from '@/app/_ui/components/SelectionCard'
+
 
 type MovieSectionComponentProps = {
-  sectionData:
-    | RouterOutputs['tmdb']['getMovies']
-    | RouterOutputs['bookmarks']['getBookmarkedMovies']
-    | undefined
+  data: RouterOutputs['tmdb']['getMovies'] | undefined
   section: string
   bookmarks: RouterOutputs['bookmarks']['getBookmarks'] | undefined
 }
 
 const MovieSectionComponent: FC<MovieSectionComponentProps> = ({
-  sectionData,
+  data,
   section,
   bookmarks,
 }) => {
-  if (sectionData && sectionData?.results < 1) {
+  if (data && data?.results < 1) {
     return (
       <div className="ml-4 text-entertainment-pure-white">
         <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl lg:mb-8">
@@ -34,16 +32,20 @@ const MovieSectionComponent: FC<MovieSectionComponentProps> = ({
         {section}
       </h1>
       <div className="flex flex-wrap gap-4 justify-center lg:justify-start lg:ml-4 lg:gap-8 text-entertainment-pure-white">
-        {sectionData?.data.map((selection) => {
+        {data?.data.map((selection) => {
           const bookmarked = bookmarks?.data.filter(
-            (bookmark) => bookmark.selection_id === selection?.id,
+            (bookmark) => bookmark.selection_id === selection?.selection_id,
           )[0] ?? { bookmarked: false }
           if (!selection) return
           return (
-            <MovieCard
-              key={selection?.id}
-              bookmarked={bookmarked?.bookmarked}
-              movie_card_data={selection}
+            <SelectionCard
+              key={selection.selection_id}
+              selection_id={selection.selection_id}
+              selection_title={selection.selection_title}
+              selection_poster_path={selection.selection_poster_path}
+              selection_year={selection.selection_year}
+              bookmarked={bookmarked.bookmarked}
+              selection_type="Movie"
             />
           )
         })}

@@ -28,92 +28,12 @@ export const bookmarkRouter = t.router({
         user_id: z.string(),
         selection_id: z.number(),
         selection_type: z.string(),
-        movie_data: z
-          .object({
-            adult: z.boolean(),
-            backdrop_path: z.string().nullable(),
-            genre_ids: z.number().array(),
-            id: z.number(),
-            original_language: z.string(),
-            original_title: z.string(),
-            overview: z.string(),
-            popularity: z.number(),
-            poster_path: z.string(),
-            release_date: z.string(),
-            title: z.string(),
-            video: z.boolean(),
-            vote_average: z.number(),
-            vote_count: z.number(),
-          })
-          .optional(),
-        series_data: z
-          .object({
-            adult: z.boolean(),
-            backdrop_path: z.string().nullable(),
-            genre_ids: z.number().array(),
-            id: z.number(),
-            origin_country: z.string().array(),
-            original_language: z.string(),
-            original_name: z.string(),
-            overview: z.string(),
-            popularity: z.number(),
-            poster_path: z.string(),
-            first_air_date: z.string(),
-            name: z.string(),
-            vote_average: z.number(),
-            vote_count: z.number(),
-          })
-          .optional(),
+        selection_title: z.string(),
+        selection_year: z.string(),
+        selection_poster_path: z.string()
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      if (input.selection_type === 'Movie') {
-        await prisma.movies.upsert({
-          where: {
-            id: input.selection_id,
-          },
-          create: {
-            adult: input.movie_data?.adult ?? false,
-            backdrop_path: input.movie_data?.backdrop_path ?? '',
-            genre_ids: input.movie_data?.genre_ids ?? [],
-            id: input.movie_data?.id ?? -0,
-            original_language: input.movie_data?.original_language ?? '',
-            original_title: input.movie_data?.original_title ?? '',
-            overview: input.movie_data?.overview ?? '',
-            popularity: input.movie_data?.popularity ?? -0,
-            poster_path: input.movie_data?.poster_path ?? '',
-            release_date: input.movie_data?.release_date ?? '',
-            title: input.movie_data?.title ?? '',
-            video: input.movie_data?.video ?? false,
-            vote_average: input.movie_data?.vote_average ?? -0,
-            vote_count: input.movie_data?.vote_count ?? -0,
-          },
-          update: {},
-        })
-      } else if (input.selection_type === 'TV Series') {
-        await prisma.series.upsert({
-          where: {
-            id: input.selection_id,
-          },
-          create: {
-            adult: input.series_data?.adult ?? false,
-            backdrop_path: input.series_data?.backdrop_path ?? '',
-            genre_ids: input.series_data?.genre_ids ?? [],
-            id: input.series_data?.id ?? -0,
-            origin_country: input.series_data?.origin_country ?? [],
-            original_language: input.series_data?.original_language ?? '',
-            original_name: input.series_data?.original_name ?? '',
-            overview: input.series_data?.overview ?? '',
-            popularity: input.series_data?.popularity ?? -0,
-            poster_path: input.series_data?.poster_path ?? '',
-            first_air_date: input.series_data?.first_air_date ?? '',
-            name: input.series_data?.name ?? '',
-            vote_average: input.series_data?.vote_average ?? -0,
-            vote_count: input.series_data?.vote_count ?? -0,
-          },
-          update: {},
-        })
-      }
       const updateBookmarkValue = await prisma.bookmarks.findFirst({
         where: {
           user_id: input.user_id ?? null,
@@ -136,6 +56,9 @@ export const bookmarkRouter = t.router({
           },
           selection_id: input.selection_id,
           selection_type: input.selection_type,
+          selection_title: input.selection_title,
+          selection_poster_path: input.selection_poster_path,
+          selection_year: input.selection_year,
           bookmarked: true,
         },
         update: {
@@ -177,23 +100,11 @@ export const bookmarkRouter = t.router({
           selection_type: 'Movie',
         },
       })
-      const movieList = await Promise.all(
-        selections.map(async (selection) => {
-          const data = await prisma.movies.findFirst({
-            where: {
-              id: selection.selection_id,
-            },
-          })
-          return data?.title.toLowerCase().includes(input.search.toLowerCase())
-            ? data
-            : null
-        }),
-      )
 
       return {
         status: 'success',
-        results: movieList.length,
-        data: movieList ?? [],
+        results: selections.length,
+        data: selections ?? [],
       }
     }),
   getBookmarkedSeries: t.procedure
@@ -206,22 +117,10 @@ export const bookmarkRouter = t.router({
           selection_type: 'TV Series',
         },
       })
-      const seriesList = await Promise.all(
-        selections.map(async (selection) => {
-          const data = await prisma.series.findFirst({
-            where: {
-              id: selection.selection_id,
-            },
-          })
-          return data?.name.toLowerCase().includes(input.search.toLowerCase())
-            ? data
-            : null
-        }),
-      )
       return {
         status: 'success',
-        results: seriesList.length,
-        data: seriesList ?? [],
+        results: selections.length,
+        data: selections ?? [],
       }
     }),
 })

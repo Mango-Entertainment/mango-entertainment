@@ -8,6 +8,7 @@ const cardVariants = cva('entertainment-pure-white relative', {
     variant: {
       trending: 'w-60 md:w-auto',
       regular: 'w-40 md:w-56',
+      selection: 'w-40 md:w-56 bg-entertainment-greyish-blue rounded-lg',
     },
   },
 })
@@ -36,7 +37,7 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("absolute right-2 top-2 flex content-center justify-center md:right-4 md:top-4", className)}
+    className={cn("  flex content-center justify-center", className)}
     {...props}
   />
 ))

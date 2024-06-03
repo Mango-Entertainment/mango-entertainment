@@ -20,40 +20,6 @@ model User {
   bookmarks Bookmarks[]
 }
 
-model Movies {
-  id Int @unique
-  adult Boolean
-  backdrop_path String
-  genre_ids Int[]
-  original_language String
-  original_title String
-  overview String
-  popularity Int
-  poster_path String
-  release_date String
-  title String
-  video Boolean
-  vote_average Int
-  vote_count Int
-}
-
-model Series {
-  id Int @unique
-  adult Boolean
-  backdrop_path String
-  genre_ids Int[]
-  origin_country String[]
-  original_language String
-  original_name String
-  overview String
-  popularity Int
-  poster_path String
-  first_air_date String
-  name String
-  vote_average Int
-  vote_count Int
-}
-
 model Bookmarks {
   id      String   @id @default(uuid())
   user_id String
@@ -62,6 +28,9 @@ model Bookmarks {
   assignedAt DateTime @default(now())
   bookmarked Boolean
   selection_type String
+  selection_title String
+  selection_poster_path String
+  selection_year String
   @@unique([user_id, selection_id], name: "user_selection")
   @@index([user_id, selection_id])
 }

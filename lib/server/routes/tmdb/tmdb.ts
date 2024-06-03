@@ -1,7 +1,14 @@
 import { z } from 'zod'
 import { t } from '@/lib/server/trpc-server'
 
-export type MovieCardData = {
+export type SelectionCardData = {
+  selection_id: number  
+  selection_title: string
+  selection_poster_path: string
+  selection_year: string
+}
+
+export type MovieCardList = {
   adult: boolean
   backdrop_path: string
   genre_ids: number[]
@@ -18,7 +25,7 @@ export type MovieCardData = {
   vote_count: number
 }
 
-export type SeriesCardData = {
+export type SeriesCardList = {
   adult: boolean
   backdrop_path: string
   genre_ids: number[]
@@ -279,16 +286,35 @@ export const tmdbRouter = t.router({
   getTrendingMovies: t.procedure
     .query(async () => {
       const trendingMovies =
-        await fetchSelectionList<TmdbListData<MovieCardData>>(trendingMovieUrl)
-      return trendingMovies
+        await fetchSelectionList<TmdbListData<MovieCardList>>(trendingMovieUrl)
+        const trendingMovieData: SelectionCardData[] =
+          trendingMovies.results.map((selection) => {
+            return {
+              selection_poster_path: selection?.poster_path,
+              selection_id: selection?.id,
+              selection_title: selection?.title,
+              selection_year: selection?.release_date,
+            }
+          })
+      return trendingMovieData
     }),
   getTrendingSeries: t.procedure
     .query(async () => {
       const trendingSeries =
-        await fetchSelectionList<TmdbListData<SeriesCardData>>(
+        await fetchSelectionList<TmdbListData<SeriesCardList>>(
           trendingSeriesUrl,
         )
-      return trendingSeries
+        const trendingSeriesData: SelectionCardData[] = trendingSeries.results.map(
+          (selection) => {
+            return {
+              selection_poster_path: selection?.poster_path,
+              selection_id: selection?.id,
+              selection_title: selection?.name,
+              selection_year: selection?.first_air_date,
+            }
+          },
+        )
+      return trendingSeriesData
     }),
 
   getMovies: t.procedure
@@ -296,8 +322,16 @@ export const tmdbRouter = t.router({
     .query(async ({ ctx, input }) => {
       const queryUrl = input.search ? `${movieSearchListUrl}?query=${input.search}` : movieListUrl
       const movies =
-        await fetchSelectionList<TmdbListData<MovieCardData>>(queryUrl)
-      const movieList = movies.results
+        await fetchSelectionList<TmdbListData<MovieCardList>>(queryUrl)
+        const movieList: SelectionCardData[] =
+          movies.results.map((selection) => {
+            return {
+              selection_poster_path: selection?.poster_path,
+              selection_id: selection?.id,
+              selection_title: selection?.title,
+              selection_year: selection?.release_date,
+            }
+          })
       return {
         status: 'success',
         results: movieList.length,
@@ -309,8 +343,16 @@ export const tmdbRouter = t.router({
     .query(async ({ ctx, input }) => {
       const queryUrl = input.search ? `${seriesSearchListUrl}?query=${input.search}` : seriesListUrl
       const series =
-        await fetchSelectionList<TmdbListData<SeriesCardData>>(queryUrl)
-      const seriesList = series.results
+        await fetchSelectionList<TmdbListData<SeriesCardList>>(queryUrl)
+      const seriesList: SelectionCardData[] =
+        series.results.map((selection) => {
+          return {
+            selection_poster_path: selection?.poster_path,
+            selection_id: selection?.id,
+            selection_title: selection?.name,
+            selection_year: selection?.first_air_date,
+          }
+        })
       return {
         status: 'success',
         results: seriesList.length,

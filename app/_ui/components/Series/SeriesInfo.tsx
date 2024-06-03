@@ -5,7 +5,6 @@ import { useUser } from '@clerk/nextjs'
 import useBookmarks from '@/app/_hooks/useBookmarks'
 import { cx } from 'class-variance-authority'
 import { CardHeader } from '@/components/ui/card'
-// import SkeletonDetails from '@/app/_ui/components/SkeletonDetails'
 import useEmblaCarousel from 'embla-carousel-react'
 import {
   PrevButton,
@@ -129,14 +128,7 @@ const SeriesDetailContent: FC<SeriesDetailsContentProps> = ({
     vote_count: seriesDetails.vote_count,
   }
   return (
-    <div
-      className='h-auto'
-      // {cx(
-      //   'relative mx-4 mb-2 md:ml-0 md:mt-2 lg:w-full lg:place-content-stretch',
-      //   // if there's no poster path, add margin top
-      //   !seriesDetails?.poster_path && 'mt-4',
-      // )}
-    >
+    <div className="h-auto">
       <div className="mb-2 flex flex-row justify-between">
         <h1 className="w-11/12 text-3xl md:w-auto lg:text-4xl">
           {seriesDetails?.name}

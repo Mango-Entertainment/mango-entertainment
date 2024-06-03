@@ -46,8 +46,8 @@ const Bookmarks = () => {
       ) : (
         <MovieSectionComponent
           section="Movies"
-          sectionData={bookmarkedMovies.data}
-          bookmarks={movieBookmarks?.data}
+          data={bookmarkedMovies.data}
+          bookmarks={movieBookmarks.data}
         />
       )}
       {bookmarkedSeries.isLoading ? (
@@ -55,8 +55,8 @@ const Bookmarks = () => {
       ) : (
         <SeriesSectionComponent
           section="TV Series"
-          sectionData={bookmarkedSeries.data}
-          bookmarks={seriesBookmarks?.data}
+          data={bookmarkedSeries.data}
+          bookmarks={seriesBookmarks.data}
         />
       )}
     </div>

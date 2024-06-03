@@ -8,7 +8,7 @@ const DetailsPoster = ({
   name: string
 }) => {
   return poster_path ? (
-    <div className="mx-auto p-4 md:p-2 max-w-full rounded-lg md:mx-0">
+    <div className="mx-auto self-center max-w-full rounded-lg md:mx-0">
       <Image
         className="rounded-lg"
         src={`https://image.tmdb.org/t/p/original${poster_path}`}

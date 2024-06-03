@@ -11,10 +11,9 @@ const Series = () => {
   const [search, setSearch] = useState('')
 
   const { user } = useUser()
-  const bookmarks = trpc.bookmarks.getBookmarks.useQuery({
+  const bookmarks = trpc.bookmarks.getBookmarkedSeries.useQuery({
     search: search,
     user_id: user?.id ?? '',
-    selection_type: 'TV Series',
   })
 
   const { data, isLoading } = trpc.tmdb.getSeries.useQuery({ search })
@@ -26,7 +25,7 @@ const Series = () => {
     return (
       <div className="text-entertainment-greyish-blue">
         <Search search={search} handleChange={handleChange} />
-        <SkeletonSectionComponent section="Recommended" />
+        <SkeletonSectionComponent section="Series" />
       </div>
     )
   if (data && data?.results < 1) {
@@ -49,7 +48,7 @@ const Series = () => {
       <Search search={search} handleChange={handleChange} />
       <SeriesSectionComponent
         section="TV Series"
-        sectionData={data}
+        data={data}
         bookmarks={bookmarks?.data}
       />
     </div>
