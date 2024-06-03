@@ -11,7 +11,7 @@ import SkeletonTrending from '@/app/_ui/components/SkeletonTrending'
 import SelectionCard from '@/app/_ui/components/SelectionCard'
 
 type TrendingSectionProps = {
-  bookmarks: RouterOutputs['bookmarks']['getBookmarks'] | undefined
+  bookmarks: RouterOutputs['bookmarks']['getBookmarkedSeries'] | undefined
 }
 
 const TrendingSeries: FC<TrendingSectionProps> = ({ bookmarks }) => {
@@ -38,7 +38,7 @@ const TrendingSeries: FC<TrendingSectionProps> = ({ bookmarks }) => {
       </div>
     )
   }
-  if (data && data?.results?.length < 1) {
+  if (data && data?.length < 1) {
     return (
       <div className="ml-4 text-entertainment-pure-white">
         <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">
@@ -59,15 +59,17 @@ const TrendingSeries: FC<TrendingSectionProps> = ({ bookmarks }) => {
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="mb-2 flex w-max touch-pan-y gap-4 md:gap-6">
             {data
-              ? data.results.map((selection) => {
+              ? data.map((selection) => {
                 const bookmarked = bookmarks?.data.filter(
-                  (bookmark) => bookmark.selection_id === selection.id,
+                  (bookmark) => bookmark.selection_id === selection.selection_id,
                 )[0] ?? { bookmarked: false }
                   return (
                     <SelectionCard
-                      key={selection.id}
-                      id={selection.id}
-                      series_card_data={selection}
+                      key={selection.selection_id}
+                      selection_id={selection.selection_id}
+                      selection_title={selection.selection_title}
+                      selection_poster_path={selection.selection_poster_path}
+                      selection_year={selection.selection_year}
                       bookmarked={bookmarked.bookmarked}
                       selection_type="TV Series"
                     />

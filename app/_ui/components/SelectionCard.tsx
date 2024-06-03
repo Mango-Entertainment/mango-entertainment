@@ -6,64 +6,46 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import useBookmarks from '@/app/_hooks/useBookmarks'
 import { useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import { type FC } from 'react'
-import type {
-  MovieCardData,
-  SeriesCardData,
-} from '@/lib/server/routes/tmdb/tmdb'
 import Link from 'next/link'
 
 interface SelectionCardProps {
-  id: number
+  selection_id: number
   bookmarked: boolean
   selection_type: 'Movie' | 'TV Series'
-  movie_card_data?: MovieCardData
-  series_card_data?: SeriesCardData
+  selection_title: string
+  selection_poster_path: string
+  selection_year: string
 }
 
-type Selection = {
+export type Selection = {
   title: string
   year: string
   imageString: string
 }
 
 const SelectionCard: FC<SelectionCardProps> = ({
-  id,
+  selection_id,
   bookmarked,
   selection_type,
-  movie_card_data,
-  series_card_data,
+  selection_title,
+  selection_poster_path,
+  selection_year,
 }) => {
-  const selection: Selection = { title: '', year: '', imageString: '' }
   const { isSignedIn, user } = useUser()
   const toggleBookmark = useBookmarks()
-  if (selection_type === 'Movie') {
-    (selection.imageString = movie_card_data?.poster_path ?? ''),
-    (selection.title = movie_card_data?.title ?? ''),
-    (selection.year = movie_card_data?.release_date.slice(0, 4) ?? '')
-  } else {
-    (selection.imageString = series_card_data?.poster_path ?? ''),
-    (selection.title = series_card_data?.name ?? ''),
-    (selection.year = series_card_data?.first_air_date.slice(0, 4) ?? '')
-  }
-  if (!selection.title) return
+  if (!selection_title) return
 
   return (
     <div>
       <Card variant={'selection'}>
         <AspectRatio
           style={{
-            backgroundImage: `url(https://image.tmdb.org/t/p/w500${selection.imageString}})`,
+            backgroundImage: `url(https://image.tmdb.org/t/p/w500${selection_poster_path}})`,
           }}
           className="rounded-lg bg-cover"
           ratio={2 / 3}
@@ -72,7 +54,7 @@ const SelectionCard: FC<SelectionCardProps> = ({
             <div className="flex flex-row justify-between">
               <Link
                 href={
-                  selection_type === 'Movie' ? `movies/${id}` : `series/${id}`
+                  selection_type === 'Movie' ? `movies/${selection_id}` : `series/${selection_id}`
                 }
                 className="h-full w-full grow"
               />
@@ -80,11 +62,12 @@ const SelectionCard: FC<SelectionCardProps> = ({
                 <CardHeader
                   onClick={() =>
                     toggleBookmark({
-                      selection_id: id,
+                      selection_id: selection_id,
                       user_id: user.id,
                       selection_type: selection_type,
-                      series_data: series_card_data,
-                      movie_data: movie_card_data,
+                      selection_title: selection_title,
+                      selection_poster_path: selection_poster_path,
+                      selection_year: selection_year,
                     })
                   }
                   className="click:scale-100 origin-center cursor-pointer p-2 transition-transform duration-500 hover:scale-125 md:p-3 md:hover:scale-150"
@@ -111,11 +94,11 @@ const SelectionCard: FC<SelectionCardProps> = ({
             </div>
             <Link
               href={
-                selection_type === 'Movie' ? `movies/${id}` : `series/${id}`
+                selection_type === 'Movie' ? `movies/${selection_id}` : `series/${selection_id}`
               }
               className="h-full w-full grow content-center"
             >
-              {!selection.imageString ? (
+              {!selection_poster_path ? (
                 <div className="mb-12 bg-entertainment-pure-white p-2 text-center	text-xl text-entertainment-greyish-blue">
                   No image available
                 </div>
@@ -126,13 +109,13 @@ const SelectionCard: FC<SelectionCardProps> = ({
           </CardContent>
         </AspectRatio>
       </Card>
-      <Link href={selection_type === 'Movie' ? `movies/${id}` : `series/${id}`}>
+      <Link href={selection_type === 'Movie' ? `movies/${selection_id}` : `series/${selection_id}`}>
         <CardFooter className="w-40 pt-2 md:w-56">
           <CardTitle className="text-wrap md:text-lg">
-            {selection.title}
+            {selection_title}
           </CardTitle>
           <CardDescription className="text-xs md:text-sm">
-            {selection.year}
+            {selection_year}
           </CardDescription>
         </CardFooter>
       </Link>

@@ -3,7 +3,6 @@
 import { trpc } from '@/lib/server/trpc'
 import { useUser } from '@clerk/nextjs'
 import SkeletonDetails from '@/app/_ui/components/SkeletonDetails'
-import SeriesInfo from '@/app/_ui/components/Series/SeriesInfo'
 import DetailsPage from '@/app/_ui/components/DetailsPage'
 import type { Selection } from '@/app/_ui/components/Details'
 

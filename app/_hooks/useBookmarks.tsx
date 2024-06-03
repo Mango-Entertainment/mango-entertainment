@@ -1,12 +1,12 @@
 import { trpc } from '@/lib/server/trpc'
-import { type SeriesCardData, type MovieCardData } from '@/lib/server/routes/tmdb/tmdb'
 
 type ToggleBookmarkArgs={
   selection_id: number
   user_id: string
   selection_type: string
-  movie_data?: MovieCardData
-  series_data?: SeriesCardData
+  selection_title: string
+  selection_poster_path: string
+  selection_year: string
 }
 
 const useBookmarks = () => {
@@ -22,15 +22,17 @@ const useBookmarks = () => {
     selection_id,
     user_id,
     selection_type,
-    movie_data,
-    series_data,
+    selection_title,
+    selection_poster_path,
+    selection_year
   }: ToggleBookmarkArgs) => {
     await mutateAsync({
       user_id: user_id,
       selection_id: selection_id,
       selection_type: selection_type,
-      movie_data: movie_data,
-      series_data: series_data,
+      selection_title: selection_title,
+      selection_poster_path: selection_poster_path,
+      selection_year: selection_year,
     })
   }
   return toggleBookmark

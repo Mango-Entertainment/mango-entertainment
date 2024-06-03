@@ -5,7 +5,6 @@ import { useUser } from '@clerk/nextjs'
 import useBookmarks from '@/app/_hooks/useBookmarks'
 import { cx } from 'class-variance-authority'
 import { CardHeader } from '@/components/ui/card'
-// import SkeletonDetails from '@/app/_ui/components/SkeletonDetails'
 import useEmblaCarousel from 'embla-carousel-react'
 import {
   PrevButton,

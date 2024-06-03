@@ -4,20 +4,20 @@ import SelectionCard from '@/app/_ui/components/SelectionCard'
 
 
 type SeriesSectionComponentProps = {
-  sectionData:
-    | RouterOutputs['tmdb']['getSeries']
-    | RouterOutputs['bookmarks']['getBookmarkedSeries']
-    | undefined
+  data: 
+  | RouterOutputs['tmdb']['getSeries']
+  | RouterOutputs['bookmarks']['getBookmarkedSeries']
+  | undefined
   section: string
   bookmarks: RouterOutputs['bookmarks']['getBookmarks'] | undefined
 }
 
 const SeriesSectionComponent: FC<SeriesSectionComponentProps> = ({
-  sectionData,
+  data,
   section,
   bookmarks,
 }) => {
-  if (sectionData && sectionData?.results < 1) {
+  if (data && data?.results < 1) {
     return (
       <div className="ml-4 text-entertainment-pure-white">
         <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl lg:mb-8">
@@ -36,16 +36,18 @@ const SeriesSectionComponent: FC<SeriesSectionComponentProps> = ({
         {section}
       </h1>
       <div className="flex flex-wrap justify-center gap-4 text-entertainment-pure-white lg:ml-4 lg:justify-start lg:gap-8">
-        {sectionData?.data.map((selection) => {
+        {data?.data.map((selection) => {
           const bookmarked = bookmarks?.data.filter(
-            (bookmark) => bookmark.selection_id === selection?.id,
+            (bookmark) => bookmark.selection_id === selection?.selection_id,
           )[0] ?? { bookmarked: false }
           if (!selection) return
           return (
             <SelectionCard
-              key={selection.id}
-              id={selection.id}
-              series_card_data={selection}
+              key={selection.selection_id}
+              selection_id={selection.selection_id}
+              selection_title={selection.selection_title}
+              selection_poster_path={selection.selection_poster_path}
+              selection_year={selection.selection_year}
               bookmarked={bookmarked.bookmarked}
               selection_type="TV Series"
             />

@@ -10,10 +10,9 @@ import SkeletonSectionComponent from '@/app/_ui/components/SkeletonSectionCompon
 const Movies = () => {
   const [search, setSearch] = useState('')
   const { user } = useUser()
-  const bookmarks = trpc.bookmarks.getBookmarks.useQuery({
+  const bookmarks = trpc.bookmarks.getBookmarkedMovies.useQuery({
     search: search,
     user_id: user?.id ?? '',
-    selection_type: 'Movie',
   })
 
   const { data, isLoading } = trpc.tmdb.getMovies.useQuery({ search })
@@ -25,7 +24,7 @@ const Movies = () => {
     return (
       <div className="text-entertainment-greyish-blue">
         <Search search={search} handleChange={handleChange} />
-        <SkeletonSectionComponent section="Recommended" />
+        <SkeletonSectionComponent section="Movies" />
       </div>
     )
   if (data && data?.results < 1) {
@@ -48,7 +47,7 @@ const Movies = () => {
       <Search search={search} handleChange={handleChange} />
       <MovieSectionComponent
         section="Movies"
-        sectionData={data}
+        data={data}
         bookmarks={bookmarks?.data}
       />
     </div>
