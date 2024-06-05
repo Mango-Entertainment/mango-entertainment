@@ -33,6 +33,8 @@ export const userRouter = t.router({
         },
         update: {
           id: input.clerkId,
+          firstName: input.firstName,
+          lastName: input.lastName,
         },
       })
     })

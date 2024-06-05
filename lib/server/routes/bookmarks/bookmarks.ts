@@ -63,6 +63,11 @@ export const bookmarkRouter = t.router({
         },
         update: {
           bookmarked: !updateBookmarkValue?.bookmarked,
+          selection_id: input.selection_id,
+          selection_type: input.selection_type,
+          selection_title: input.selection_title,
+          selection_poster_path: input.selection_poster_path,
+          selection_year: input.selection_year,
         },
       })
 
