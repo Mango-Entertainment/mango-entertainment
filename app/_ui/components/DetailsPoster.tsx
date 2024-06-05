@@ -38,14 +38,18 @@ const DetailsPoster: FC<DetailsPosterProps> = ({
     <div className="md:col-span-2">
       <Card variant="poster">
         <AspectRatio
-          style={{
-            backgroundImage: `url(https://image.tmdb.org/t/p/original${selection_poster_path}})`,
-          }}
+          style={
+            selection_poster_path
+              ? {
+                  backgroundImage: `url(https://image.tmdb.org/t/p/original${selection_poster_path}})`,
+                }
+              : {background: 'rgba(255,255,255,0.2)'}
+          }
           className="rounded-lg bg-cover p-2"
           ratio={2 / 3}
         >
-          <CardContent className="flex h-full flex-col justify-between">
-            <div className="flex flex-row justify-between">
+          <CardContent className="flex h-full flex-col">
+            <div className="flex flex-row ">
               <div className="h-full w-full grow"></div>
               {isSignedIn ? (
                 <CardHeader
@@ -81,12 +85,12 @@ const DetailsPoster: FC<DetailsPosterProps> = ({
                 <></>
               )}
             </div>
-            {!selection_poster_path ? (
-              <div className="mb-12 bg-entertainment-pure-white p-2 text-center	text-xl text-entertainment-greyish-blue">
-                No image available
+            {!selection_poster_path && (
+              <div className="flex 	grow items-center">
+                <div className="mb-12 grow bg-entertainment-pure-white p-2 text-center text-xl text-entertainment-greyish-blue">
+                  No image available
+                </div>
               </div>
-            ) : (
-              <></>
             )}
           </CardContent>
         </AspectRatio>
