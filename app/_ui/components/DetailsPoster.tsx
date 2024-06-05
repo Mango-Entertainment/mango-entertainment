@@ -12,6 +12,8 @@ import { useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import { type FC } from 'react'
 import Link from 'next/link'
+import { cx } from 'class-variance-authority'
+
 
 interface DetailsPosterProps {
   selection_id: number
@@ -45,7 +47,9 @@ const DetailsPoster: FC<DetailsPosterProps> = ({
                 }
               : {background: 'rgba(255,255,255,0.2)'}
           }
-          className="rounded-lg bg-cover p-2"
+          className={cx('rounded-lg bg-cover',
+          selection_poster_path && 'p-2',
+          )}
           ratio={2 / 3}
         >
           <CardContent className="flex h-full flex-col">
