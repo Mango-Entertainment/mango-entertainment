@@ -9,6 +9,8 @@ const cardVariants = cva('entertainment-pure-white relative', {
       trending: 'w-60 md:w-auto',
       regular: 'w-40 md:w-56',
       selection: 'w-40 md:w-56 bg-entertainment-greyish-blue rounded-lg',
+      poster:
+        'mx-auto md:h-full w-11/12 md:w-auto max-w-full self-center content-center rounded-lg md:mx-0',
     },
   },
 })

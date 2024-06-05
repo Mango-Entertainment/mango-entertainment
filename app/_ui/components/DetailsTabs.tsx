@@ -32,7 +32,7 @@ const DetailsTabs: FC<DetailsProps> = ({ selectionData, bookmarked }) => {
   return (
     <div
       className={cx(
-        'relative max-w-full md:col-span-2 md:w-full lg:place-content-stretch',
+        'relative max-w-full md:col-span-3 md:w-full lg:place-content-stretch',
         // if there's no poster path, add margin top
         !selectionData?.poster_path && 'mt-4',
       )}
