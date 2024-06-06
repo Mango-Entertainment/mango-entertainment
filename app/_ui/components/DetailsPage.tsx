@@ -16,10 +16,17 @@ const DetailsPage: FC<DetailsProps> = ({bookmarked, selectionData}) => {
             backgroundImage: `url(https://image.tmdb.org/t/p/original${selectionData?.backdrop_path}})`,
           }}
         >
-          <div className="grid grid-cols-1 gap-3 bg-entertainment-greyish-blue bg-opacity-80 p-3 backdrop-blur-lg md:aspect-video md:grid-cols-3 md:gap-6 md:p-6">
+          <div
+            id="details-grid"
+            className="grid grid-cols-1 gap-3 bg-entertainment-greyish-blue bg-opacity-80 p-3 backdrop-blur-lg md:aspect-video md:grid-cols-5 md:gap-6 md:p-6"
+          >
             <DetailsPoster
-              poster_path={selectionData.poster_path}
-              name={selectionData.title}
+              selection_id={selectionData.id}
+              selection_title={selectionData.title}
+              selection_poster_path={selectionData.poster_path}
+              selection_year={selectionData.year}
+              bookmarked={bookmarked}
+              selection_type={selectionData.selection_type}
             />
             <DetailsTabs
               bookmarked={bookmarked}
@@ -29,10 +36,17 @@ const DetailsPage: FC<DetailsProps> = ({bookmarked, selectionData}) => {
         </div>
       ) : (
         <div className="mt-2 aspect-video w-full bg-slate-700 bg-cover md:mt-4 lg:mt-8">
-          <div className="flex flex-col bg-entertainment-greyish-blue bg-opacity-80 backdrop-blur-lg md:m-4 md:aspect-video md:flex-row md:gap-2 md:p-4">
+          <div
+            id="details-grid"
+            className="grid grid-cols-1 gap-3 bg-entertainment-greyish-blue bg-opacity-80 p-3 backdrop-blur-lg md:aspect-video md:grid-cols-5 md:gap-6 md:p-6"
+          >
             <DetailsPoster
-              poster_path={selectionData.poster_path}
-              name={selectionData.title}
+              selection_id={selectionData.id}
+              selection_title={selectionData.title}
+              selection_poster_path={selectionData.poster_path}
+              selection_year={selectionData.year}
+              bookmarked={bookmarked}
+              selection_type={selectionData.selection_type}
             />
             <DetailsTabs
               bookmarked={bookmarked}

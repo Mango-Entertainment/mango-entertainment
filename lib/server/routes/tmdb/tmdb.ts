@@ -293,7 +293,7 @@ export const tmdbRouter = t.router({
               selection_poster_path: selection?.poster_path,
               selection_id: selection?.id,
               selection_title: selection?.title,
-              selection_year: selection?.release_date,
+              selection_year: selection?.release_date.slice(0, 4),
             }
           })
       return trendingMovieData
@@ -310,7 +310,7 @@ export const tmdbRouter = t.router({
               selection_poster_path: selection?.poster_path,
               selection_id: selection?.id,
               selection_title: selection?.name,
-              selection_year: selection?.first_air_date,
+              selection_year: selection?.first_air_date.slice(0, 4),
             }
           },
         )
@@ -329,7 +329,7 @@ export const tmdbRouter = t.router({
               selection_poster_path: selection?.poster_path,
               selection_id: selection?.id,
               selection_title: selection?.title,
-              selection_year: selection?.release_date,
+              selection_year: selection?.release_date.slice(0, 4),
             }
           })
       return {
@@ -350,7 +350,7 @@ export const tmdbRouter = t.router({
             selection_poster_path: selection?.poster_path,
             selection_id: selection?.id,
             selection_title: selection?.name,
-            selection_year: selection?.first_air_date,
+            selection_year: selection?.first_air_date.slice(0, 4),
           }
         })
       return {

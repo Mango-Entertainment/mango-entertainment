@@ -63,6 +63,11 @@ export const bookmarkRouter = t.router({
         },
         update: {
           bookmarked: !updateBookmarkValue?.bookmarked,
+          selection_id: input.selection_id,
+          selection_type: input.selection_type,
+          selection_title: input.selection_title,
+          selection_poster_path: input.selection_poster_path,
+          selection_year: input.selection_year,
         },
       })
 
@@ -82,6 +87,10 @@ export const bookmarkRouter = t.router({
           user_id: input.user_id,
           bookmarked: true,
           selection_type: input.selection_type,
+          selection_title: {
+            contains: input.search,
+            mode: 'insensitive',
+          },
         },
       })
       return {
@@ -98,6 +107,10 @@ export const bookmarkRouter = t.router({
           user_id: input.user_id,
           bookmarked: true,
           selection_type: 'Movie',
+          selection_title: {
+            contains: input.search,
+            mode: 'insensitive',
+          },
         },
       })
 
@@ -115,6 +128,10 @@ export const bookmarkRouter = t.router({
           user_id: input.user_id,
           bookmarked: true,
           selection_type: 'TV Series',
+          selection_title: {
+            contains: input.search,
+            mode: 'insensitive',
+          },
         },
       })
       return {

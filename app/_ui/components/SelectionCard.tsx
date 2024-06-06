@@ -22,11 +22,11 @@ interface SelectionCardProps {
   selection_year: string
 }
 
-export type Selection = {
-  title: string
-  year: string
-  imageString: string
-}
+// export type Selection = {
+//   title: string
+//   year: string
+//   imageString: string
+// }
 
 const SelectionCard: FC<SelectionCardProps> = ({
   selection_id,
