@@ -24,14 +24,22 @@ const Series = () => {
   if (isLoading)
     return (
       <div className="text-entertainment-greyish-blue">
-        <Search search={search} handleChange={handleChange} />
+        <Search
+          search={search}
+          setSearch={setSearch}
+          handleChange={handleChange}
+        />
         <SkeletonSectionComponent section="Series" />
       </div>
     )
   if (data && data?.results < 1) {
     return (
       <div className="text-entertainment-greyish-blue">
-        <Search search={search} handleChange={handleChange} />
+        <Search
+          search={search}
+          setSearch={setSearch}
+          handleChange={handleChange}
+        />
         <div className="ml-4 text-entertainment-pure-white">
           <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl">
             TV Series
@@ -45,7 +53,11 @@ const Series = () => {
   }
   return (
     <div className="text-entertainment-greyish-blue">
-      <Search search={search} handleChange={handleChange} />
+      <Search
+        search={search}
+        setSearch={setSearch}
+        handleChange={handleChange}
+      />
       <SeriesSectionComponent
         section="TV Series"
         data={data}
