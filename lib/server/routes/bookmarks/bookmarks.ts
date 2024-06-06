@@ -87,6 +87,10 @@ export const bookmarkRouter = t.router({
           user_id: input.user_id,
           bookmarked: true,
           selection_type: input.selection_type,
+          selection_title: {
+            contains: input.search,
+            mode: 'insensitive',
+          },
         },
       })
       return {
@@ -103,6 +107,10 @@ export const bookmarkRouter = t.router({
           user_id: input.user_id,
           bookmarked: true,
           selection_type: 'Movie',
+          selection_title: {
+            contains: input.search,
+            mode: 'insensitive',
+          },
         },
       })
 
@@ -120,6 +128,10 @@ export const bookmarkRouter = t.router({
           user_id: input.user_id,
           bookmarked: true,
           selection_type: 'TV Series',
+          selection_title: {
+            contains: input.search,
+            mode: 'insensitive',
+          },
         },
       })
       return {

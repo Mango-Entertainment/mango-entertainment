@@ -12,7 +12,6 @@ const Bookmarks = () => {
   const [search, setSearch] = useState('')
 
   const { user } = useUser()
-  const user_id = user?.id ?? ''
 
   const movieBookmarks = trpc.bookmarks.getBookmarks.useQuery({
     search: search,
@@ -27,12 +26,12 @@ const Bookmarks = () => {
   })
 
   const bookmarkedSeries = trpc.bookmarks.getBookmarkedSeries.useQuery({
-    search,
-    user_id,
+    search: search,
+    user_id: user?.id ?? '',
   })
   const bookmarkedMovies = trpc.bookmarks.getBookmarkedMovies.useQuery({
-    search,
-    user_id,
+    search: search,
+    user_id: user?.id ?? '',
   })
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
