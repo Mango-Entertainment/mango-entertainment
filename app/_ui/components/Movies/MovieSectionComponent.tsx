@@ -17,10 +17,10 @@ const MovieSectionComponent: FC<MovieSectionComponentProps> = ({
   if (data && data?.results < 1) {
     return (
       <div className="ml-4 text-entertainment-pure-white">
-        <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl lg:mb-8">
+        <h1 className="mb-4 text-xl font-light md:text-3xl">
           {section}
         </h1>
-        <p className="text-center font-light opacity-75 lg:text-xl">
+        <p className="lg:mb-8 font-light text-center opacity-75 md:mb-6 md:text-left lg:text-xl">
           No results found
         </p>
       </div>
