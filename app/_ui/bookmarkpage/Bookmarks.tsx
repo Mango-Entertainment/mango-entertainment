@@ -39,7 +39,7 @@ const Bookmarks = () => {
   }
   return (
     <div className="text-entertainment-greyish-blue">
-      <Search search={search} handleChange={handleChange} />
+      <Search search={search} setSearch={setSearch} handleChange={handleChange} />
       {bookmarkedMovies.isLoading ? (
         <SkeletonSectionComponent section="Movies" />
       ) : (
