@@ -6,7 +6,7 @@ const MovieIcon = ({ pathName }: { pathName: string }) => {
       viewBox="0 0 20 20"
       className={cx(
         'hover:scale-125',
-        pathName === '/movies'
+        pathName.startsWith('/movie')
           ? 'fill-entertainment-pure-white'
           : 'fill-entertainment-greyish-blue',
       )}

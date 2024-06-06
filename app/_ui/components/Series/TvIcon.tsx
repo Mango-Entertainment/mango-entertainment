@@ -6,7 +6,7 @@ const TvIcon = ({ pathName }: { pathName: string }) => {
       viewBox="0 0 20 20"
       className={cx(
         'hover:scale-125',
-        pathName === '/series'
+        pathName.startsWith('/series')
           ? 'fill-entertainment-pure-white'
           : 'fill-entertainment-greyish-blue',
       )}

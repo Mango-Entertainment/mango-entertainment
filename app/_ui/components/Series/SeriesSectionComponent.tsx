@@ -20,10 +20,8 @@ const SeriesSectionComponent: FC<SeriesSectionComponentProps> = ({
   if (data && data?.results < 1) {
     return (
       <div className="ml-4 text-entertainment-pure-white">
-        <h1 className="mb-4 text-xl font-light md:mb-6 md:text-3xl lg:mb-8">
-          {section}
-        </h1>
-        <p className="text-center font-light opacity-75 lg:text-xl">
+        <h1 className="mb-4 text-xl font-light md:text-3xl ">{section}</h1>
+        <p className="text-center font-light opacity-75 md:mb-6 md:text-left lg:mb-8 lg:text-xl">
           No results found
         </p>
       </div>
