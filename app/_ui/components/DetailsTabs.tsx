@@ -52,7 +52,7 @@ const DetailsTabs: FC<DetailsProps> = ({ selectionData, bookmarked }) => {
           />
         </TabsContent>
         <TabsContent value="description">
-          <p className="text-lg lg:text-xl overflow-hidden text-ellipsis whitespace-nowrap">
+          <p className="text-lg lg:text-xl">
             {selectionData?.details
               ? selectionData.details
               : 'No description available'}
