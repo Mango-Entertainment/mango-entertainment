@@ -1,5 +1,6 @@
 import { z } from 'zod'
-import { t } from '@/lib/server/trpc-server'
+import { router, publicProcedure, protectedProcedure } from '@/lib/server/trpc-server'
+
 
 export type SelectionCardData = {
   selection_id: number  
@@ -282,84 +283,85 @@ function fetchSelectionList<T>(url: string): Promise<T> {
   })
 }
 
-export const tmdbRouter = t.router({
-  getTrendingMovies: t.procedure
-    .query(async () => {
-      const trendingMovies =
-        await fetchSelectionList<TmdbListData<MovieCardList>>(trendingMovieUrl)
-        const trendingMovieData: SelectionCardData[] =
-          trendingMovies.results.map((selection) => {
-            return {
-              selection_poster_path: selection?.poster_path,
-              selection_id: selection?.id,
-              selection_title: selection?.title,
-              selection_year: selection?.release_date.slice(0, 4),
-            }
-          })
-      return trendingMovieData
-    }),
-  getTrendingSeries: t.procedure
-    .query(async () => {
-      const trendingSeries =
-        await fetchSelectionList<TmdbListData<SeriesCardList>>(
-          trendingSeriesUrl,
-        )
-        const trendingSeriesData: SelectionCardData[] = trendingSeries.results.map(
-          (selection) => {
-            return {
-              selection_poster_path: selection?.poster_path,
-              selection_id: selection?.id,
-              selection_title: selection?.name,
-              selection_year: selection?.first_air_date.slice(0, 4),
-            }
-          },
-        )
-      return trendingSeriesData
-    }),
+export const tmdbRouter = router({
+  getTrendingMovies: publicProcedure.query(async () => {
+    const trendingMovies =
+      await fetchSelectionList<TmdbListData<MovieCardList>>(trendingMovieUrl)
+    const trendingMovieData: SelectionCardData[] = trendingMovies.results.map(
+      (selection) => {
+        return {
+          selection_poster_path: selection?.poster_path,
+          selection_id: selection?.id,
+          selection_title: selection?.title,
+          selection_year: selection?.release_date.slice(0, 4),
+        }
+      },
+    )
+    return trendingMovieData
+  }),
+  getTrendingSeries: publicProcedure.query(async () => {
+    const trendingSeries =
+      await fetchSelectionList<TmdbListData<SeriesCardList>>(trendingSeriesUrl)
+    const trendingSeriesData: SelectionCardData[] = trendingSeries.results.map(
+      (selection) => {
+        return {
+          selection_poster_path: selection?.poster_path,
+          selection_id: selection?.id,
+          selection_title: selection?.name,
+          selection_year: selection?.first_air_date.slice(0, 4),
+        }
+      },
+    )
+    return trendingSeriesData
+  }),
 
-  getMovies: t.procedure
+  getMovies: protectedProcedure
     .input(z.object({ search: z.string() }))
     .query(async ({ ctx, input }) => {
-      const queryUrl = input.search ? `${movieSearchListUrl}?query=${input.search}` : movieListUrl
+      const queryUrl = input.search
+        ? `${movieSearchListUrl}?query=${input.search}`
+        : movieListUrl
       const movies =
         await fetchSelectionList<TmdbListData<MovieCardList>>(queryUrl)
-        const movieList: SelectionCardData[] =
-          movies.results.map((selection) => {
-            return {
-              selection_poster_path: selection?.poster_path,
-              selection_id: selection?.id,
-              selection_title: selection?.title,
-              selection_year: selection?.release_date.slice(0, 4),
-            }
-          })
+      const movieList: SelectionCardData[] = movies.results.map((selection) => {
+        return {
+          selection_poster_path: selection?.poster_path,
+          selection_id: selection?.id,
+          selection_title: selection?.title,
+          selection_year: selection?.release_date.slice(0, 4),
+        }
+      })
       return {
         status: 'success',
         results: movieList.length,
         data: movieList,
       }
     }),
-  getSeries: t.procedure
+  getSeries: protectedProcedure
     .input(z.object({ search: z.string() }))
     .query(async ({ ctx, input }) => {
-      const queryUrl = input.search ? `${seriesSearchListUrl}?query=${input.search}` : seriesListUrl
+      const queryUrl = input.search
+        ? `${seriesSearchListUrl}?query=${input.search}`
+        : seriesListUrl
       const series =
         await fetchSelectionList<TmdbListData<SeriesCardList>>(queryUrl)
-      const seriesList: SelectionCardData[] =
-        series.results.map((selection) => {
+      const seriesList: SelectionCardData[] = series.results.map(
+        (selection) => {
           return {
             selection_poster_path: selection?.poster_path,
             selection_id: selection?.id,
             selection_title: selection?.name,
             selection_year: selection?.first_air_date.slice(0, 4),
           }
-        })
+        },
+      )
       return {
         status: 'success',
         results: seriesList.length,
         data: seriesList,
       }
     }),
-  getMovieDetails: t.procedure
+  getMovieDetails: protectedProcedure
     .input(z.object({ movie_id: z.number() }))
     .query(async ({ ctx, input }) => {
       const movies = await fetchSelectionList<TmdbMovieDetailsData>(
@@ -367,7 +369,7 @@ export const tmdbRouter = t.router({
       )
       return movies
     }),
-  getSeriesDetails: t.procedure
+  getSeriesDetails: protectedProcedure
     .input(z.object({ series_id: z.number() }))
     .query(async ({ ctx, input }) => {
       const series = await fetchSelectionList<TmdbSeriesDetailsData>(

@@ -1,14 +1,18 @@
 import { z } from 'zod'
-import { t } from '@/lib/server/trpc-server'
+import {
+  router,
+  publicProcedure,
+  protectedProcedure,
+} from '@/lib/server/trpc-server'
 import prisma from '@/prisma/prisma.db'
 
-export const userRouter = t.router({
-  getAll: t.procedure
+export const userRouter = router({
+  getAll: protectedProcedure
     .input(z.object({ search: z.string() }))
     .query(({ ctx }) => {
       return prisma.user.findMany()
     }),
-  getById: t.procedure
+  getById: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
       return prisma.user.findFirst({
@@ -18,7 +22,7 @@ export const userRouter = t.router({
         },
       })
     }),
-  create: t.procedure
+  create: publicProcedure
     .input(
       z.object({ clerkId: z.string(), firstName: z.string(), lastName: z.string(), email: z.string() }),
     )
