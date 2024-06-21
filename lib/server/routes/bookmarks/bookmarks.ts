@@ -1,9 +1,9 @@
 import { z } from 'zod'
-import { t } from '@/lib/server/trpc-server'
+import { router, protectedProcedure } from '@/lib/server/trpc-server'
 import prisma from '@/prisma/prisma.db'
 
-export const bookmarkRouter = t.router({
-  getBookmark: t.procedure
+export const bookmarkRouter = router({
+  getBookmark: protectedProcedure
     .input(
       z.object({
         user_id: z.string(),
@@ -12,7 +12,7 @@ export const bookmarkRouter = t.router({
       }),
     )
     .query(async ({ ctx, input }) => {
-      const is_bookmarked = await prisma.bookmarks.findFirst({
+      const is_bookmarked = await ctx.prisma.bookmarks.findFirst({
         where: {
           user_id: input.user_id,
           selection_id: input.selection_id,
@@ -22,7 +22,7 @@ export const bookmarkRouter = t.router({
       return is_bookmarked
     }),
 
-  createBookmark: t.procedure
+  createBookmark: protectedProcedure
     .input(
       z.object({
         user_id: z.string(),
@@ -30,7 +30,7 @@ export const bookmarkRouter = t.router({
         selection_type: z.string(),
         selection_title: z.string(),
         selection_year: z.string(),
-        selection_poster_path: z.string()
+        selection_poster_path: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -73,7 +73,7 @@ export const bookmarkRouter = t.router({
 
       return result
     }),
-  getBookmarks: t.procedure
+  getBookmarks: protectedProcedure
     .input(
       z.object({
         search: z.string(),
@@ -99,7 +99,7 @@ export const bookmarkRouter = t.router({
         data: bookmarks,
       }
     }),
-  getBookmarkedMovies: t.procedure
+  getBookmarkedMovies: protectedProcedure
     .input(z.object({ search: z.string(), user_id: z.string() }))
     .query(async ({ ctx, input }) => {
       const selections = await prisma.bookmarks.findMany({
@@ -120,7 +120,7 @@ export const bookmarkRouter = t.router({
         data: selections ?? [],
       }
     }),
-  getBookmarkedSeries: t.procedure
+  getBookmarkedSeries: protectedProcedure
     .input(z.object({ search: z.string(), user_id: z.string() }))
     .query(async ({ ctx, input }) => {
       const selections = await prisma.bookmarks.findMany({

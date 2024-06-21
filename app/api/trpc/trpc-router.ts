@@ -1,23 +1,23 @@
 import { userRouter } from '@/lib/server/routes/users/users'
-import { t } from '@/lib/server/trpc-server'
-import { createServerSideHelpers } from '@trpc/react-query/server'
-import SuperJSON from 'superjson'
+import { router } from '@/lib/server/trpc-server'
+// import { createServerSideHelpers } from '@trpc/react-query/server'
+// import SuperJSON from 'superjson'
 import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
 import { bookmarkRouter } from '@/lib/server/routes/bookmarks/bookmarks'
 import { tmdbRouter } from '@/lib/server/routes/tmdb/tmdb'
 
-export const appRouter = t.router({
+export const appRouter = router({
   users: userRouter,
   bookmarks: bookmarkRouter,
   tmdb: tmdbRouter
 })
 
-export const createSSRHelper = () =>
-  createServerSideHelpers({
-    router: appRouter,
-    transformer: SuperJSON,
-    ctx: () => {},
-  })
+// export const createSSRHelper = () =>
+//   createServerSideHelpers({
+//     router: appRouter,
+//     transformer: SuperJSON,
+//     ctx: () => {},
+//   })
 
 export type AppRouter = typeof appRouter
 export type RouterInputs = inferRouterInputs<AppRouter>
