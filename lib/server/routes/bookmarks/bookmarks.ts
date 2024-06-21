@@ -12,7 +12,7 @@ export const bookmarkRouter = router({
       }),
     )
     .query(async ({ ctx, input }) => {
-      const is_bookmarked = await prisma.bookmarks.findFirst({
+      const is_bookmarked = await ctx.prisma.bookmarks.findFirst({
         where: {
           user_id: input.user_id,
           selection_id: input.selection_id,
