@@ -26,16 +26,12 @@ export const metadata = {
     card: 'summary_large_image',
     description: meta.description,
     image: { src: meta.image },
-    creator: meta.creator,
   },
   openGraph: {
     title: meta.title,
     description: meta.description,
     url: meta.url,
-    siteName: meta.title,
-    creator: meta.creator,
     image: meta.image,
-    locale: 'en_US',
     type: 'website',
   },
 }
