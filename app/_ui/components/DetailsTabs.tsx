@@ -1,11 +1,6 @@
-import { type RouterOutputs } from '@/app/api/trpc/trpc-router'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { type FC } from 'react'
-import { useUser } from '@clerk/nextjs'
-import useBookmarks from '@/app/_hooks/useBookmarks'
 import { cx } from 'class-variance-authority'
-import { CardHeader } from '@/components/ui/card'
-// import SkeletonDetails from '@/app/_ui/components/SkeletonDetails'
 import useEmblaCarousel from 'embla-carousel-react'
 import {
   PrevButton,

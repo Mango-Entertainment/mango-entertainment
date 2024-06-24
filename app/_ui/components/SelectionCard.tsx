@@ -8,10 +8,10 @@ import {
 } from '@/components/ui/card'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import useBookmarks from '@/app/_hooks/useBookmarks'
-import { useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import { type FC } from 'react'
 import Link from 'next/link'
+import { trpc } from '@/lib/server/trpc'
 
 interface SelectionCardProps {
   selection_id: number
@@ -36,7 +36,7 @@ const SelectionCard: FC<SelectionCardProps> = ({
   selection_poster_path,
   selection_year,
 }) => {
-  const { isSignedIn, user } = useUser()
+  const user = trpc.users.getCurrent.useQuery()
   const toggleBookmark = useBookmarks()
   if (!selection_title) return
 
@@ -54,16 +54,18 @@ const SelectionCard: FC<SelectionCardProps> = ({
             <div className="flex flex-row justify-between">
               <Link
                 href={
-                  selection_type === 'Movie' ? `movies/${selection_id}` : `series/${selection_id}`
+                  selection_type === 'Movie'
+                    ? `movies/${selection_id}`
+                    : `series/${selection_id}`
                 }
                 className="h-full w-full grow"
               />
-              {isSignedIn ? (
+              {user.data ? (
                 <CardHeader
                   onClick={() =>
                     toggleBookmark({
                       selection_id: selection_id,
-                      user_id: user.id,
+                      user_id: user?.data?.id ?? '',
                       selection_type: selection_type,
                       selection_title: selection_title,
                       selection_poster_path: selection_poster_path,
@@ -94,7 +96,9 @@ const SelectionCard: FC<SelectionCardProps> = ({
             </div>
             <Link
               href={
-                selection_type === 'Movie' ? `movies/${selection_id}` : `series/${selection_id}`
+                selection_type === 'Movie'
+                  ? `movies/${selection_id}`
+                  : `series/${selection_id}`
               }
               className="h-full w-full grow content-center"
             >
@@ -109,7 +113,13 @@ const SelectionCard: FC<SelectionCardProps> = ({
           </CardContent>
         </AspectRatio>
       </Card>
-      <Link href={selection_type === 'Movie' ? `movies/${selection_id}` : `series/${selection_id}`}>
+      <Link
+        href={
+          selection_type === 'Movie'
+            ? `movies/${selection_id}`
+            : `series/${selection_id}`
+        }
+      >
         <CardFooter className="w-40 pt-2 md:w-56">
           <CardTitle className="text-wrap md:text-lg">
             {selection_title}

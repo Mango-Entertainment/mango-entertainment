@@ -1,7 +1,6 @@
 'use client'
 
 import { trpc } from '@/lib/server/trpc'
-import { useUser } from '@clerk/nextjs'
 import SkeletonDetails from '@/app/_ui/components/SkeletonDetails'
 import DetailsPage from '@/app/_ui/components/DetailsPage'
 import type { Selection } from '@/app/_ui/components/Details'
@@ -9,10 +8,10 @@ import type { Selection } from '@/app/_ui/components/Details'
 const SeriesDetailsPage = ({ params }: { params: { details: string } }) => {
   const series_id = parseInt(params.details)
   const { data, isLoading } = trpc.tmdb.getSeriesDetails.useQuery({ series_id })
-  const { isSignedIn, user } = useUser()
+  const user = trpc.users.getCurrent.useQuery()
   const bookmark = trpc.bookmarks.getBookmark.useQuery({
     selection_id: series_id,
-    user_id: user?.id ?? '',
+    user_id: user?.data?.id ?? '',
     selection_type: 'TV Series',
   })
   const bookmarked = bookmark?.data?.bookmarked ?? false

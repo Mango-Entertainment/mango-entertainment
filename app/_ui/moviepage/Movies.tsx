@@ -4,15 +4,15 @@ import { trpc } from '@/lib/server/trpc'
 import Search from '@/app/_ui/components/Search'
 import MovieSectionComponent from '@/app/_ui/components/Movies/MovieSectionComponent'
 import { type ChangeEvent, useState } from 'react'
-import { useUser } from '@clerk/nextjs'
 import SkeletonSectionComponent from '@/app/_ui/components/SkeletonSectionComponent'
 
 const Movies = () => {
   const [search, setSearch] = useState('')
-  const { user } = useUser()
+  const user = trpc.users.getCurrent.useQuery()
+
   const bookmarks = trpc.bookmarks.getBookmarkedMovies.useQuery({
     search: search,
-    user_id: user?.id ?? '',
+    user_id: user?.data?.id ?? '',
   })
 
   const { data, isLoading } = trpc.tmdb.getMovies.useQuery({ search })

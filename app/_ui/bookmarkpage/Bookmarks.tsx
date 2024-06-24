@@ -3,7 +3,6 @@
 import { trpc } from '@/lib/server/trpc'
 import Search from '@/app/_ui/components/Search'
 import { type ChangeEvent, useState } from 'react'
-import { useUser } from '@clerk/nextjs'
 import SkeletonSectionComponent from '@/app/_ui/components/SkeletonSectionComponent'
 import MovieSectionComponent from '../components/Movies/MovieSectionComponent'
 import SeriesSectionComponent from '../components/Series/SeriesSectionComponent'
@@ -11,27 +10,27 @@ import SeriesSectionComponent from '../components/Series/SeriesSectionComponent'
 const Bookmarks = () => {
   const [search, setSearch] = useState('')
 
-  const { user } = useUser()
+  const user = trpc.users.getCurrent.useQuery()
 
   const movieBookmarks = trpc.bookmarks.getBookmarks.useQuery({
     search: search,
-    user_id: user?.id ?? '',
+    user_id: user?.data?.id ?? '',
     selection_type: 'Movie',
   })
 
   const seriesBookmarks = trpc.bookmarks.getBookmarks.useQuery({
     search: search,
-    user_id: user?.id ?? '',
+    user_id: user?.data?.id ?? '',
     selection_type: 'TV Series',
   })
 
   const bookmarkedSeries = trpc.bookmarks.getBookmarkedSeries.useQuery({
     search: search,
-    user_id: user?.id ?? '',
+    user_id: user?.data?.id ?? '',
   })
   const bookmarkedMovies = trpc.bookmarks.getBookmarkedMovies.useQuery({
     search: search,
-    user_id: user?.id ?? '',
+    user_id: user?.data?.id ?? '',
   })
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

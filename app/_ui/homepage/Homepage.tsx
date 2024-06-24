@@ -1,22 +1,20 @@
 'use client'
 
 import { trpc } from '@/lib/server/trpc'
-import { useUser } from '@clerk/nextjs'
 import TrendingMovies from '@/app/_ui/components/Movies/TrendingMovies'
 import TrendingSeries from '@/app/_ui/components/Series/TrendingSeries'
 import { Separator } from '@/components/ui/separator'
 
-
 const Homepage = () => {
-  const { user } = useUser()
+  const user = trpc.users.getCurrent.useQuery()
   const movies = trpc.bookmarks.getBookmarkedMovies.useQuery({
     search: '',
-    user_id: user?.id ?? '',
+    user_id: user?.data?.id ?? '',
   })
 
   const series = trpc.bookmarks.getBookmarkedSeries.useQuery({
     search: '',
-    user_id: user?.id ?? '',
+    user_id: user?.data?.id ?? '',
   })
 
   return (

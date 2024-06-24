@@ -1,19 +1,10 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import useBookmarks from '@/app/_hooks/useBookmarks'
-import { useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import { type FC } from 'react'
-import Link from 'next/link'
+import { trpc } from '@/lib/server/trpc'
 import { cx } from 'class-variance-authority'
-
 
 interface DetailsPosterProps {
   selection_id: number
@@ -32,7 +23,7 @@ const DetailsPoster: FC<DetailsPosterProps> = ({
   selection_poster_path,
   selection_year,
 }) => {
-  const { isSignedIn, user } = useUser()
+  const user = trpc.users.getCurrent.useQuery()
   const toggleBookmark = useBookmarks()
   if (!selection_title) return
 
@@ -45,22 +36,20 @@ const DetailsPoster: FC<DetailsPosterProps> = ({
               ? {
                   backgroundImage: `url(https://image.tmdb.org/t/p/original${selection_poster_path}})`,
                 }
-              : {background: 'rgba(255,255,255,0.2)'}
+              : { background: 'rgba(255,255,255,0.2)' }
           }
-          className={cx('rounded-lg bg-cover',
-          selection_poster_path && 'p-2',
-          )}
+          className={cx('rounded-lg bg-cover', selection_poster_path && 'p-2')}
           ratio={2 / 3}
         >
           <CardContent className="flex h-full flex-col">
             <div className="flex flex-row ">
               <div className="h-full w-full grow"></div>
-              {isSignedIn ? (
+              {user.data ? (
                 <CardHeader
                   onClick={() =>
                     toggleBookmark({
                       selection_id: selection_id,
-                      user_id: user.id,
+                      user_id: user?.data?.id ?? '',
                       selection_type: selection_type,
                       selection_title: selection_title,
                       selection_poster_path: selection_poster_path,

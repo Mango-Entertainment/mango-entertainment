@@ -3,7 +3,7 @@ import Link from "next/link"
 import { UserButton, useUser } from "@clerk/nextjs"
 
 const Auth = () => {
-  const { isSignedIn, user, isLoaded } = useUser()
+  const { isSignedIn } = useUser()
 
   if(!isSignedIn){
     return (

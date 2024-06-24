@@ -22,9 +22,23 @@ export const userRouter = router({
         },
       })
     }),
+  getCurrent: protectedProcedure
+    .query(({ ctx }) => {
+      return prisma.user.findFirst({
+        where: { id: ctx.auth.userId },
+        include: {
+          bookmarks: true,
+        },
+      })
+    }),
   create: publicProcedure
     .input(
-      z.object({ clerkId: z.string(), firstName: z.string(), lastName: z.string(), email: z.string() }),
+      z.object({
+        clerkId: z.string(),
+        firstName: z.string(),
+        lastName: z.string(),
+        email: z.string(),
+      }),
     )
     .mutation(({ ctx, input }) => {
       return prisma.user.upsert({
@@ -41,5 +55,5 @@ export const userRouter = router({
           lastName: input.lastName,
         },
       })
-    })
+    }),
 })

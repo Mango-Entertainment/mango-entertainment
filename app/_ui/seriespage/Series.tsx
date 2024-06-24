@@ -3,17 +3,17 @@
 import { trpc } from '@/lib/server/trpc'
 import Search from '../components/Search'
 import { type ChangeEvent, useState } from 'react'
-import { useUser } from '@clerk/nextjs'
 import SkeletonSectionComponent from '@/app/_ui/components/SkeletonSectionComponent'
 import SeriesSectionComponent from '@/app/_ui/components/Series/SeriesSectionComponent'
 
 const Series = () => {
   const [search, setSearch] = useState('')
 
-  const { user } = useUser()
+  const user = trpc.users.getCurrent.useQuery()
+
   const bookmarks = trpc.bookmarks.getBookmarkedSeries.useQuery({
     search: search,
-    user_id: user?.id ?? '',
+    user_id: user?.data?.id ?? '',
   })
 
   const { data, isLoading } = trpc.tmdb.getSeries.useQuery({ search })
