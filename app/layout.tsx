@@ -16,18 +16,9 @@ const meta = {
 }
 
 export const metadata = {
-  title: meta.title,
   description: meta.description,
   url: meta.url,
-  siteName: meta.title,
-  creator: meta.creator,
-  images: [
-    {
-      url: meta.image,
-      width: 716,
-      height: 729,
-    },
-  ],
+  keyword: 'nextjs, reactjs, tailwind, trpc, javascript, typescript, tmdb, shadcn',
   locale: 'en_US',
   type: 'website',
   twitter: {
@@ -43,13 +34,7 @@ export const metadata = {
     url: meta.url,
     siteName: meta.title,
     creator: meta.creator,
-    images: [
-      {
-        url: meta.image,
-        width: 716,
-        height: 729,
-      },
-    ],
+    image: meta.image,
     locale: 'en_US',
     type: 'website',
   },
