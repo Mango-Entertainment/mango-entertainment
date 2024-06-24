@@ -1,8 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardHeader
-} from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import useBookmarks from '@/app/_hooks/useBookmarks'
 import Image from 'next/image'
@@ -48,35 +44,39 @@ const DetailsPoster: FC<DetailsPosterProps> = ({
           <CardContent className="flex h-full flex-col">
             <div className="flex flex-row ">
               <div className="h-full w-full grow"></div>
-              <CardHeader
-                onClick={() =>
-                  toggleBookmark({
-                    selection_id: selection_id,
-                    user_id: user?.data?.id ?? '',
-                    selection_type: selection_type,
-                    selection_title: selection_title,
-                    selection_poster_path: selection_poster_path,
-                    selection_year: selection_year,
-                  })
-                }
-                className="click:scale-100 origin-center cursor-pointer p-2 transition-transform duration-500 hover:scale-125 md:p-3 md:hover:scale-150"
-              >
-                {bookmarked ? (
-                  <Image
-                    src="/icon-bookmark-full.svg"
-                    height={32}
-                    width={32}
-                    alt="bookmark icon"
-                  />
-                ) : (
-                  <Image
-                    src="/icon-bookmark-empty.svg"
-                    height={32}
-                    width={32}
-                    alt="bookmark icon"
-                  />
-                )}
-              </CardHeader>
+              {user.data ? (
+                <CardHeader
+                  onClick={() =>
+                    toggleBookmark({
+                      selection_id: selection_id,
+                      user_id: user?.data?.id ?? '',
+                      selection_type: selection_type,
+                      selection_title: selection_title,
+                      selection_poster_path: selection_poster_path,
+                      selection_year: selection_year,
+                    })
+                  }
+                  className="click:scale-100 origin-center cursor-pointer p-2 transition-transform duration-500 hover:scale-125 md:p-3 md:hover:scale-150"
+                >
+                  {bookmarked ? (
+                    <Image
+                      src="/icon-bookmark-full.svg"
+                      height={32}
+                      width={32}
+                      alt="bookmark icon"
+                    />
+                  ) : (
+                    <Image
+                      src="/icon-bookmark-empty.svg"
+                      height={32}
+                      width={32}
+                      alt="bookmark icon"
+                    />
+                  )}
+                </CardHeader>
+              ) : (
+                <></>
+              )}
             </div>
             {!selection_poster_path && (
               <div className="flex 	grow items-center">
