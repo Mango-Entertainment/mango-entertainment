@@ -4,7 +4,6 @@ import './globals.css'
 import Navbar from './_ui/components/Navbar'
 import { ClerkProvider } from '@clerk/nextjs'
 import { TrpcProvider } from '@/lib/server/trpc-provider'
-import { Metadata } from 'next'
 
 const meta = {
   favicon: '/favicon.ico',
@@ -21,7 +20,7 @@ export const metadata = {
   siteName: meta.title,
   images: [
     {
-      url: `${process.env.NEXT_PUBLIC_URL}/mango-logo.png`,
+      url: `${process.env.NEXT_PUBLIC_URL}/public/mango-logo.png`,
       width: 716,
       height: 729,
     },
@@ -35,7 +34,7 @@ export const metadata = {
     siteName: meta.title,
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_URL}/mango-logo.png`,
+        url: `${process.env.NEXT_PUBLIC_URL}/public/mango-logo.png`,
         width: 716,
         height: 729,
       },
