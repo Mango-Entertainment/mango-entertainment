@@ -1,16 +1,17 @@
-// import { authMiddleware } from '@clerk/nextjs'
 import {
   clerkMiddleware,
   createRouteMatcher,
 } from '@clerk/nextjs/server'
-import { type NextRequest, NextResponse } from 'next/server'
+// import { type NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
+
  
-const allowedOrigins = ['http://localhost:3000', 'https://mango-entertainment.vercel.app/']
+// const allowedOrigins = ['http://localhost:3000', 'https://mango-entertainment.vercel.app/']
  
-const corsOptions = {
-  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-}
+// const corsOptions = {
+//   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+//   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+// }
  
 // export function middleware(request: NextRequest) {
 //   // Check the origin from the request
@@ -43,11 +44,11 @@ const corsOptions = {
 // }
 
 const isPublicRoute = createRouteMatcher(['/', '/api/(.*)', '/sign-in', '/sign-up', '/logo.svg', '/password-reset'])
-const isProtectedRoute = createRouteMatcher([
-  '/movies(.*)',
-  '/series(.*)',
-  '/bookmarks',
-])
+// const isProtectedRoute = createRouteMatcher([
+//   '/movies(.*)',
+//   '/series(.*)',
+//   '/bookmarks',
+// ])
 const isApiRoute = createRouteMatcher(['/api/(.*)'])
 
 

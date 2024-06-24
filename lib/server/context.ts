@@ -1,11 +1,14 @@
+import { type getAuth } from '@clerk/nextjs/server'
 import type * as trpc from '@trpc/server'
-import type * as trpcNext from '@trpc/server/adapters/next'
-import { getAuth } from '@clerk/nextjs/server'
+import prisma from '@/prisma/prisma.db'
 
-export const createTRPCContext = async (
-  opts: trpcNext.CreateNextContextOptions,
-) => {
-  return { auth: getAuth(opts.req) }
+type AuthObject = ReturnType<typeof getAuth>
+
+export const createTRPCContext = async (opts: {
+  headers: Headers
+  auth: AuthObject
+}) => {
+  return { prisma, userId: opts.auth.userId, ...opts }
 }
 
 export type Context = trpc.inferAsyncReturnType<typeof createTRPCContext>
