@@ -17,6 +17,7 @@ const meta = {
 
 export const metadata = {
   description: meta.description,
+  title: meta.title,
   // url: meta.url,
   // keyword: 'nextjs, reactjs, tailwind, trpc, javascript, typescript, tmdb, shadcn',
   // locale: 'en_US',
@@ -27,7 +28,7 @@ export const metadata = {
     url: meta.url,
     title: meta.title,
     description: meta.description,
-    image: {src: meta.image},
+    image: { src: meta.image },
   },
   openGraph: {
     url: meta.url,
