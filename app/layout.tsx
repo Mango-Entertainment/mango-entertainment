@@ -28,12 +28,14 @@ export const metadata = {
     url: meta.url,
     title: meta.title,
     description: meta.description,
+    image: meta.image,
   },
   openGraph: {
     url: meta.url,
     type: 'website',
     title: meta.title,
     description: meta.description,
+    image: meta.image,
   },
 }
 
