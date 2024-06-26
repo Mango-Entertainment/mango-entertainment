@@ -17,22 +17,24 @@ const meta = {
 
 export const metadata = {
   description: meta.description,
-  url: meta.url,
-  keyword: 'nextjs, reactjs, tailwind, trpc, javascript, typescript, tmdb, shadcn',
-  locale: 'en_US',
-  type: 'website',
+  // url: meta.url,
+  // keyword: 'nextjs, reactjs, tailwind, trpc, javascript, typescript, tmdb, shadcn',
+  // locale: 'en_US',
+  // type: 'website',
   twitter: {
-    title: meta.title,
     card: 'summary_large_image',
+    domain: 'mango-entertainment.vercel.app',
+    url: meta.url,
+    title: meta.title,
     description: meta.description,
-    image: { src: meta.image },
+    image: meta.image,
   },
   openGraph: {
+    url: meta.url,
+    type: 'website',
     title: meta.title,
     description: meta.description,
-    url: meta.url,
     image: meta.image,
-    type: 'website',
   },
 }
 
