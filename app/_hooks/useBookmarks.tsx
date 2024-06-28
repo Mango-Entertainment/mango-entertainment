@@ -1,6 +1,6 @@
 import { trpc } from '@/lib/server/trpc'
 
-type ToggleBookmarkArgs={
+type ToggleBookmarkArgs = {
   selection_id: number
   user_id: string
   selection_type: string
