@@ -42,7 +42,7 @@ const SelectionCard: FC<SelectionCardProps> = ({
             : `series/${selection_id}`
         }
       >
-        <Card variant={'selection'}>
+        <Card variant="selection">
           {user.data ? (
             <CardHeader
               onClick={async (event: MouseEvent<HTMLDivElement>) => {
