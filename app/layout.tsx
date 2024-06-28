@@ -16,20 +16,23 @@ const meta = {
 }
 
 export const metadata = {
+  metadataBase: new URL(meta.url),
   description: meta.description,
   title: meta.title,
   url: meta.url,
-  // url: meta.url,
-  keyword: 'nextjs, reactjs, tailwind, trpc, javascript, typescript, tmdb, shadcn',
-  // locale: 'en_US',
-  // type: 'website',
+  keyword:
+    'nextjs, reactjs, tailwind, trpc, javascript, typescript, tmdb, shadcn',
   twitter: {
     title: meta.title,
     card: 'summary_large_image',
     description: meta.description,
-    image: {src: meta.image},
-    // domain: 'mango-entertainment.vercel.app',
-    // url: meta.url,
+    images: [
+      {
+        url: meta.image,
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
   openGraph: {
     title: meta.title,
@@ -41,7 +44,7 @@ export const metadata = {
         url: meta.image,
         width: 1200,
         height: 630,
-      }
+      },
     ],
   },
 }
