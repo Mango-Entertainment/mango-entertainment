@@ -38,7 +38,7 @@ const DetailsPoster: FC<DetailsPosterProps> = ({
                 user_id: user?.data?.id ?? '',
                 selection_type: selection_type,
                 selection_title: selection_title,
-                selection_poster_path: selection_poster_path,
+                selection_poster_path: selection_poster_path ?? '',
                 selection_year: selection_year,
               })
             }
@@ -66,7 +66,6 @@ const DetailsPoster: FC<DetailsPosterProps> = ({
         <AspectRatio
           style={{ background: 'rgba(255,255,255,0.2)' }}
           className="rounded-lg"
-          // className={cx('rounded-lg bg-cover', selection_poster_path && 'p-2')}
           ratio={2 / 3}
         >
           {selection_poster_path ? (
@@ -90,24 +89,12 @@ const DetailsPoster: FC<DetailsPosterProps> = ({
               />
             </picture>
           ) : (
-            <div className=" h-full w-full grow content-center bg-entertainment-semi-dark-blue">
+            <div className="h-full w-full rounded-lg grow content-center ">
               <div className=" bg-entertainment-pure-white p-2 text-center text-xl text-entertainment-greyish-blue">
                 No image available
               </div>
             </div>
           )}
-          <CardContent className="flex h-full flex-col">
-            <div className="flex flex-row ">
-              <div className="h-full w-full grow"></div>
-            </div>
-            {/* {!selection_poster_path && (
-              <div className="flex 	grow items-center">
-                <div className="mb-12 grow bg-entertainment-pure-white p-2 text-center text-xl text-entertainment-greyish-blue">
-                  No image available
-                </div>
-              </div>
-            )} */}
-          </CardContent>
         </AspectRatio>
       </Card>
     </div>
