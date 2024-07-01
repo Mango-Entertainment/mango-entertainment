@@ -30,7 +30,7 @@
 
 Mango Entertainment allows you to curate the ripest mix of entertainment. TV series, movies, your favorite titles come to fruition! Create an account, checkout the catalogue, and rock on with your 🥭!
 
-<div style='text-align: right;'>
+<div style='text-align:right;'>
 
 [Back to Top](#top)
 
@@ -38,12 +38,12 @@ Mango Entertainment allows you to curate the ripest mix of entertainment. TV ser
 
 ## Screenshots
 
-<div style="display:grid;grid-gap:15px;justify-content:center;" align="center">
+<div style="display:grid;gap:15px;justify-content:center;">
     <img src="./public/mango-entertainmentL.png" style="height:350px" />
     <img src="./public/selection-example.png" style="height:350px" />
 </div>
 
-<div style='text-align: right;'>
+<div style='text-align:right;'>
 
 [Back to Top](#top)
 
@@ -55,7 +55,7 @@ Mango Entertainment allows you to curate the ripest mix of entertainment. TV ser
 [![Postgres]][Postgres-url] [![Prisma]][Prisma-url] [![tRPC]][tRPC-url]
 [![Clerk]][Clerk-url] [![Vercel]][Vercel-url] [![Docker]][Docker-url]
 
-<div style='text-align: right;'>
+<div style='text-align:right;'>
 
 [Back to Top](#top)
 
@@ -105,7 +105,7 @@ POSTGRES_PRISMA_URL=postgres://postgres:postgres@localhost:5432/postgres
 POSTGRES_URL_NON_POOLING=postgres://postgres:postgres@localhost:5432/postgres
 ```
 
-<div style='text-align: right;'>
+<div style='text-align:right;'>
 
 [Back to Top](#top)
 
@@ -117,7 +117,7 @@ Make sure you have Docker installed, the Docker daemon running, and the [remote 
 
 For more info about developing inside a container, [check this out][container-info-url].
 
-<div style='text-align: right;'>
+<div style='text-align:right;'>
 
 [Back to Top](#top)
 
@@ -132,7 +132,7 @@ npx prisma migrate dev
 npx prisma db seed
 ```
 
-<div style='text-align: right;'>
+<div style='text-align:right;'>
 
 [Back to Top](#top)
 
@@ -144,7 +144,7 @@ Now you're ready to run the project! Run `pnpm dev`.
 
 This runs the project on port 3000.
 
-<div style='text-align: right;'>
+<div style='text-align:right;'>
 
 [Back to Top](#top)
 
@@ -157,7 +157,7 @@ Our database has three tables: users, bookmarks, and user-bookmarks.
     <img src="./public/prisma-erd.svg" style="height:350px" />
   </div>
 
-<div style='text-align: right;'>
+<div style='text-align:right;'>
 
 [Back to Top](#top)
 
@@ -178,7 +178,7 @@ Alex Curtis-Slep
 
 </div>
 
-<div style='text-align: right;'>
+<div style='text-align:right;'>
 
 [Back to Top](#top)
 
