@@ -51,7 +51,6 @@ Mango Entertainment allows you to curate the ripest mix of entertainment. TV ser
   }
 }
 </style>
-
 <div class="grid-container">
     <img src="./public/main-homepage.png"  />
     <img src="./public/selection-example.png"  />
