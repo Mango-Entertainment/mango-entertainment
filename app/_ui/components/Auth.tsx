@@ -7,7 +7,7 @@ const Auth = () => {
 
   if(!isSignedIn){
     return (
-      <div className="bg-entertainment-red text-entertainment-pure-white text-center w-14 h-7 mr-4 rounded-md md:h-8 md:mr-6 lg:mr-0 lg:mb-8 flex align-center justify-center"
+      <div className="bg-entertainment-red text-entertainment-pure-white text-center w-14 h-7 rounded-md md:h-8 flex align-center justify-center"
 >
         <Link
           href="/sign-in"
@@ -20,7 +20,7 @@ const Auth = () => {
   }
   
   return (
-    <div className="mr-4 mt-.5 md:mr-6 lg:mb-8 lg:mr-0">
+    <div className="pt-1">
       <UserButton afterSignOutUrl="/" />
     </div>
   )
