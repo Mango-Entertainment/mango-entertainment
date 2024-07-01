@@ -39,8 +39,8 @@ Mango Entertainment allows you to curate the ripest mix of entertainment. TV ser
 ## Screenshots
 
 <p align="middle">
-  <img src="./public/main-homepage.png" width="400" hspace="10" />
-  <img src="./public/selection-example.png" width="400" hspace="10" />
+  <img src="./public/main-homepage.png" width="300" hspace="10" />
+  <img src="./public/selection-example.png" width="300" hspace="10" />
 </p>
 
 <div align='right'>
