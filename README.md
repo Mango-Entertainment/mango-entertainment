@@ -38,9 +38,25 @@ Mango Entertainment allows you to curate the ripest mix of entertainment. TV ser
 
 ## Screenshots
 
-<div style="display:grid;gap:15px;justify-content:center;">
-    <img src="./public/mango-entertainmentL.png" style="height:350px" />
-    <img src="./public/selection-example.png" style="height:350px" />
+<style>
+.grid-container {
+  display: grid;
+  
+  justify-content: space-around;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+</style>
+
+<div class="grid-container">
+    <img src="./public/main-homepage.png"  />
+    <img src="./public/selection-example.png"  />
 </div>
 
 <div style='text-align:right;'>
