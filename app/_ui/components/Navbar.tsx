@@ -15,14 +15,16 @@ const Navbar = () => {
   const pathName = usePathname()
 
   return (
-    <div className="sticky grid h-20 w-full grid-cols-3 items-center bg-entertainment-semi-dark-blue md:mx-4 md:mt-6 md:w-auto md:rounded-xl lg:mx-0 lg:mx-0 lg:h-screen lg:max-h-[960px] lg:w-20 lg:grid-cols-1 lg:grid-rows-[3fr_3fr_9fr] lg:place-items-start lg:justify-self-center">
-      <div className="mb-6 ml-4 mt-5 h-8 w-10 md:ml-6 lg:ml-0 lg:mt-8 lg:justify-self-center">
-        <Link href="/" className="w-8 md:w-10">
+    <div className="fixed bottom-0 left-0 right-0 z-20 grid h-14 md:h-16 w-full grid-cols-3 items-center bg-entertainment-semi-dark-blue md:w-auto lg:top-0 lg:h-screen lg:w-20 lg:grid-cols-1 lg:grid-rows-[3fr_3fr_9fr] lg:place-items-start">
+      <div 
+      className="mb-1 ml-4 h-8 w-10 md:ml-6 lg:ml-0 lg:mt-8 lg:justify-self-center"
+      >
+        <Link href="/">
           <Image src="/mango-logo.png" alt="icon" width={64} height={50} />
         </Link>
       </div>
       {isSignedIn ? (
-        <div className="flex justify-between lg:h-full lg:w-5 lg:flex-col lg:justify-self-center">
+        <div className="flex content-center justify-between lg:h-full lg:w-5 lg:flex-col lg:justify-self-center">
           <Link href="/" className="w-4 md:w-5">
             <HomeIcon pathName={pathName} />
           </Link>
@@ -39,7 +41,7 @@ const Navbar = () => {
       ) : (
         <div className="h-5"></div>
       )}
-      <div className="flex justify-end lg:self-end lg:justify-self-center">
+      <div className="mr-4  lg:mr-0 lg:mb-4 justify-self-end lg:self-end lg:justify-self-center">
         <div>
           <Auth />
         </div>
