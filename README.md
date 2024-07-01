@@ -30,7 +30,7 @@
 
 Mango Entertainment allows you to curate the ripest mix of entertainment. TV series, movies, your favorite titles come to fruition! Create an account, checkout the catalogue, and rock on with your 🥭!
 
-<div style='text-align:right;'>
+<div align='right'>
 
 [Back to Top](#top)
 
@@ -38,25 +38,11 @@ Mango Entertainment allows you to curate the ripest mix of entertainment. TV ser
 
 ## Screenshots
 
-<style>
-.grid-container {
-  display: grid;
-  
-  justify-content: space-around;
-  gap: 20px;
-}
-@media (min-width: 768px) {
-  .grid-container {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-</style>
-<div class="grid-container">
-    <img src="./public/main-homepage.png"  />
-    <img src="./public/selection-example.png"  />
-</div>
+  <img src="./public/main-homepage.png" width="300px" />
+  <img src="./public/selection-example.png" width="300px" hspace="15" />
 
-<div style='text-align:right;'>
+
+<div align='right'>
 
 [Back to Top](#top)
 
