@@ -45,13 +45,11 @@ Mango Entertainment allows you to curate the ripest mix of entertainment. TV ser
   justify-content: space-around;
   gap: 20px;
 }
-
 @media (min-width: 768px) {
   .grid-container {
     grid-template-columns: 1fr 1fr;
   }
 }
-
 </style>
 
 <div class="grid-container">
