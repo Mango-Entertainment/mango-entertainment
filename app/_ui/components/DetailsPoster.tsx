@@ -1,10 +1,9 @@
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Card, CardHeader } from '@/components/ui/card'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import useBookmarks from '@/app/_hooks/useBookmarks'
-import Image from 'next/image'
 import { type FC } from 'react'
 import { trpc } from '@/lib/server/trpc'
-import { cx } from 'class-variance-authority'
+import Bookmark from '@/app/_ui/components/Bookmark'
 
 interface DetailsPosterProps {
   selection_id: number
@@ -44,21 +43,7 @@ const DetailsPoster: FC<DetailsPosterProps> = ({
             }
             className="click:scale-100 right-0 z-10 p-2 absolute top-0 origin-center cursor-pointer transition-transform duration-500 hover:scale-125 md:p-3 md:hover:scale-150"
           >
-            {bookmarked ? (
-              <Image
-                src="/icon-bookmark-full.svg"
-                height={32}
-                width={32}
-                alt="bookmark icon"
-              />
-            ) : (
-              <Image
-                src="/icon-bookmark-empty.svg"
-                height={32}
-                width={32}
-                alt="bookmark icon"
-              />
-            )}
+           <Bookmark bookmarked={bookmarked} />
           </CardHeader>
         ) : (
           <></>
