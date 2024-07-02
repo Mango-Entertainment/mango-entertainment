@@ -53,7 +53,7 @@ Mango Entertainment allows you to curate the ripest mix of entertainment. TV ser
 
 [![TypeScript]][TypeScript-url] [![Next JS]][Next-js-url] [![Tailwindcss]][Tailwind-url]
 [![Postgres]][Postgres-url] [![Prisma]][Prisma-url] [![tRPC]][tRPC-url]
-[![Clerk]][Clerk-url] [![Vercel]][Vercel-url] [![Docker]][Docker-url]
+[![Clerk]][Clerk-url] [![Vercel]][Vercel-url] [![Docker]][Docker-url] [![Github-Shield]][Github-url]
 
 <div align='right'>
 
@@ -152,7 +152,7 @@ This runs the project on port 3000.
 
 ## Entity Relationship Diagram (database schema)
 
-Our database has three tables: users, bookmarks, and user-bookmarks.
+Our database has two tables: users and bookmarks.
 
 <div align='center'>
 
@@ -224,3 +224,4 @@ Alex Curtis-Slep
 [Docker-url]: https://www.docker.com/
 [dev-container-extension-url]: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
 [container-info-url]: https://code.visualstudio.com/docs/devcontainers/containers
+[Github-url]: https://github.com/
