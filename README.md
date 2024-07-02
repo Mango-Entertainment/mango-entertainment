@@ -153,9 +153,13 @@ This runs the project on port 3000.
 ## Entity Relationship Diagram (database schema)
 
 Our database has three tables: users, bookmarks, and user-bookmarks.
-  <div align="center">
-    <img src="./public/prisma-erd.svg" style="height:350px" />
-  </div>
+
+<div align='center'>
+
+[![](https://mermaid.ink/img/pako:eNp9Uk1vwjAM_StRzvAHegOxw4QYEmW3SshrTBuRj8pxDlXpf19GK-jUrb7E9nuK7Wd3svQKZSaRdhoqAls4kewzfzuJ-3299p3YHo_7w-a0z0UmYkAaGAOlG4NkOZN2ldBqlrpqCvwBFmeIgX8AtKDNLEveTKg7YDxri6IkTK7a8B9YbNQU64fnNdLyAO-ORUCDJWvvLlPkWQBC0JX7XX3rU6PgxJf3Nwt0w7kmr1-5bXAJ1myW8MYHRro0wPUCq0UY99bLlbRISV-V1v4Yv5BcY1qCzJKrUr-FLNwPDyL7vHWlzJgiriT5WNUyu4IJKRqkHc_mmUWl2dNhuKrHcfXf3Fq_lA?type=png)](https://mermaid.live/edit#pako:eNp9Uk1vwjAM_StRzvAHegOxw4QYEmW3SshrTBuRj8pxDlXpf19GK-jUrb7E9nuK7Wd3svQKZSaRdhoqAls4kewzfzuJ-3299p3YHo_7w-a0z0UmYkAaGAOlG4NkOZN2ldBqlrpqCvwBFmeIgX8AtKDNLEveTKg7YDxri6IkTK7a8B9YbNQU64fnNdLyAO-ORUCDJWvvLlPkWQBC0JX7XX3rU6PgxJf3Nwt0w7kmr1-5bXAJ1myW8MYHRro0wPUCq0UY99bLlbRISV-V1v4Yv5BcY1qCzJKrUr-FLNwPDyL7vHWlzJgiriT5WNUyu4IJKRqkHc_mmUWl2dNhuKrHcfXf3Fq_lA)
+
+</div>
+
 
 <div align='right'>
 
