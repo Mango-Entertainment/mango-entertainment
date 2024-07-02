@@ -7,10 +7,10 @@ import {
 } from '@/components/ui/card'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import useBookmarks from '@/app/_hooks/useBookmarks'
-import Image from 'next/image'
 import type { FC, MouseEvent } from 'react'
 import Link from 'next/link'
 import { trpc } from '@/lib/server/trpc'
+import Bookmark from '@/app/_ui/components/Bookmark'
 
 interface SelectionCardProps {
   selection_id: number
@@ -59,21 +59,7 @@ const SelectionCard: FC<SelectionCardProps> = ({
               }}
               className="click:scale-100 h-12 w-12 absolute top-0 right-0 z-10 origin-center cursor-pointer p-2 transition-transform duration-500 hover:scale-125 md:p-3 md:hover:scale-150"
             >
-              {bookmarked ? (
-                <Image
-                  src="/icon-bookmark-full.svg"
-                  height={32}
-                  width={32}
-                  alt="bookmark icon"
-                />
-              ) : (
-                <Image
-                  src="/icon-bookmark-empty.svg"
-                  height={32}
-                  width={32}
-                  alt="bookmark icon"
-                />
-              )}
+              <Bookmark bookmarked={bookmarked} />
             </CardHeader>
           ) : (
             <></>
